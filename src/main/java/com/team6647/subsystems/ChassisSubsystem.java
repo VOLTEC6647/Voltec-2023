@@ -22,26 +22,22 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
   static SuperTalonFX backRight = new SuperTalonFX(ChassisConstants.backRightID,
       false,
       ChassisConstants.motorConfig);
+
   static SuperTalonFX[] listLeft = { frontLeft, backLeft };
   static SuperTalonFX[] listRight = { frontRight, backRight };
 
-  /** Creates a new ChassisSubsystem. */
+  /**
+   * Creates a new ChassisSubsystem.
+   */
   private ChassisSubsystem() {
     super(listLeft, listRight);
-    frontLeft = new SuperTalonFX(ChassisConstants.frontLeftID, false,
-        ChassisConstants.motorConfig);
-    frontRight = new SuperTalonFX(ChassisConstants.frontRightID,
-        false,
-        ChassisConstants.motorConfig);
-    backLeft = new SuperTalonFX(ChassisConstants.backLeftID,
-        false,
-        ChassisConstants.motorConfig);
-    backRight = new SuperTalonFX(ChassisConstants.backRightID,
-        false,
-        ChassisConstants.motorConfig);
-
   }
 
+  /**
+   * Returns an instance of {@link ChassisSubsystem} for singleton purposes.
+   * 
+   * @return {@link ChassisSubsystem} global instance
+   */
   public static ChassisSubsystem getInstance() {
     if (instance == null) {
       instance = new ChassisSubsystem();
