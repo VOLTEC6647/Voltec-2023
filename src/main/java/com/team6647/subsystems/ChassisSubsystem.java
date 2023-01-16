@@ -4,13 +4,52 @@
 
 package com.team6647.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.andromedalib.motorControllers.SuperTalonFX;
+import com.andromedalib.subsystems.DifferentialDriveSubsystem;
+import com.team6647.Constants.ChassisConstants;
 
-public class ChassisSubsystem extends SubsystemBase {
-  public ChassisSubsystem() {}
+public class ChassisSubsystem extends DifferentialDriveSubsystem {
+  private static ChassisSubsystem instance;
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+  static SuperTalonFX frontLeft = new SuperTalonFX(ChassisConstants.frontLeftID, false,
+      ChassisConstants.motorConfig);
+  static SuperTalonFX frontRight = new SuperTalonFX(ChassisConstants.frontRightID,
+      false,
+      ChassisConstants.motorConfig);
+  static SuperTalonFX backLeft = new SuperTalonFX(ChassisConstants.backLeftID,
+      false,
+      ChassisConstants.motorConfig);
+  static SuperTalonFX backRight = new SuperTalonFX(ChassisConstants.backRightID,
+      false,
+      ChassisConstants.motorConfig);
+  static SuperTalonFX[] listLeft = { frontLeft, backLeft };
+  static SuperTalonFX[] listRight = { frontRight, backRight };
+
+  /** Creates a new ChassisSubsystem. */
+  private ChassisSubsystem() {
+    super(listLeft, listRight);
+    frontLeft = new SuperTalonFX(ChassisConstants.frontLeftID, false,
+        ChassisConstants.motorConfig);
+    frontRight = new SuperTalonFX(ChassisConstants.frontRightID,
+        false,
+        ChassisConstants.motorConfig);
+    backLeft = new SuperTalonFX(ChassisConstants.backLeftID,
+        false,
+        ChassisConstants.motorConfig);
+    backRight = new SuperTalonFX(ChassisConstants.backRightID,
+        false,
+        ChassisConstants.motorConfig);
+
+  }
+
+  public static ChassisSubsystem getInstance() {
+    if (instance == null) {
+      instance = new ChassisSubsystem();
+    }
+    return instance;
+  }
+
+  public boolean isInverted() {
+    return frontLeft.getInverted();
   }
 }
