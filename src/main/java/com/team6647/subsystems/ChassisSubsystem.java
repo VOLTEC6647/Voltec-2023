@@ -44,8 +44,4 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
     }
     return instance;
   }
-
-  public boolean isInverted() {
-    return frontLeft.getInverted();
-  }
 }
