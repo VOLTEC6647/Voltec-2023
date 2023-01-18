@@ -44,4 +44,8 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
     }
     return instance;
   }
+
+  @Override
+  public void outputTelemetry() {}
+
 }
