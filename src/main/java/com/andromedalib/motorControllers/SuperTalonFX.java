@@ -25,7 +25,7 @@ public class SuperTalonFX extends WPI_TalonFX implements HyperMotorController {
     /**
      * Configures SuperTalonFX motor controller
      * 
-     * @param id            ID of the motor controller
+     * @param motorID            ID of the motor controller
      * @param idleMode      Idle mode of the motor controller
      * @param inverted      Inverted state of the motor controller
      * @param configuration Stator current limit configuration
@@ -74,7 +74,7 @@ public class SuperTalonFX extends WPI_TalonFX implements HyperMotorController {
     }
 
     /**
-     * Configures a SuperTalonFX with the {@link NeutralMode} as Cosat, and a new
+     * Configures a SuperTalonFX with the {@link NeutralMode} as Coast, and a new
      * {@link Blinkin} at PWM port 0
      * 
      * @param motorID

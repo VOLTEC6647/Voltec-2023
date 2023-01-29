@@ -5,21 +5,32 @@
 package com.team6647.subsystems;
 
 import com.andromedalib.motorControllers.SuperSparkMax;
+import com.andromedalib.motorControllers.SuperTalonFX;
 import com.andromedalib.motorControllers.IdleManager.GlobalIdleMode;
 import com.andromedalib.subsystems.DifferentialDriveSubsystem;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.team6647.Constants.ChassisConstants;
 
+/**
+ * Singleton class
+ */
 public class ChassisSubsystem extends DifferentialDriveSubsystem {
   private static ChassisSubsystem instance;
 
-  static SuperSparkMax frontLeft = new SuperSparkMax(ChassisConstants.frontLeftID, MotorType.kBrushless, GlobalIdleMode.Coast, false, 20, 0);
-  static SuperSparkMax frontRight = new SuperSparkMax(ChassisConstants.frontRightID, MotorType.kBrushless, GlobalIdleMode.Coast, false, 20, 0); 
-  static SuperSparkMax backLeft = new SuperSparkMax(ChassisConstants.backLeftID, MotorType.kBrushless, GlobalIdleMode.Coast, false, 20, 0);
-  static SuperSparkMax backRight = new SuperSparkMax(ChassisConstants.backRightID, MotorType.kBrushless, GlobalIdleMode.Coast, false, 20, 0); 
-
-  static SuperSparkMax[] listLeft = { frontLeft, backLeft };
-  static SuperSparkMax[] listRight = { frontRight, backRight };
+  static SuperTalonFX frontLeft = new SuperTalonFX(ChassisConstants.frontLeftID, false,
+      ChassisConstants.motorConfig);
+  static SuperTalonFX frontRight = new SuperTalonFX(ChassisConstants.frontRightID,
+      false,
+      ChassisConstants.motorConfig);
+  static SuperTalonFX backLeft = new SuperTalonFX(ChassisConstants.backLeftID,
+      false,
+      ChassisConstants.motorConfig);
+  static SuperTalonFX backRight = new SuperTalonFX(ChassisConstants.backRightID,
+      false,
+      ChassisConstants.motorConfig);
+      
+  static SuperTalonFX[] listLeft = { frontLeft, backLeft };
+  static SuperTalonFX[] listRight = { frontRight, backRight };
 
   /**
    * Creates a new ChassisSubsystem.
@@ -41,6 +52,7 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
   }
 
   @Override
-  public void outputTelemetry() {}
+  public void outputTelemetry() {
+  }
 
 }
