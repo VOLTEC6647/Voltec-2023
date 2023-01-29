@@ -4,11 +4,8 @@
 
 package com.team6647.subsystems;
 
-import com.andromedalib.motorControllers.SuperSparkMax;
 import com.andromedalib.motorControllers.SuperTalonFX;
-import com.andromedalib.motorControllers.IdleManager.GlobalIdleMode;
 import com.andromedalib.subsystems.DifferentialDriveSubsystem;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.team6647.Constants.ChassisConstants;
 
 /**
@@ -28,7 +25,7 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
   static SuperTalonFX backRight = new SuperTalonFX(ChassisConstants.backRightID,
       false,
       ChassisConstants.motorConfig);
-      
+
   static SuperTalonFX[] listLeft = { frontLeft, backLeft };
   static SuperTalonFX[] listRight = { frontRight, backRight };
 
