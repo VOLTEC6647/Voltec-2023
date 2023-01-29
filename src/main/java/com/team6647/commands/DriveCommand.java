@@ -4,6 +4,7 @@
 
 package com.team6647.commands;
 
+import com.team6647.Constants.OperatorConstants;
 import com.team6647.subsystems.ChassisSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -29,8 +30,8 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public void execute() {
-    leftY = -controller.getLeftY();
-    rightY = -controller.getRightY();
+    leftY = -controller.getLeftY() * OperatorConstants.xMultiplier;
+    rightY = -controller.getRightY() * OperatorConstants.xMultiplier;
     controller.y().onTrue(new RunCommand(() -> {
       chassis.driveInverted = !chassis.driveInverted;
     }, chassis));
