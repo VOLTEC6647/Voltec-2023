@@ -7,6 +7,7 @@ package com.team6647.commands;
 import com.team6647.Constants.OperatorConstants;
 import com.team6647.subsystems.ChassisSubsystem;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -32,16 +33,18 @@ public class DriveCommand extends CommandBase {
   public void execute() {
     leftY = -controller.getLeftY() * OperatorConstants.xMultiplier;
     rightY = -controller.getRightY() * OperatorConstants.xMultiplier;
-    controller.y().onTrue(new RunCommand(() -> {
-      chassis.driveInverted = !chassis.driveInverted;
-    }, chassis));
-    new Trigger(chassis::isInverted)
-        .onTrue(new RunCommand(() -> {
-          leftY = -leftY;
-          rightY = -rightY;
-        }, chassis));
+    /*
+     * controller.y().onTrue(new RunCommand(() -> {
+     * chassis.driveInverted = !chassis.driveInverted;
+     * }, chassis));
+     * new Trigger(chassis::isInverted)
+     * .onTrue(new RunCommand(() -> {
+     * leftY = -leftY;
+     * rightY = -rightY;
+     * }, chassis));
+     */
 
-    chassis.tankDrive(leftY, rightY);
+    chassis.arcadeDrive(leftY, rightY);
   }
 
   // Called once the command ends or is interrupted.
