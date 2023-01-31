@@ -19,6 +19,7 @@ public class Robot extends TimedRobot {
 
     robotContainer.initSubsystems();
     robotContainer.configureBindings();
+    
     addPeriodic(() -> {
       CommandScheduler.getInstance().run();
     }, 0.01);

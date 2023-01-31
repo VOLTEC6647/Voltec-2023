@@ -15,11 +15,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ArmSubsystem extends SubsystemBase {
   private static ArmSubsystem instance;
 
-  private static SuperSparkMax rotMax = new SuperSparkMax(ArmConstants.armNeo1ID, false);
-  private static SuperSparkMax rotMax2 = new SuperSparkMax(ArmConstants.armNeo2ID, false);
+  private static SuperSparkMax pivoSpark = new SuperSparkMax(ArmConstants.armNeo1ID, false, 20);
+  private static SuperSparkMax extendingSpark = new SuperSparkMax(ArmConstants.armNeo2ID, false, 20);
 
   /** Creates a new ArmSubsystem. */
-  private ArmSubsystem() {}
+  private ArmSubsystem() {
+  }
 
   /**
    * Returns an instance of {@link ArmSubsystem} for singleton purposes.

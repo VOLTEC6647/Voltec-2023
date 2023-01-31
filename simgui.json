@@ -40,8 +40,10 @@
     }
   },
   "NetworkTables": {
-    "Transitory Values": {
-      "open": false
+    "transitory": {
+      "SmartDashboard": {
+        "open": true
+      }
     }
   }
 }

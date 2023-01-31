@@ -6,21 +6,27 @@ package com.team6647;
 
 import com.team6647.Constants.OperatorConstants;
 import com.team6647.commands.DriveCommand;
+import com.team6647.subsystems.ArmSubsystem;
 import com.team6647.subsystems.ChassisSubsystem;
+import com.team6647.subsystems.VisionSubsystem;
 
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class RobotContainer {
 
   private ChassisSubsystem chassis;
+  private VisionSubsystem vision;
+  private ArmSubsystem arm;
 
-  private final CommandXboxController driverController1 = new CommandXboxController(
-      OperatorConstants.kDriverControllerPort);
+  private final CommandXboxController driverController1 = new CommandXboxController(OperatorConstants.kDriverControllerPort);
   private final CommandXboxController driverController2 = new CommandXboxController(
       OperatorConstants.kDriverControllerPort2);
 
-  public RobotContainer() {}
+  public RobotContainer() {
+  }
 
   /**
    * Initializes every  the subsystems. Call this function from the
@@ -28,6 +34,9 @@ public class RobotContainer {
    */
   public void initSubsystems() {
     chassis = ChassisSubsystem.getInstance();
+    arm = ArmSubsystem.getInstance();
+    vision = VisionSubsystem.getInstance("AprilCamera");
+
   }
 
   public void configureBindings() {
