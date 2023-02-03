@@ -5,6 +5,8 @@
 package com.team6647.subsystems;
 
 import com.andromedalib.motorControllers.SuperSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 import com.team6647.Constants.ArmConstants;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,11 +17,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ArmSubsystem extends SubsystemBase {
   private static ArmSubsystem instance;
 
-  private static SuperSparkMax pivoSpark = new SuperSparkMax(ArmConstants.armNeo1ID, false, 20);
+  private static SuperSparkMax pivotSpark = new SuperSparkMax(ArmConstants.armNeo1ID, false, 20);
   private static SuperSparkMax extendingSpark = new SuperSparkMax(ArmConstants.armNeo2ID, false, 20);
+
+  private SparkMaxPIDController pivotController;
 
   /** Creates a new ArmSubsystem. */
   private ArmSubsystem() {
+    pivotController = pivotSpark.getPIDController();
+
   }
 
   /**
@@ -34,6 +40,10 @@ public class ArmSubsystem extends SubsystemBase {
     return instance;
   }
 
+  public void setDegree(double degree){
+    
+  }
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
