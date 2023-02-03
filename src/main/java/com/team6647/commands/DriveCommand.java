@@ -44,7 +44,7 @@ public class DriveCommand extends CommandBase {
      * }, chassis));
      */
 
-    chassis.arcadeDrive(leftY, rightY);
+    chassis.tankDrive(leftY, rightY);
   }
 
   // Called once the command ends or is interrupted.

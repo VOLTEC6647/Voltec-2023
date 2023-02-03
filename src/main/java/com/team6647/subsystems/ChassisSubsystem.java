@@ -33,7 +33,7 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
    * Creates a new ChassisSubsystem.
    */
   private ChassisSubsystem() {
-    super(listLeft, listRight);
+    super(listLeft, listRight, "Right");
   }
 
   /**
