@@ -5,7 +5,6 @@
 package com.team6647.subsystems;
 
 import com.andromedalib.motorControllers.SuperSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.team6647.Constants.ArmConstants;
 
@@ -25,6 +24,7 @@ public class ArmSubsystem extends SubsystemBase {
   /** Creates a new ArmSubsystem. */
   private ArmSubsystem() {
     pivotController = pivotSpark.getPIDController();
+    pivotController.setP(0);
 
   }
 
@@ -42,6 +42,10 @@ public class ArmSubsystem extends SubsystemBase {
 
   public void setDegree(double degree){
     
+  }
+
+  public void extendArm(double speed){
+    extendingSpark.set(speed);
   }
   
   @Override
