@@ -14,16 +14,13 @@ import com.team6647.Constants.ChassisConstants;
 public class ChassisSubsystem extends DifferentialDriveSubsystem {
   private static ChassisSubsystem instance;
 
-  private static SuperTalonFX frontLeft = new SuperTalonFX(ChassisConstants.frontLeftID, false,
+  private static SuperTalonFX frontLeft = new SuperTalonFX(ChassisConstants.frontLeftID,
       ChassisConstants.motorConfig);
   private static SuperTalonFX frontRight = new SuperTalonFX(ChassisConstants.frontRightID,
-      false,
       ChassisConstants.motorConfig);
   private static SuperTalonFX backLeft = new SuperTalonFX(ChassisConstants.backLeftID,
-      false,
       ChassisConstants.motorConfig);
   private static SuperTalonFX backRight = new SuperTalonFX(ChassisConstants.backRightID,
-      false,
       ChassisConstants.motorConfig);
 
   private static SuperTalonFX[] listLeft = { frontLeft, backLeft };
