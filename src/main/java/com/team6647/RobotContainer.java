@@ -4,16 +4,24 @@
 
 package com.team6647;
 
+import com.andromedalib.shuffleboard.ShuffleboardInteractions;
 import com.team6647.Constants.OperatorConstants;
-import com.team6647.commands.DriveCommand;
+import com.team6647.Constants.ShuffleboardConstants;
+import com.team6647.commands.TankDriveCommand;
 import com.team6647.subsystems.ArmSubsystem;
 import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.subsystems.VisionSubsystem;
+import com.team6647.utils.DriveModeSelector;
+import com.team6647.utils.MotorInfoTab;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class RobotContainer {
+
+  private DriveModeSelector selector;
+  private ShuffleboardInteractions interactions;
+  private MotorInfoTab motorTab;
 
   private ChassisSubsystem chassis;
   private VisionSubsystem vision;
@@ -33,14 +41,24 @@ public class RobotContainer {
    */
   public void initSubsystems() {
     chassis = ChassisSubsystem.getInstance();
+
     /*
      * arm = ArmSubsystem.getInstance();
      * vision = VisionSubsystem.getInstance("AprilCamera");
      */
   }
 
+  /**
+   * Initializes the sending of telemetry
+   */
+  public void initTelemetry() {
+    interactions = ShuffleboardInteractions.getInstance(ShuffleboardConstants.kShuffleboardTab);
+    motorTab = MotorInfoTab.getInstance(ShuffleboardConstants.kMotorDebugTab);
+    selector = new DriveModeSelector();
+  }
+
   public void configureBindings() {
-    chassis.setDefaultCommand(new DriveCommand(chassis, driverController1));
+    chassis.setDefaultCommand(new TankDriveCommand(chassis, driverController1));
 
     /*
      * // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
