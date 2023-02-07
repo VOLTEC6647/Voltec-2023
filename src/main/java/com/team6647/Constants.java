@@ -8,6 +8,8 @@ import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public final class Constants {
   public static class OperatorConstants {
@@ -16,6 +18,13 @@ public final class Constants {
 
     public static final double xMultiplier = 1;
     public static final double yMultiplier = 1;
+  }
+
+  public static class ShuffleboardConstants {
+    private static final String kShuffleboardTabName = "Team 6647";
+    private static final String kMotorDebugTabName = "Motor debug info";
+    public static final ShuffleboardTab kShuffleboardTab = Shuffleboard.getTab(kShuffleboardTabName);
+    public static final ShuffleboardTab kMotorDebugTab = Shuffleboard.getTab(kMotorDebugTabName);
   }
 
   public static class ChassisConstants {
