@@ -4,28 +4,28 @@ import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
-public class ShuffleBoardInteractions {
+public class ShuffleboardInteractions {
 
-    public static ShuffleBoardInteractions instance;
+    public static ShuffleboardInteractions instance;
 
     public static String tabName;
     private static ShuffleboardTab tab;
 
-    private ShuffleBoardInteractions() {
+    private ShuffleboardInteractions() {
     }
 
-    public static ShuffleBoardInteractions getInstance(String name) {
+    public static ShuffleboardInteractions getInstance(String name) {
         if (instance == null) {
-            instance = new ShuffleBoardInteractions();
+            instance = new ShuffleboardInteractions();
             tabName = name;
             tab = Shuffleboard.getTab(tabName);
         }
         return instance;
     }
 
-    public static ShuffleBoardInteractions getInstance(ShuffleboardTab shuffleTab) {
+    public static ShuffleboardInteractions getInstance(ShuffleboardTab shuffleTab) {
         if (instance == null) {
-            instance = new ShuffleBoardInteractions();
+            instance = new ShuffleboardInteractions();
             tab = shuffleTab;
         }
         return instance;
