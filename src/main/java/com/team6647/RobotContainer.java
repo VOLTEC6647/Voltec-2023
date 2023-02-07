@@ -4,6 +4,7 @@
 
 package com.team6647;
 
+import com.andromedalib.shuffleboard.MotorInfoTab;
 import com.andromedalib.shuffleboard.ShuffleboardInteractions;
 import com.team6647.Constants.OperatorConstants;
 import com.team6647.Constants.ShuffleboardConstants;
@@ -12,7 +13,6 @@ import com.team6647.subsystems.ArmSubsystem;
 import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.subsystems.VisionSubsystem;
 import com.team6647.utils.DriveModeSelector;
-import com.team6647.utils.MotorInfoTab;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;

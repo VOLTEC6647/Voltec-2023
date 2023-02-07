@@ -13,13 +13,13 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-public class DriveCommand extends CommandBase {
+public class TankDriveCommand extends CommandBase {
   ChassisSubsystem chassis;
   CommandXboxController controller;
   double leftY;
   double rightY;
 
-  public DriveCommand(ChassisSubsystem chassis, CommandXboxController controller) {
+  public TankDriveCommand(ChassisSubsystem chassis, CommandXboxController controller) {
     this.chassis = chassis;
     this.controller = controller;
     addRequirements(chassis);
@@ -33,16 +33,15 @@ public class DriveCommand extends CommandBase {
   public void execute() {
     leftY = -controller.getLeftY() * OperatorConstants.xMultiplier;
     rightY = -controller.getRightY() * OperatorConstants.xMultiplier;
-    /*
-     * controller.y().onTrue(new RunCommand(() -> {
-     * chassis.driveInverted = !chassis.driveInverted;
-     * }, chassis));
-     * new Trigger(chassis::isInverted)
-     * .onTrue(new RunCommand(() -> {
-     * leftY = -leftY;
-     * rightY = -rightY;
-     * }, chassis));
-     */
+
+    controller.y().onTrue(new RunCommand(() -> {
+      chassis.driveInverted = !chassis.driveInverted;
+    }, chassis));
+    new Trigger(chassis::isInverted)
+        .onTrue(new RunCommand(() -> {
+          leftY = -leftY;
+          rightY = -rightY;
+        }, chassis));
 
     chassis.tankDrive(leftY, rightY);
   }
