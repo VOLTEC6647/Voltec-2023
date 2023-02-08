@@ -28,9 +28,7 @@ public final class Constants {
 
   public static class ShuffleboardConstants {
     private static final String kShuffleboardTabName = "Team 6647";
-    private static final String kMotorDebugTabName = "Motor debug info";
     public static final ShuffleboardTab kShuffleboardTab = Shuffleboard.getTab(kShuffleboardTabName);
-    public static final ShuffleboardTab kMotorDebugTab = Shuffleboard.getTab(kMotorDebugTabName);
   }
 
   public static class ChassisConstants {
