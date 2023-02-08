@@ -10,11 +10,17 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
     public static final int kDriverControllerPort2 = 1;
+
+    public static final CommandXboxController driverController1 = new CommandXboxController(
+        OperatorConstants.kDriverControllerPort);
+    public static final CommandXboxController driverController2 = new CommandXboxController(
+        OperatorConstants.kDriverControllerPort2);
 
     public static final double xMultiplier = 1;
     public static final double yMultiplier = 1;
