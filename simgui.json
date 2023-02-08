@@ -27,10 +27,24 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Motor debug info/Drive Mode": "String Chooser",
+      "/Shuffleboard/Team 6647/Differential Drive": "DifferentialDrive",
+      "/Shuffleboard/Team 6647/Drive Mode": "String Chooser",
+      "/SmartDashboard/ChassisSubsystem": "Subsystem",
       "/SmartDashboard/DifferentialDrive[1]": "DifferentialDrive",
       "/SmartDashboard/DifferentialDrive[3]": "DifferentialDrive"
     },
     "windows": {
+      "/Shuffleboard/Team 6647/Differential Drive": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Team 6647/Drive Mode": {
+        "window": {
+          "visible": true
+        }
+      },
       "/SmartDashboard/DifferentialDrive[1]": {
         "window": {
           "name": "Differential Drive",
@@ -41,6 +55,12 @@
   },
   "NetworkTables": {
     "transitory": {
+      "Shuffleboard": {
+        "Team 6647": {
+          "open": true
+        },
+        "open": true
+      },
       "SmartDashboard": {
         "open": true
       }
