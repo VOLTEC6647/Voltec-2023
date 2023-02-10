@@ -27,6 +27,9 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/LiveWindow/Ungrouped/DifferentialDrive[1]": "DifferentialDrive",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/LiveWindow/Ungrouped/Spark[0]": "Motor Controller",
       "/Shuffleboard/Motor debug info/Drive Mode": "String Chooser",
       "/Shuffleboard/Team 6647/Differential Drive": "DifferentialDrive",
       "/Shuffleboard/Team 6647/Drive Mode": "String Chooser",
