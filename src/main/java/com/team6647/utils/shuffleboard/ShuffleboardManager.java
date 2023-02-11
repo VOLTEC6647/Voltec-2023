@@ -4,6 +4,7 @@ import com.andromedalib.shuffleboard.ShuffleboardTabBase;
 import com.andromedalib.shuffleboard.tabs.DifferentialDriveInfo;
 import com.team6647.Constants.ShuffleboardConstants;
 import com.team6647.subsystems.ChassisSubsystem;
+import com.team6647.utils.shuffleboard.tabs.DebugTab;
 import com.team6647.utils.shuffleboard.tabs.DefaultTab;
 
 public class ShuffleboardManager {
@@ -21,11 +22,12 @@ public class ShuffleboardManager {
         if (debug) {
             list = new ShuffleboardTabBase[] {
                     new DifferentialDriveInfo(ShuffleboardConstants.kShuffleboardTab, ChassisSubsystem.getInstance()),
-                    new DefaultTab(ShuffleboardConstants.kShuffleboardTab),
+                    new DebugTab(ShuffleboardConstants.kShuffleboardTab),
             };
         } else {
             list = new ShuffleboardTabBase[] {
                     new DifferentialDriveInfo(ShuffleboardConstants.kShuffleboardTab, ChassisSubsystem.getInstance()),
+                    new DefaultTab(ShuffleboardConstants.kShuffleboardTab),
             };
         }
     }

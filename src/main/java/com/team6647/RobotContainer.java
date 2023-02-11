@@ -48,8 +48,8 @@ public class RobotContainer {
    * Initializes the sending of telemetry
    */
   public void initTelemetry() {
-    interactions = ShuffleboardManager.getInstance();
     selector = new DriveModeSelector();
+    interactions = ShuffleboardManager.getInstance();
   }
 
   /**
