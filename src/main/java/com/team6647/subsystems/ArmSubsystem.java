@@ -5,10 +5,8 @@
 package com.team6647.subsystems;
 
 import com.andromedalib.motorControllers.SuperSparkMax;
-import com.revrobotics.SparkMaxPIDController;
 import com.team6647.Constants.ArmConstants;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
