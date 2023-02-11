@@ -9,18 +9,19 @@ import com.andromedalib.subsystems.DifferentialDriveSubsystem;
 import com.team6647.Constants.ChassisConstants;
 
 /**
- * Singleton class
+ * Singleton class. It controls the actual movement and interactions in the
+ * drivetrain
  */
 public class ChassisSubsystem extends DifferentialDriveSubsystem {
   private static ChassisSubsystem instance;
 
-  private static SuperTalonFX frontLeft = new SuperTalonFX(ChassisConstants.frontLeftID,
+  static SuperTalonFX frontLeft = new SuperTalonFX(ChassisConstants.frontLeftID,
       ChassisConstants.motorConfig);
-  private static SuperTalonFX frontRight = new SuperTalonFX(ChassisConstants.frontRightID,
+  static SuperTalonFX frontRight = new SuperTalonFX(ChassisConstants.frontRightID,
       ChassisConstants.motorConfig);
-  private static SuperTalonFX backLeft = new SuperTalonFX(ChassisConstants.backLeftID,
+  static SuperTalonFX backLeft = new SuperTalonFX(ChassisConstants.backLeftID,
       ChassisConstants.motorConfig);
-  private static SuperTalonFX backRight = new SuperTalonFX(ChassisConstants.backRightID,
+  static SuperTalonFX backRight = new SuperTalonFX(ChassisConstants.backRightID,
       ChassisConstants.motorConfig);
 
   private static SuperTalonFX[] listLeft = { frontLeft, backLeft };

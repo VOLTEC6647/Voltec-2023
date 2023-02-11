@@ -4,7 +4,11 @@
 
 package com.team6647;
 
+import com.team6647.Constants.OperatorConstants;
+import com.team6647.commands.auto.AutoBalance;
+import com.team6647.commands.hybrid.RotateArm;
 import com.team6647.subsystems.ChassisSubsystem;
+import com.team6647.subsystems.DriveSubsystem;
 import com.team6647.utils.DriveModeSelector;
 import com.team6647.utils.shuffleboard.ShuffleboardManager;
 
@@ -18,6 +22,7 @@ public class RobotContainer {
   private ShuffleboardManager interactions;
 
   private ChassisSubsystem chassis;
+  private DriveSubsystem drive;
 
   private RobotContainer() {
   }
@@ -35,6 +40,7 @@ public class RobotContainer {
    */
   public void initSubsystems() {
     chassis = ChassisSubsystem.getInstance();
+    drive = DriveSubsystem.getInstance();
   }
 
   /**
@@ -58,6 +64,11 @@ public class RobotContainer {
    */
   public void configureBindings() {
     chassis.setDefaultCommand(selector.getDriveMode());
+
+    OperatorConstants.driverController1.y().onTrue(new AutoBalance(drive, chassis));
+
+    OperatorConstants.driverController2.x().onTrue(new RotateArm(1));
+    OperatorConstants.driverController2.b().onTrue(new RotateArm(-1));
   }
 
   /**
