@@ -50,6 +50,14 @@ public class ArmSubsystem extends SubsystemBase {
     pivotSpark2.set(degree);
   }
 
+  public double getPivot1Velocity() {
+    return pivotSpark1.getVelocity();
+  }
+
+  public double getPivot2Velocity() {
+    return pivotSpark2.getVelocity();
+  }
+
   /*
    * public void extendArm(double speed) {
    * extendingSpark.set(speed);
