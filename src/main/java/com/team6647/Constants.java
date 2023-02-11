@@ -37,7 +37,7 @@ public final class Constants {
     public static final int backLeftID = 3;
     public static final int backRightID = 4;
 
-    public static final StatorCurrentLimitConfiguration motorConfig = new StatorCurrentLimitConfiguration(true, 25, 30,
+    public static final StatorCurrentLimitConfiguration motorConfig = new StatorCurrentLimitConfiguration(true, 50, 55,
         2);
   }
 
@@ -45,6 +45,7 @@ public final class Constants {
     public static final int armNeo1ID = 5;
     public static final int armNeo2ID = 6;
 
+    // TODO SET
     public static final double pivotkP = 0;
     public static final double pivotkI = 0;
     public static final double pivotkD = 0;
@@ -52,6 +53,7 @@ public final class Constants {
   }
 
   public static class DriveConstants {
+    // TODO SET
     public static final double ksVolts = 0;
     public static final double kvVoltSecondsPerMeter = 0;
     public static final double kaVoltSecondsSquaredPerMeter = 0;
@@ -70,7 +72,21 @@ public final class Constants {
     public static final double kGearRatio = 7.29;
 
     public static final double kWheelRadiusInches = 3;
-    public static final double kWheelDiameterMeter = Units.inchesToMeters(kWheelRadiusInches);
+    public static final double kWheelDiameterMeter = Units.inchesToMeters(kWheelRadiusInches * 2);
     public static final double kWheelCircumference = kWheelDiameterMeter * Math.PI;
+
+    // TODO SET //SETABLE IN SHUFFLEBOARD
+    public static double angleKp = 0;
+    public static double angleKi = 0;
+    public static double angleKd = 0;
+
+    public static double angleTolerance = 10;
+
+    // TODO SET
+    public static final double velocityKp = 0;
+    public static final double velocityKi = 0;
+    public static final double velocityKd = 0;
+
+    public static final double velocityTolerance = 2;
   }
 }

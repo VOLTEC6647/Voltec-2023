@@ -8,6 +8,7 @@ import com.andromedalib.motorControllers.SuperSparkMax;
 import com.revrobotics.SparkMaxPIDController;
 import com.team6647.Constants.ArmConstants;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -16,15 +17,21 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ArmSubsystem extends SubsystemBase {
   private static ArmSubsystem instance;
 
-  private static SuperSparkMax pivotSpark = new SuperSparkMax(ArmConstants.armNeo1ID, false, 20);
-  private static SuperSparkMax extendingSpark = new SuperSparkMax(ArmConstants.armNeo2ID, false, 20);
+  private static SuperSparkMax pivotSpark1 = new SuperSparkMax(ArmConstants.armNeo1ID, false, 50);
+  private static SuperSparkMax pivotSpark2 = new SuperSparkMax(ArmConstants.armNeo2ID, true, 50);
 
-  private SparkMaxPIDController pivotController;
+  /*
+   * private SparkMaxPIDController pivotController;
+   * 
+   * private ArmFeedforward armFeedforward;
+   */
 
   /** Creates a new ArmSubsystem. */
   private ArmSubsystem() {
-    pivotController = pivotSpark.getPIDController();
-    pivotController.setP(0);
+    /*
+     * pivotController = pivotSpark.getPIDController();
+     * pivotController.setP(0);
+     */
 
   }
 
@@ -40,14 +47,17 @@ public class ArmSubsystem extends SubsystemBase {
     return instance;
   }
 
-  public void setDegree(double degree){
-    
+  public void setAngle(double degree) {
+    pivotSpark1.set(degree);
+    pivotSpark2.set(degree);
   }
 
-  public void extendArm(double speed){
-    extendingSpark.set(speed);
-  }
-  
+  /*
+   * public void extendArm(double speed) {
+   * extendingSpark.set(speed);
+   * }
+   */
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
