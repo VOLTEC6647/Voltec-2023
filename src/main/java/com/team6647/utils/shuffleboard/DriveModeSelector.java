@@ -1,4 +1,4 @@
-package com.team6647.utils;
+package com.team6647.utils.shuffleboard;
 
 import com.team6647.Constants.OperatorConstants;
 import com.team6647.Constants.ShuffleboardConstants;
