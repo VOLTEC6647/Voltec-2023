@@ -19,10 +19,10 @@ public class DebugTab extends ShuffleboardTabBase {
     GenericEntry armSpeed;
 
     public DebugTab(ShuffleboardTab tab) {
-        this.angleKp = tab.add("Angle Kp", DriveConstants.angleKp).getEntry();
-        this.angleKi = tab.add("Angle Ki", DriveConstants.angleKi).getEntry();
-        this.angleKd = tab.add("Angle Kd", DriveConstants.angleKd).getEntry();
-        this.armSpeed = tab.add("Arm Speed", ArmConstants.armSpeed).getEntry();
+        this.angleKp = tab.add("Angle Kp", DriveConstants.angleKp).withPosition(3, 1).getEntry();
+        this.angleKi = tab.add("Angle Ki", DriveConstants.angleKi).withPosition(4, 1).getEntry();
+        this.angleKd = tab.add("Angle Kd", DriveConstants.angleKd).withPosition(5, 1).getEntry();
+        this.armSpeed = tab.add("Arm Speed", ArmConstants.armSpeed).withPosition(6, 1).getEntry();
     }
 
     @Override

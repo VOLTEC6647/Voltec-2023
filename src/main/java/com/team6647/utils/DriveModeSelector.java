@@ -39,7 +39,7 @@ public class DriveModeSelector {
         driveModeChooser.setDefaultOption("Tank", DriveMode.TANK);
         driveModeChooser.addOption("Arcade", DriveMode.ARCADE);
         driveModeChooser.addOption("Curvature", DriveMode.CURVATURE);
-        ShuffleboardConstants.kShuffleboardTab.add("Drive Mode", driveModeChooser).withSize(2, 2).withPosition(0, 0);
+        ShuffleboardConstants.kShuffleboardTab.add("Drive Mode", driveModeChooser).withPosition(5, 0);
     }
 
     /**
