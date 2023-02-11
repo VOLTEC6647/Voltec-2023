@@ -45,6 +45,8 @@ public final class Constants {
     public static final int armNeo1ID = 5;
     public static final int armNeo2ID = 6;
 
+    public static double armSpeed = 0.2;
+
     // TODO SET
     public static final double pivotkP = 0;
     public static final double pivotkI = 0;

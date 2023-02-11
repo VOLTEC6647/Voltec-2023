@@ -4,6 +4,7 @@
 
 package com.team6647;
 
+import com.team6647.Constants.ArmConstants;
 import com.team6647.Constants.OperatorConstants;
 import com.team6647.commands.auto.AutoBalance;
 import com.team6647.commands.hybrid.RotateArm;
@@ -67,8 +68,8 @@ public class RobotContainer {
 
     OperatorConstants.driverController1.y().onTrue(new AutoBalance(drive, chassis));
 
-    OperatorConstants.driverController2.x().onTrue(new RotateArm(1));
-    OperatorConstants.driverController2.b().onTrue(new RotateArm(-1));
+    OperatorConstants.driverController2.x().onTrue(new RotateArm(ArmConstants.pivotkD));
+    OperatorConstants.driverController2.b().onTrue(new RotateArm(ArmConstants.armSpeed));
   }
 
   /**
