@@ -21,11 +21,11 @@ public class ShuffleboardManager {
         if (debug) {
             list = new ShuffleboardTabBase[] {
                     new DifferentialDriveInfo(ShuffleboardConstants.kShuffleboardTab, ChassisSubsystem.getInstance()),
+                    new DefaultTab(ShuffleboardConstants.kShuffleboardTab),
             };
         } else {
             list = new ShuffleboardTabBase[] {
                     new DifferentialDriveInfo(ShuffleboardConstants.kShuffleboardTab, ChassisSubsystem.getInstance()),
-                    new DefaultTab(ShuffleboardConstants.kShuffleboardTab),
             };
         }
     }
