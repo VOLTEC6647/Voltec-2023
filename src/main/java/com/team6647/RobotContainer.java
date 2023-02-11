@@ -10,7 +10,7 @@ import com.team6647.commands.auto.AutoBalance;
 import com.team6647.commands.hybrid.RotateArm;
 import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.subsystems.DriveSubsystem;
-import com.team6647.utils.DriveModeSelector;
+import com.team6647.utils.shuffleboard.DriveModeSelector;
 import com.team6647.utils.shuffleboard.ShuffleboardManager;
 
 import edu.wpi.first.wpilibj2.command.Command;
