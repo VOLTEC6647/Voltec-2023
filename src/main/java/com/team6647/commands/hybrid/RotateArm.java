@@ -22,11 +22,11 @@ public class RotateArm extends CommandBase {
 
   @Override
   public void initialize() {
+    arm.setAngle(speed);
   }
 
   @Override
   public void execute() {
-    arm.setAngle(speed);
   }
 
   // Called once the command ends or is interrupted.
