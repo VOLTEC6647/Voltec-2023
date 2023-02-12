@@ -66,7 +66,7 @@ public class RobotContainer {
   public void configureBindings() {
     chassis.setDefaultCommand(selector.getDriveMode());
 
-    OperatorConstants.driverController1.y().onTrue(new AutoBalance(drive, chassis));
+    OperatorConstants.driverController1.y().whileTrue(new AutoBalance(drive, chassis));
 
     OperatorConstants.driverController2.x().whileTrue(new RotateArm(ArmConstants.armSpeed));
     OperatorConstants.driverController2.b().whileTrue(new RotateArm(-ArmConstants.armSpeed));
