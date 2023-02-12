@@ -47,7 +47,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   public void setAngle(double degree) {
     pivotSpark1.set(degree);
-    pivotSpark2.set(-degree);
+    pivotSpark2.set(degree);
   }
 
   public double getPivot1Velocity() {
