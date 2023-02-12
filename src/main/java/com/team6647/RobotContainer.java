@@ -68,8 +68,8 @@ public class RobotContainer {
 
     OperatorConstants.driverController1.y().onTrue(new AutoBalance(drive, chassis));
 
-    OperatorConstants.driverController2.x().onTrue(new RotateArm(ArmConstants.armSpeed));
-    OperatorConstants.driverController2.b().onTrue(new RotateArm(-ArmConstants.armSpeed));
+    OperatorConstants.driverController2.x().whileTrue(new RotateArm(ArmConstants.armSpeed));
+    OperatorConstants.driverController2.b().whileTrue(new RotateArm(-ArmConstants.armSpeed));
   }
 
   /**
