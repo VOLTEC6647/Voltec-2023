@@ -61,10 +61,17 @@ public class RobotContainer {
   }
 
   /**
+   * Sets the {@link ChassisSubsystem} default command
+   */
+  public void setChassisCommand() {
+    chassis.setDefaultCommand(selector.getDriveMode());
+  }
+
+  /**
    * Sets the button bidings
    */
   public void configureBindings() {
-    chassis.setDefaultCommand(selector.getDriveMode());
+    setChassisCommand();
 
     OperatorConstants.driverController1.y().whileTrue(new AutoBalance(drive, chassis));
 

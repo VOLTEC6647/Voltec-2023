@@ -57,6 +57,7 @@ public class Robot extends TimedRobot {
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
+    robotContainer.setChassisCommand();
   }
 
   @Override
