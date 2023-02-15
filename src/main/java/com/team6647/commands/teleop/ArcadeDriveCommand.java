@@ -28,7 +28,7 @@ public class ArcadeDriveCommand extends CommandBase {
   @Override
   public void execute() {
     forwardY = -controller.getLeftY() * OperatorConstants.yMultiplier;
-    turnX = controller.getRightX() * OperatorConstants.xMultiplier;
+    turnX = -controller.getRightX() * OperatorConstants.xMultiplier;
 
     controller.y().onTrue(new RunCommand(() -> {
       chassis.toggleInverted();
