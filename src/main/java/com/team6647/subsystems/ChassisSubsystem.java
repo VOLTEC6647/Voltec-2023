@@ -58,7 +58,9 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
   public void outputTelemetry() {
   }
 
-  /* Changes reduction state */
+  /**
+   * Changes reduction state
+   */
   public static void toggleReduction() {
     var currentState = forwardSolenoid.get();
 
