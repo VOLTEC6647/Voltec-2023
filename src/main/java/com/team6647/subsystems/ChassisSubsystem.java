@@ -8,6 +8,10 @@ import com.andromedalib.motorControllers.SuperTalonFX;
 import com.andromedalib.subsystems.DifferentialDriveSubsystem;
 import com.team6647.Constants.ChassisConstants;
 
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+
 /**
  * Singleton class. It controls the actual movement and interactions in the
  * drivetrain
@@ -26,6 +30,11 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
 
   private static SuperTalonFX[] listLeft = { frontLeft, backLeft };
   private static SuperTalonFX[] listRight = { frontRight, backRight };
+
+  private static Solenoid forwardSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM,
+      ChassisConstants.forwardSolenoidID);
+  private static Solenoid backSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM,
+      ChassisConstants.backwardSolenoidID);
 
   /**
    * Creates a new ChassisSubsystem.
@@ -50,4 +59,11 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
   public void outputTelemetry() {
   }
 
+  /* Changes reduction state */
+  public static void toggleReduction() {
+    var currentState = forwardSolenoid.get();
+
+    forwardSolenoid.set(!currentState);
+    backSolenoid.set(currentState);
+  }
 }

@@ -39,6 +39,9 @@ public final class Constants {
 
     public static final StatorCurrentLimitConfiguration motorConfig = new StatorCurrentLimitConfiguration(true, 50, 55,
         2);
+
+    public static final int forwardSolenoidID = 0;
+    public static final int backwardSolenoidID = 1;
   }
 
   public static class ArmConstants {
