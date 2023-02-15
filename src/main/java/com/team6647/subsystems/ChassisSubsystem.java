@@ -10,7 +10,6 @@ import com.team6647.Constants.ChassisConstants;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 
 /**
  * Singleton class. It controls the actual movement and interactions in the
