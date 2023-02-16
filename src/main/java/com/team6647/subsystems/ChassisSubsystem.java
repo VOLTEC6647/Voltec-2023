@@ -8,7 +8,6 @@ import com.andromedalib.motorControllers.SuperTalonFX;
 import com.andromedalib.subsystems.DifferentialDriveSubsystem;
 import com.team6647.Constants.ChassisConstants;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 
@@ -31,8 +30,6 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
   private static SuperTalonFX[] listLeft = { frontLeft, backLeft };
   private static SuperTalonFX[] listRight = { frontRight, backRight };
 
-  private static Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
-
   private static Solenoid forwardSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM,
       ChassisConstants.forwardSolenoidID);
   private static Solenoid backSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM,
@@ -42,9 +39,7 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
    * Creates a new ChassisSubsystem.
    */
   private ChassisSubsystem() {
-    super(listLeft, listRight, "Right");
-    
-    compressor.enableDigital();
+    super(listLeft, listRight, "Right");    
   }
 
   /**
