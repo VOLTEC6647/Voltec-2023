@@ -5,6 +5,7 @@
 package com.team6647.subsystems;
 
 import com.andromedalib.motorControllers.SuperSparkMax;
+import com.andromedalib.motorControllers.IdleManager.GlobalIdleMode;
 import com.team6647.Constants.ArmConstants;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,8 +16,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ArmSubsystem extends SubsystemBase {
   private static ArmSubsystem instance;
 
-  private static SuperSparkMax pivotSpark1 = new SuperSparkMax(ArmConstants.armNeo1ID, false, 50);
-  private static SuperSparkMax pivotSpark2 = new SuperSparkMax(ArmConstants.armNeo2ID, true, 50);
+  private static SuperSparkMax pivotSpark1 = new SuperSparkMax(ArmConstants.armNeo1ID, GlobalIdleMode.brake, false, 50);
+  private static SuperSparkMax pivotSpark2 = new SuperSparkMax(ArmConstants.armNeo2ID, GlobalIdleMode.brake, true, 50);
 
   /*
    * private SparkMaxPIDController pivotController;
