@@ -24,6 +24,8 @@ public final class Constants {
 
     public static final double xMultiplier = 1;
     public static final double yMultiplier = 1;
+
+    public static double rampTimeSeconds = 0.25;
   }
 
   public static class ShuffleboardConstants {

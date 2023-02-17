@@ -7,6 +7,7 @@ package com.team6647.commands.teleop;
 import com.team6647.Constants.OperatorConstants;
 import com.team6647.subsystems.ChassisSubsystem;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -29,6 +30,8 @@ public class TankDriveCommand extends CommandBase {
     leftY = -controller.getLeftY() * OperatorConstants.xMultiplier;
     rightY = -controller.getRightY() * OperatorConstants.xMultiplier;
 
+    SlewRateLimiter slewFilter = new SlewRateLimiter(1.0 / OperatorConstants.rampTimeSeconds);
+
     controller.y().onTrue(new RunCommand(() -> {
       chassis.toggleInverted();
     }, chassis));
@@ -37,7 +40,7 @@ public class TankDriveCommand extends CommandBase {
       rightY = -rightY;
     }
 
-    chassis.tankDrive(leftY, rightY);
+    chassis.tankDrive(slewFilter.calculate(leftY), slewFilter.calculate(rightY));
   }
 
   @Override

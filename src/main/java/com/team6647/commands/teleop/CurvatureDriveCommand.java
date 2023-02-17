@@ -7,6 +7,7 @@ package com.team6647.commands.teleop;
 import com.team6647.Constants.OperatorConstants;
 import com.team6647.subsystems.ChassisSubsystem;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -30,6 +31,8 @@ public class CurvatureDriveCommand extends CommandBase {
     forwardY = -controller.getLeftY() * OperatorConstants.yMultiplier;
     turnX = -controller.getRightX() * OperatorConstants.xMultiplier;
 
+    SlewRateLimiter slewFilter = new SlewRateLimiter(1.0 / OperatorConstants.rampTimeSeconds);
+
     controller.y().onTrue(new RunCommand(() -> {
       chassis.toggleInverted();
     }, chassis));
@@ -38,7 +41,7 @@ public class CurvatureDriveCommand extends CommandBase {
       turnX = -turnX;
     }
 
-    chassis.curvatureDrive(forwardY, turnX);
+    chassis.arcadeDrive(slewFilter.calculate(forwardY), turnX);
   }
 
   @Override
