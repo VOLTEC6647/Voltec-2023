@@ -9,7 +9,6 @@ import com.team6647.subsystems.ChassisSubsystem;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class ArcadeDriveCommand extends CommandBase {
@@ -33,9 +32,9 @@ public class ArcadeDriveCommand extends CommandBase {
 
     SlewRateLimiter slewFilter = new SlewRateLimiter(1.0 / OperatorConstants.rampTimeSeconds);
 
-    controller.y().onTrue(new RunCommand(() -> {
+    if (controller.y().getAsBoolean()) {
       chassis.toggleInverted();
-    }, chassis));
+    }
     if (chassis.isInverted()) {
       forwardY = -forwardY;
       turnX = -turnX;
