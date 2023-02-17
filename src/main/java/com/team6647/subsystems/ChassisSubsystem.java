@@ -7,7 +7,9 @@ package com.team6647.subsystems;
 import com.andromedalib.motorControllers.SuperTalonFX;
 import com.andromedalib.subsystems.DifferentialDriveSubsystem;
 import com.team6647.Constants.ChassisConstants;
+import com.team6647.Constants.DriveConstants;
 
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 
@@ -35,11 +37,15 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
   private static Solenoid backSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM,
       ChassisConstants.backwardSolenoidID);
 
+  // TOOD DEBUG
+  private SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(DriveConstants.ksVolts,
+      DriveConstants.kvVoltSecondsPerMeter, DriveConstants.kaVoltSecondsSquaredPerMeter);
+
   /**
    * Creates a new ChassisSubsystem.
    */
   private ChassisSubsystem() {
-    super(listLeft, listRight, "Right");    
+    super(listLeft, listRight, "Right");
   }
 
   /**
@@ -66,5 +72,16 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
 
     forwardSolenoid.set(!currentState);
     backSolenoid.set(currentState);
+  }
+
+  /**
+   * Uses a FeedForward control to aid in TankDrive movement
+   * 
+   * @param leftSpeed Left side speed
+   * @param rightSpeed Right side speed
+   */
+  public void tankDriveFeedForward(double leftSpeed, double rightSpeed) {
+    leftMotorController.setVoltage(feedforward.calculate(leftSpeed));
+    rightMotorController.setVoltage(feedforward.calculate(rightSpeed));
   }
 }
