@@ -16,10 +16,12 @@ public class TankDriveFeedForward extends CommandBase {
   CommandXboxController controller;
   double leftY;
   double rightY;
+  SlewRateLimiter slewFilter;
 
   public TankDriveFeedForward(ChassisSubsystem chassis, CommandXboxController controller) {
     this.chassis = chassis;
     this.controller = controller;
+    slewFilter = new SlewRateLimiter(1 / OperatorConstants.rampTimeSeconds);
 
     addRequirements(chassis);
   }
@@ -29,11 +31,8 @@ public class TankDriveFeedForward extends CommandBase {
     leftY = -controller.getLeftY() * OperatorConstants.xMultiplier;
     rightY = -controller.getRightY() * OperatorConstants.xMultiplier;
 
-    SlewRateLimiter slewFilter = new SlewRateLimiter(1.0 / OperatorConstants.rampTimeSeconds);
-
     if (controller.y().getAsBoolean()) {
       chassis.toggleInverted();
-
     }
     if (chassis.isInverted()) {
       leftY = -leftY;

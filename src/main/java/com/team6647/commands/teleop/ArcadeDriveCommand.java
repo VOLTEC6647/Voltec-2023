@@ -16,11 +16,13 @@ public class ArcadeDriveCommand extends CommandBase {
   CommandXboxController controller;
   double forwardY;
   double turnX;
+  SlewRateLimiter slewFilter;
 
   /** Creates a new ArcadeDriveCommand. */
   public ArcadeDriveCommand(ChassisSubsystem chassis, CommandXboxController controller) {
     this.chassis = chassis;
     this.controller = controller;
+    slewFilter = new SlewRateLimiter(1.0 / OperatorConstants.rampTimeSeconds);
 
     addRequirements(chassis);
   }
@@ -29,8 +31,6 @@ public class ArcadeDriveCommand extends CommandBase {
   public void execute() {
     forwardY = -controller.getLeftY() * OperatorConstants.yMultiplier;
     turnX = -controller.getRightX() * OperatorConstants.xMultiplier;
-
-    SlewRateLimiter slewFilter = new SlewRateLimiter(1.0 / OperatorConstants.rampTimeSeconds);
 
     if (controller.y().getAsBoolean()) {
       chassis.toggleInverted();
