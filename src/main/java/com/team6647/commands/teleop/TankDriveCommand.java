@@ -34,7 +34,6 @@ public class TankDriveCommand extends CommandBase {
 
     if (controller.y().getAsBoolean()) {
       chassis.toggleInverted();
-
     }
     if (chassis.isInverted()) {
       leftY = -leftY;
