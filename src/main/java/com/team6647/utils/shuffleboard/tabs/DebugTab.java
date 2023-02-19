@@ -19,6 +19,7 @@ public class DebugTab extends ShuffleboardTabBase {
     GenericEntry angleTolerance;
 
     GenericEntry armSpeed;
+    GenericEntry extendSpeed;
     GenericEntry pivot1Speed;
     GenericEntry pivot2Speed;
 
@@ -29,9 +30,10 @@ public class DebugTab extends ShuffleboardTabBase {
         this.angleKi = tab.add("Angle Ki", DriveConstants.angleKi).withPosition(4, 1).getEntry();
         this.angleKd = tab.add("Angle Kd", DriveConstants.angleKd).withPosition(5, 1).getEntry();
         this.armSpeed = tab.add("Arm Speed", ArmConstants.armSpeed).withPosition(6, 1).getEntry();
-        this.pivot1Speed = tab.add("Pivot 1 Speed", ArmSubsystem.getInstance().getPivot1Velocity()).withPosition(7, 1).getEntry();
-        this.pivot2Speed = tab.add("Pivot 2 Speed", ArmSubsystem.getInstance().getPivot2Velocity()).withPosition(8, 1).getEntry();
-        this.rampTimeSeconds = tab.add("Ramp Time Seconds", OperatorConstants.rampTimeSeconds).withPosition(9, 1).getEntry();
+        this.extendSpeed = tab.add("Extend Arm speed", ArmConstants.extendSped).withPosition(7, 1).getEntry();
+        this.pivot1Speed = tab.add("Pivot 1 Speed", ArmSubsystem.getInstance().getPivot1Velocity()).withPosition(8, 1).getEntry();
+        this.pivot2Speed = tab.add("Pivot 2 Speed", ArmSubsystem.getInstance().getPivot2Velocity()).withPosition(9, 1).getEntry();
+        this.rampTimeSeconds = tab.add("Ramp Time Seconds", OperatorConstants.rampTimeSeconds).withPosition(10, 1).getEntry();
     }
 
     @Override
@@ -40,7 +42,8 @@ public class DebugTab extends ShuffleboardTabBase {
         DriveConstants.angleKi = angleKi.getDouble(DriveConstants.angleKi);
         DriveConstants.angleKd = angleKd.getDouble(  DriveConstants.angleKd);
 
-        ArmConstants.armSpeed = armSpeed.getDouble(ArmConstants.armSpeed);
+        ArmConstants.armSpeed = armSpeed.getDouble(0);
+        ArmConstants.extendSped = extendSpeed.getDouble(0);
 
         pivot1Speed.setDouble(ArmSubsystem.getInstance().getPivot1Velocity());
         pivot2Speed.setDouble(ArmSubsystem.getInstance().getPivot2Velocity());

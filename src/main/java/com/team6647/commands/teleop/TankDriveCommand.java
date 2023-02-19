@@ -41,7 +41,7 @@ public class TankDriveCommand extends CommandBase {
       rightY = -rightY;
     }
 
-    chassis.tankDrive(slewFilter.calculate(leftY), slewFilter.calculate(rightY));
+    chassis.tankDrive(leftY, rightY);
   }
 
   @Override

@@ -40,7 +40,7 @@ public class ArcadeDriveCommand extends CommandBase {
       turnX = -turnX;
     }
 
-    chassis.arcadeDrive(slewFilter.calculate(forwardY), turnX);
+    chassis.arcadeDrive(forwardY, turnX);
   }
 
   @Override

@@ -5,15 +5,21 @@
 package com.team6647;
 
 import com.team6647.Constants.ArmConstants;
+import com.team6647.Constants.ClawConstants;
 import com.team6647.Constants.OperatorConstants;
-import com.team6647.commands.auto.AutoBalance;
-import com.team6647.commands.hybrid.RotateArm;
+import com.team6647.commands.hybrid.Arm.ExtendArm;
+import com.team6647.commands.hybrid.Arm.MoveClaw;
+import com.team6647.commands.hybrid.Arm.RotateArm;
+import com.team6647.commands.hybrid.Arm.ToggleClaw;
+import com.team6647.commands.hybrid.Arm.ToggleClaw.ClawModes;
+import com.team6647.subsystems.ArmSubsystem;
 import com.team6647.subsystems.ChassisSubsystem;
-import com.team6647.subsystems.DriveSubsystem;
+import com.team6647.subsystems.ClawSubsytem;
 import com.team6647.utils.shuffleboard.DriveModeSelector;
 import com.team6647.utils.shuffleboard.ShuffleboardManager;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class RobotContainer {
 
@@ -23,8 +29,6 @@ public class RobotContainer {
   private ShuffleboardManager interactions;
 
   private ChassisSubsystem chassis;
-  private DriveSubsystem drive;
-
   private RobotContainer() {
   }
 
@@ -41,7 +45,9 @@ public class RobotContainer {
    */
   public void initSubsystems() {
     chassis = ChassisSubsystem.getInstance();
-    drive = DriveSubsystem.getInstance();
+    ArmSubsystem.getInstance();
+    ClawSubsytem.getInstance();
+
   }
 
   /**
@@ -73,10 +79,18 @@ public class RobotContainer {
   public void configureBindings() {
     setChassisCommand();
 
-    OperatorConstants.driverController1.y().whileTrue(new AutoBalance(drive, chassis));
-
     OperatorConstants.driverController2.x().whileTrue(new RotateArm(ArmConstants.armSpeed));
     OperatorConstants.driverController2.b().whileTrue(new RotateArm(-ArmConstants.armSpeed));
+    OperatorConstants.driverController2.y().whileTrue(new ExtendArm(ArmConstants.extendSped));
+    OperatorConstants.driverController2.a().whileTrue(new ExtendArm(-ArmConstants.extendSped));
+
+    OperatorConstants.driverController1.rightTrigger(0.1).whileTrue(new MoveClaw(ClawConstants.clawSpeed));
+    OperatorConstants.driverController1.leftTrigger(0.1).whileTrue(new MoveClaw(-ClawConstants.clawSpeed)); 
+    OperatorConstants.driverController2.rightBumper().whileTrue(new ToggleClaw(ClawModes.CONE));
+    OperatorConstants.driverController2.leftBumper().whileTrue(new ToggleClaw(ClawModes.CUBE));
+
+
+    OperatorConstants.driverController1.y().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleReduction()));
   }
 
   /**
