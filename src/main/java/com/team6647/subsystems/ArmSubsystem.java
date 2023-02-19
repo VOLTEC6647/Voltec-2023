@@ -19,6 +19,9 @@ public class ArmSubsystem extends SubsystemBase {
   private static SuperSparkMax pivotSpark1 = new SuperSparkMax(ArmConstants.armNeo1ID, GlobalIdleMode.brake, false, 50);
   private static SuperSparkMax pivotSpark2 = new SuperSparkMax(ArmConstants.armNeo2ID, GlobalIdleMode.brake, true, 50);
 
+  private static SuperSparkMax extendingSpark = new SuperSparkMax(ArmConstants.extendNeoID, GlobalIdleMode.brake, true,
+      50);
+
   /*
    * private SparkMaxPIDController pivotController;
    * 
@@ -37,7 +40,7 @@ public class ArmSubsystem extends SubsystemBase {
   /**
    * Returns an instance of {@link ArmSubsystem} for singleton purposes.
    * 
-   * @return {@link ChassisSubsystem} global instance
+   * @return {@link ArmSubsystem} global instance
    */
   public static ArmSubsystem getInstance() {
     if (instance == null) {
@@ -51,6 +54,18 @@ public class ArmSubsystem extends SubsystemBase {
     pivotSpark2.set(degree);
   }
 
+  public void extendArm(double speed) {
+    extendingSpark.set(speed);
+  }
+
+  public double getExtendPosition(){
+    return extendingSpark.getPosition();
+  }
+
+  public void resetExtendPosition(){
+    extendingSpark.resetEncoder();
+  }
+
   public double getPivot1Velocity() {
     return pivotSpark1.getVelocity();
   }
@@ -58,12 +73,6 @@ public class ArmSubsystem extends SubsystemBase {
   public double getPivot2Velocity() {
     return pivotSpark2.getVelocity();
   }
-
-  /*
-   * public void extendArm(double speed) {
-   * extendingSpark.set(speed);
-   * }
-   */
 
   @Override
   public void periodic() {
