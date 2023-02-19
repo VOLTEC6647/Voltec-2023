@@ -38,8 +38,10 @@ public class DifferentialDriveSubsystem extends SubsystemBase {
     switch (invertedSide) {
       case "Left":
         leftMotorController.setInverted(true);
+        rightMotorController.setInverted(false);
         break;
       case "Right":
+        leftMotorController.setInverted(false);
         rightMotorController.setInverted(true);
         break;
       default:
