@@ -29,8 +29,9 @@ public class RobotContainer {
   private ShuffleboardManager interactions;
 
   private ChassisSubsystem chassis;
-  private RobotContainer() {
-  }
+  private ClawSubsytem claw;
+
+  private RobotContainer() {}
 
   public static RobotContainer getInstance() {
     if (instance == null) {
@@ -46,7 +47,7 @@ public class RobotContainer {
   public void initSubsystems() {
     chassis = ChassisSubsystem.getInstance();
     ArmSubsystem.getInstance();
-    ClawSubsytem.getInstance();
+    claw = ClawSubsytem.getInstance();
 
   }
 
@@ -86,8 +87,8 @@ public class RobotContainer {
 
     OperatorConstants.driverController1.rightTrigger(0.1).whileTrue(new MoveClaw(ClawConstants.clawSpeed));
     OperatorConstants.driverController1.leftTrigger(0.1).whileTrue(new MoveClaw(-ClawConstants.clawSpeed)); 
-    OperatorConstants.driverController2.rightBumper().whileTrue(new ToggleClaw(ClawModes.CONE));
-    OperatorConstants.driverController2.leftBumper().whileTrue(new ToggleClaw(ClawModes.CUBE));
+    OperatorConstants.driverController2.rightBumper().whileTrue(new InstantCommand(() -> {claw.ConeSet();}));
+    OperatorConstants.driverController2.leftBumper().whileTrue(new InstantCommand(() -> {claw.cubeSet();}));
 
 
     OperatorConstants.driverController1.y().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleReduction()));
