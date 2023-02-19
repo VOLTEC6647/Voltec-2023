@@ -61,11 +61,13 @@ public final class Constants {
     // TODO SET
     public static final double forwardLimit = 0;
 
-    // TODO SET
+    public static final double feedkG = 1.38;
+    public static final double feedkV = 0.12;
+    public static final double feedkA = 0.03;
+
     public static final double pivotkP = 0;
     public static final double pivotkI = 0;
     public static final double pivotkD = 0;
-    public static final double pivotkp = 0;
   }
 
   public static class ClawConstants {

@@ -22,7 +22,7 @@ public class RotateArm extends CommandBase {
 
   @Override
   public void initialize() {
-    arm.setAngle(speed);
+    arm.setAngle(speed, 2);
   }
 
   @Override
@@ -32,10 +32,10 @@ public class RotateArm extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    arm.setAngle(0);
+    arm.stopPivot();
   }
 
-  // Returns true when the command should end.
+  // Returns true when the command should end.w
   @Override
   public boolean isFinished() {
     return false;

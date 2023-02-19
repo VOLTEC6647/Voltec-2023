@@ -8,6 +8,8 @@ import com.andromedalib.motorControllers.SuperSparkMax;
 import com.andromedalib.motorControllers.IdleManager.GlobalIdleMode;
 import com.team6647.Constants.ArmConstants;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -22,19 +24,18 @@ public class ArmSubsystem extends SubsystemBase {
   private static SuperSparkMax extendingSpark = new SuperSparkMax(ArmConstants.extendNeoID, GlobalIdleMode.brake, true,
       50);
 
-  /*
-   * private SparkMaxPIDController pivotController;
-   * 
-   * private ArmFeedforward armFeedforward;
-   */
+  private static ArmFeedforward feedforward = new ArmFeedforward(ArmConstants.feedkA, ArmConstants.feedkG,
+      ArmConstants.feedkV);
 
-  /** Creates a new ArmSubsystem. */
+  private static PIDController pidController = new PIDController(ArmConstants.pivotkP, ArmConstants.pivotkI,
+      ArmConstants.pivotkD);
+
+  public double setpoint;
+
   private ArmSubsystem() {
-    /*
-     * pivotController = pivotSpark.getPIDController();
-     * pivotController.setP(0);
-     */
+    pivotSpark1.follow(pivotSpark1, true);
 
+    pidController.setTolerance(1.0);
   }
 
   /**
@@ -49,33 +50,67 @@ public class ArmSubsystem extends SubsystemBase {
     return instance;
   }
 
-  public void setAngle(double degree) {
-    pivotSpark1.set(degree);
-    pivotSpark2.set(degree);
+  /**
+   * Sets the position to the corresponding angle and velocity
+   * 
+   * @param degree Desired degree
+   * @param velocity Desired velocity
+   */
+  public void setAngle(double degree, double velocity) {
+    setpoint = degree;
+    pivotSpark1.setVoltage(
+        feedforward.calculate(degree, velocity) + pidController.calculate(pivotSpark1.getPosition(), degree));
   }
 
+  public void stopPivot(){
+    pivotSpark1.set(0);
+    pivotSpark2.set(0);
+  }
+
+  /**
+   * Extends the arm at the desired speed
+   * 
+   * @param speed
+   */
   public void extendArm(double speed) {
     extendingSpark.set(speed);
   }
 
-  public double getExtendPosition(){
+  /**
+   * Gets the current position of the extending spark
+   * 
+   * @return Current position
+   */
+  public double getExtendPosition() {
     return extendingSpark.getPosition();
   }
 
-  public void resetExtendPosition(){
+  /**
+   * Sets the extending position to 0
+   */
+  public void resetExtendPosition() {
     extendingSpark.resetEncoder();
   }
 
+  /**
+   * Gets the velocity of pivot1
+   * 
+   * @return Pivot1 Velocity
+   */
   public double getPivot1Velocity() {
     return pivotSpark1.getVelocity();
   }
 
+  /**
+   * Gets the velocity of pivot2
+   * 
+   * @return Pivot2 Velocity
+   */
   public double getPivot2Velocity() {
     return pivotSpark2.getVelocity();
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
   }
 }

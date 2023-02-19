@@ -85,8 +85,8 @@ public class RobotContainer {
 
     OperatorConstants.driverController1.y().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleReduction()));
 
-    OperatorConstants.driverController2.x().whileTrue(new RotateArm(ArmConstants.armSpeed));
-    OperatorConstants.driverController2.b().whileTrue(new RotateArm(-ArmConstants.armSpeed));
+   /*  OperatorConstants.driverController2.x().whileTrue(new RotateArm(ArmConstants.armSpeed));
+    OperatorConstants.driverController2.b().whileTrue(new RotateArm(-ArmConstants.armSpeed)); */
     OperatorConstants.driverController2.y().whileTrue(new ExtendArm(ArmConstants.extendSped));
     OperatorConstants.driverController2.a().whileTrue(new ExtendArm(-ArmConstants.extendSped));
 
@@ -108,7 +108,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return Load.loadTrajectory(Filesystem.getDeployDirectory()
-        + "/pathplanner/generatedJSON/LeaveCommunityTop.wpilib.json",
+        + "/pathplanner/generatedJSON/LeaveCommunityDown.wpilib.json",
         true);
   }
 }
