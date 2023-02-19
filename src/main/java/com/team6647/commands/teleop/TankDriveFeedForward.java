@@ -39,7 +39,7 @@ public class TankDriveFeedForward extends CommandBase {
       rightY = -rightY;
     }
 
-    chassis.tankDriveFeedForward(slewFilter.calculate(leftY), slewFilter.calculate(rightY));
+    chassis.tankDriveFeedForward(leftY, rightY);
   }
 
   @Override
