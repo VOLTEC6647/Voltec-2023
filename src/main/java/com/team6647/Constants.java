@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -54,9 +55,10 @@ public final class Constants {
     public static double armSpeed = 0.2;
     public static double extendSped = 0.2;
 
-
     public static final int extendLimitSwitchPort = 0;
-    //TODO SET
+    public static final DigitalInput limitSwitch = new DigitalInput(extendLimitSwitchPort);
+
+    // TODO SET
     public static final double forwardLimit = 0;
 
     // TODO SET
@@ -66,7 +68,7 @@ public final class Constants {
     public static final double pivotkp = 0;
   }
 
-  public static class ClawConstants{
+  public static class ClawConstants {
     public static final int clawNeo1ID = 8;
     public static final int clawNeo2ID = 9;
 
@@ -78,10 +80,10 @@ public final class Constants {
 
   public static class DriveConstants {
     // TODO SET
-    public static final double ksVolts = 0;
-    public static final double kvVoltSecondsPerMeter = 0;
-    public static final double kaVoltSecondsSquaredPerMeter = 0;
-    public static final double kpDriveVelocity = 0;
+    public static final double ksVolts = 0.59085; // 0.1519
+    public static final double kvVoltSecondsPerMeter = 2.4174; // 1.6277 //0.63 //2.4174
+    public static final double kaVoltSecondsSquaredPerMeter = 0.14582; // 0.22002 //0.03
+    public static final double kpDriveVelocity = 2.5106; // 2.0958 //0.2
 
     public static final double kTrackWidthMeters = Units.inchesToMeters(19);
     public static final DifferentialDriveKinematics kDrivekinematics = new DifferentialDriveKinematics(
