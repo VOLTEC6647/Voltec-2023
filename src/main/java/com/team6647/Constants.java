@@ -49,14 +49,31 @@ public final class Constants {
   public static class ArmConstants {
     public static final int armNeo1ID = 5;
     public static final int armNeo2ID = 6;
+    public static final int extendNeoID = 7;
 
     public static double armSpeed = 0.2;
+    public static double extendSped = 0.2;
+
+
+    public static final int extendLimitSwitchPort = 0;
+    //TODO SET
+    public static final double forwardLimit = 0;
 
     // TODO SET
     public static final double pivotkP = 0;
     public static final double pivotkI = 0;
     public static final double pivotkD = 0;
     public static final double pivotkp = 0;
+  }
+
+  public static class ClawConstants{
+    public static final int clawNeo1ID = 8;
+    public static final int clawNeo2ID = 9;
+
+    public static final int clawForwardPistonID = 7;
+    public static final int clawBackwarddPistonID = 4;
+
+    public static final double clawSpeed = 1;
   }
 
   public static class DriveConstants {
