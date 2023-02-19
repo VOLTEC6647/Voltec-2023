@@ -10,8 +10,6 @@ import com.team6647.Constants.OperatorConstants;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.Arm.RotateArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
-import com.team6647.commands.hybrid.claw.ToggleClaw;
-import com.team6647.commands.hybrid.claw.ToggleClaw.ClawModes;
 import com.team6647.subsystems.ArmSubsystem;
 import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.subsystems.ClawSubsytem;
