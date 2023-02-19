@@ -16,12 +16,10 @@ public class TankDriveCommand extends CommandBase {
   CommandXboxController controller;
   double leftY;
   double rightY;
-  SlewRateLimiter slewFilter;
 
   public TankDriveCommand(ChassisSubsystem chassis, CommandXboxController controller) {
     this.chassis = chassis;
     this.controller = controller;
-    slewFilter = new SlewRateLimiter(1.0 / OperatorConstants.rampTimeSeconds);
 
     addRequirements(chassis);
 
