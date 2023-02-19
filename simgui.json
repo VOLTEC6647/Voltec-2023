@@ -58,13 +58,15 @@
       },
       "/SmartDashboard/DifferentialDrive[1]": {
         "window": {
-          "name": "Differential Drive",
-          "visible": true
+          "name": "Differential Drive"
         }
       }
     }
   },
   "NetworkTables": {
+    "Retained Values": {
+      "open": false
+    },
     "retained": {
       "Shuffleboard": {
         "Team 6647": {
