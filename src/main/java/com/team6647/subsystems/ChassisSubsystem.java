@@ -77,7 +77,7 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
   /**
    * Uses a FeedForward control to aid in TankDrive movement
    * 
-   * @param leftSpeed Left side speed
+   * @param leftSpeed  Left side speed
    * @param rightSpeed Right side speed
    */
   public void tankDriveFeedForward(double leftSpeed, double rightSpeed) {

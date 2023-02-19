@@ -14,8 +14,8 @@ public class ExtendArm extends CommandBase {
   ArmSubsystem arm;
   double speed;
 
-   DigitalInput extendLimitSwitch = new DigitalInput(ArmConstants.extendLimitSwitchPort);
- 
+  DigitalInput extendLimitSwitch = ArmConstants.limitSwitch;
+
   public ExtendArm(double speed) {
     arm = ArmSubsystem.getInstance();
     this.speed = speed;
@@ -33,7 +33,7 @@ public class ExtendArm extends CommandBase {
         arm.extendArm(speed);
       }
     } else {
-      if(arm.getExtendPosition() > ArmConstants.forwardLimit){
+      if (arm.getExtendPosition() >= ArmConstants.forwardLimit) {
         arm.extendArm(0);
       } else {
         arm.extendArm(speed);
@@ -42,7 +42,8 @@ public class ExtendArm extends CommandBase {
   }
 
   @Override
-  public void execute() {}
+  public void execute() {
+  }
 
   // Called once the command ends or is interrupted.
   @Override

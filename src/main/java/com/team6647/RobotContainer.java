@@ -7,15 +7,18 @@ package com.team6647;
 import com.team6647.Constants.ArmConstants;
 import com.team6647.Constants.ClawConstants;
 import com.team6647.Constants.OperatorConstants;
+import com.team6647.commands.auto.Load;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.Arm.RotateArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
 import com.team6647.subsystems.ArmSubsystem;
 import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.subsystems.ClawSubsytem;
+import com.team6647.subsystems.DriveSubsystem;
 import com.team6647.utils.shuffleboard.DriveModeSelector;
 import com.team6647.utils.shuffleboard.ShuffleboardManager;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
@@ -29,7 +32,8 @@ public class RobotContainer {
   private ChassisSubsystem chassis;
   private ClawSubsytem claw;
 
-  private RobotContainer() {}
+  private RobotContainer() {
+  }
 
   public static RobotContainer getInstance() {
     if (instance == null) {
@@ -44,6 +48,7 @@ public class RobotContainer {
    */
   public void initSubsystems() {
     chassis = ChassisSubsystem.getInstance();
+    DriveSubsystem.getInstance();
     ArmSubsystem.getInstance();
     claw = ClawSubsytem.getInstance();
 
@@ -78,18 +83,22 @@ public class RobotContainer {
   public void configureBindings() {
     setChassisCommand();
 
+    OperatorConstants.driverController1.y().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleReduction()));
+
     OperatorConstants.driverController2.x().whileTrue(new RotateArm(ArmConstants.armSpeed));
     OperatorConstants.driverController2.b().whileTrue(new RotateArm(-ArmConstants.armSpeed));
     OperatorConstants.driverController2.y().whileTrue(new ExtendArm(ArmConstants.extendSped));
     OperatorConstants.driverController2.a().whileTrue(new ExtendArm(-ArmConstants.extendSped));
 
-    OperatorConstants.driverController1.rightTrigger(0.1).whileTrue(new MoveClaw(ClawConstants.clawSpeed));
-    OperatorConstants.driverController1.leftTrigger(0.1).whileTrue(new MoveClaw(-ClawConstants.clawSpeed)); 
-    OperatorConstants.driverController2.rightBumper().whileTrue(new InstantCommand(() -> {claw.ConeSet();}));
-    OperatorConstants.driverController2.leftBumper().whileTrue(new InstantCommand(() -> {claw.cubeSet();}));
+    OperatorConstants.driverController2.rightTrigger(0.1).whileTrue(new MoveClaw(ClawConstants.clawSpeed));
+    OperatorConstants.driverController2.leftTrigger(0.1).whileTrue(new MoveClaw(-ClawConstants.clawSpeed));
+    OperatorConstants.driverController2.rightBumper().whileTrue(new InstantCommand(() -> {
+      claw.ConeSet();
+    }));
+    OperatorConstants.driverController2.leftBumper().whileTrue(new InstantCommand(() -> {
+      claw.cubeSet();
+    }));
 
-
-    OperatorConstants.driverController1.y().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleReduction()));
   }
 
   /**
@@ -98,6 +107,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return null;
+    return Load.loadTrajectory(Filesystem.getDeployDirectory()
+        + "/pathplanner/generatedJSON/LeaveCommunityTop.wpilib.json",
+        true);
   }
 }

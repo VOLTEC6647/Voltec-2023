@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class Load {
-    DriveSubsystem drive = DriveSubsystem.getInstance();
+    static DriveSubsystem drive = DriveSubsystem.getInstance();
 
     /**
      * Loads a JSON Path file into a command
@@ -28,7 +28,7 @@ public class Load {
      * @param resetOdometry Reset odometry status
      * @return JSON Path command
      */
-    public Command loadTrajectory(String filename, boolean resetOdometry) {
+    public static Command loadTrajectory(String filename, boolean resetOdometry) {
         Trajectory trajectory;
         try {
             /* Searchs for trajectory in deploy directory */
