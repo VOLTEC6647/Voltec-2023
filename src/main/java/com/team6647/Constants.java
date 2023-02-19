@@ -61,6 +61,7 @@ public final class Constants {
     // TODO SET
     public static final double forwardLimit = 0;
 
+    public static final double feedkS = 0.00;
     public static final double feedkG = 1.38;
     public static final double feedkV = 0.12;
     public static final double feedkA = 0.03;
@@ -102,19 +103,12 @@ public final class Constants {
     public static final double kWheelRadiusInches = 3;
     public static final double kWheelDiameterMeter = Units.inchesToMeters(kWheelRadiusInches * 2);
     public static final double kWheelCircumference = kWheelDiameterMeter * Math.PI;
+  }
 
-    // TODO SET //SETABLE IN SHUFFLEBOARD
-    public static double angleKp = 0;
-    public static double angleKi = 0;
-    public static double angleKd = 0;
-
-    public static double angleTolerance = 10;
-
-    // TODO SET
-    public static final double velocityKp = 0;
-    public static final double velocityKi = 0;
-    public static final double velocityKd = 0;
-
-    public static final double velocityTolerance = 2;
+  public static class VisionConstants {
+    public static final double cameraHeight = Units.inchesToMeters(2);
+    public static final double targetHeight = Units.inchesToMeters(27);
+    public static final double cameraPitch = Units.degreesToRadians(0);
+    public static final double goalRange = 0.36;
   }
 }

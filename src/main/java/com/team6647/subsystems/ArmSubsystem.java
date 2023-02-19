@@ -24,8 +24,8 @@ public class ArmSubsystem extends SubsystemBase {
   private static SuperSparkMax extendingSpark = new SuperSparkMax(ArmConstants.extendNeoID, GlobalIdleMode.brake, true,
       50);
 
-  private static ArmFeedforward feedforward = new ArmFeedforward(ArmConstants.feedkA, ArmConstants.feedkG,
-      ArmConstants.feedkV);
+  private static ArmFeedforward feedforward = new ArmFeedforward(ArmConstants.feedkS, ArmConstants.feedkG,
+      ArmConstants.feedkV, ArmConstants.feedkA);
 
   private static PIDController pidController = new PIDController(ArmConstants.pivotkP, ArmConstants.pivotkI,
       ArmConstants.pivotkD);
