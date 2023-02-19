@@ -7,7 +7,10 @@ package com.team6647.subsystems;
 import com.andromedalib.sensors.SuperNavx;
 import com.team6647.Constants.DriveConstants;
 
-import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -15,15 +18,37 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class DriveSubsystem extends SubsystemBase {
   private static DriveSubsystem instance;
-  ChassisSubsystem chassis;
 
-  public SuperNavx navx;
-  PIDController angleController;//, velocityController;
-  int angleSetpoint, velocitySetpoint;
+  public SuperNavx navx = SuperNavx.getInstance();
+  /*
+   * PIDController angleController;//, velocityController;
+   */ /* int angleSetpoint, velocitySetpoint; */
+  Field2d field = new Field2d();
+
+  DifferentialDriveOdometry odometry;
 
   private DriveSubsystem() {
-    chassis = ChassisSubsystem.getInstance();
-    angleController = new PIDController(DriveConstants.angleKp, DriveConstants.angleKi, DriveConstants.angleKd);
+    /*
+     * angleController = new PIDController(DriveConstants.angleKp,
+     * DriveConstants.angleKi, DriveConstants.angleKd);
+     */
+
+    resetEncoders();
+
+    navx.zeroHeading();
+
+    odometry = new DifferentialDriveOdometry(navx.getRotation(),
+        ChassisSubsystem.frontLeft.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
+        ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio));
+
+    odometry.resetPosition(navx.getRotation(),
+        ChassisSubsystem.frontLeft.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
+        ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
+        new Pose2d());
+
+    resetOdometry(new Pose2d());
+
+    field.setRobotPose(getPose());
   }
 
   public static DriveSubsystem getInstance() {
@@ -33,29 +58,45 @@ public class DriveSubsystem extends SubsystemBase {
     return instance;
   }
 
-  public void setAngleSetpoint(int aSetpoint) {
-    angleSetpoint = aSetpoint;
-    angleController.setSetpoint(angleSetpoint);
+  @Override
+  public void periodic() {
+    updateRotation2D();
+    field.setRobotPose(getPose());
   }
 
-  public boolean angleIsInTolerance() {
-    return Math
-        .abs(ChassisSubsystem.frontLeft.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio)
-            - angleSetpoint) < DriveConstants.angleTolerance;
+  private void updateRotation2D() {
+    odometry.update(navx.getRotation(),
+        ChassisSubsystem.frontLeft.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
+        ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio));
   }
 
-  public double angleCalculate(double measurement, double setpoint) {
-    return angleController.calculate(measurement, setpoint);
+  public void resetOdometry(Pose2d pose) {
+
+    resetEncoders();
+
+    odometry.resetPosition(navx.getRotation(),
+        ChassisSubsystem.frontLeft.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
+        ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
+        pose);
   }
 
- /*  public void setVelocitySetpoint(int velSetpoint) {
-    velocitySetpoint = velSetpoint;
-    velocityController.setSetpoint(velocitySetpoint);
+  public void resetEncoders() {
+    ChassisSubsystem.frontLeft.resetEncoder();
+    ChassisSubsystem.frontRight.resetEncoder();
   }
 
-  public boolean velIsIntolerance() {
-    return Math
-        .abs(ChassisSubsystem.frontLeft.getVelocity(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio)
-            - velocitySetpoint) < DriveConstants.velocityTolerance;
-  } */
+  public Pose2d getPose() {
+    return odometry.getPoseMeters();
+  }
+
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(
+        ChassisSubsystem.frontLeft.getVelocity(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
+        ChassisSubsystem.frontRight.getVelocity(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio));
+  }
+
+  public void tankDriveVolts(double leftVolts, double rightVolts){
+    ChassisSubsystem.leftMotorController.setVoltage(leftVolts);
+    ChassisSubsystem.rightMotorController.setVoltage(rightVolts);
+  }
 }
