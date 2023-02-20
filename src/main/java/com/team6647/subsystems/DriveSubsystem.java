@@ -7,8 +7,8 @@ package com.team6647.subsystems;
 import com.andromedalib.sensors.SuperNavx;
 import com.team6647.Constants.DriveConstants;
 
+import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -26,7 +26,7 @@ public class DriveSubsystem extends SubsystemBase {
    */ /* int angleSetpoint, velocitySetpoint; */
   Field2d field = new Field2d();
 
-  DifferentialDriveOdometry odometry;
+  DifferentialDrivePoseEstimator odometry;
 
   private DriveSubsystem() {
     /*
@@ -38,9 +38,10 @@ public class DriveSubsystem extends SubsystemBase {
 
     navx.zeroHeading();
 
-    odometry = new DifferentialDriveOdometry(navx.getRotation(),
+    odometry = new DifferentialDrivePoseEstimator(DriveConstants.kDrivekinematics, navx.getRotation(),
         ChassisSubsystem.frontLeft.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
-        ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio));
+        ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
+        new Pose2d());
 
     odometry.resetPosition(navx.getRotation(),
         ChassisSubsystem.frontLeft.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
@@ -88,7 +89,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public Pose2d getPose() {
-    return odometry.getPoseMeters();
+    return odometry.getEstimatedPosition();
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
@@ -97,7 +98,7 @@ public class DriveSubsystem extends SubsystemBase {
         ChassisSubsystem.frontRight.getVelocity(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio));
   }
 
-  public void tankDriveVolts(double leftVolts, double rightVolts){
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
     ChassisSubsystem.leftMotorController.setVoltage(leftVolts);
     ChassisSubsystem.rightMotorController.setVoltage(rightVolts);
   }
