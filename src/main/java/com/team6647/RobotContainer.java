@@ -85,8 +85,8 @@ public class RobotContainer {
 
     OperatorConstants.driverController1.y().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleReduction()));
 
-   /*  OperatorConstants.driverController2.x().whileTrue(new RotateArm(ArmConstants.armSpeed));
-    OperatorConstants.driverController2.b().whileTrue(new RotateArm(-ArmConstants.armSpeed)); */
+    OperatorConstants.driverController2.x().whileTrue(new RotateArm(Math.PI));
+    OperatorConstants.driverController2.b().whileTrue(new RotateArm(0));
     OperatorConstants.driverController2.y().whileTrue(new ExtendArm(ArmConstants.extendSped));
     OperatorConstants.driverController2.a().whileTrue(new ExtendArm(-ArmConstants.extendSped));
 
