@@ -4,10 +4,10 @@
 
 package com.team6647;
 
+import com.andromedalib.auto.Load;
 import com.team6647.Constants.ArmConstants;
 import com.team6647.Constants.ClawConstants;
 import com.team6647.Constants.OperatorConstants;
-import com.team6647.commands.auto.Load;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.Arm.RotateArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
