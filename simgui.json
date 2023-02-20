@@ -58,7 +58,13 @@
       },
       "/SmartDashboard/DifferentialDrive[1]": {
         "window": {
-          "name": "Differential Drive"
+          "name": "Differential Drive",
+          "visible": true
+        }
+      },
+      "/SmartDashboard/Field": {
+        "window": {
+          "visible": true
         }
       }
     }
@@ -90,6 +96,19 @@
           "open": true
         },
         "open": true
+      }
+    }
+  },
+  "Plot": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "crosshairs": true,
+          "height": 338
+        }
+      ],
+      "window": {
+        "visible": false
       }
     }
   }

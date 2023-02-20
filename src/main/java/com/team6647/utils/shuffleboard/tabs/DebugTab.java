@@ -1,3 +1,7 @@
+/**
+ * Written by Juan Pablo Gutiérrez
+ */
+
 package com.team6647.utils.shuffleboard.tabs;
 
 import com.andromedalib.shuffleboard.ShuffleboardTabBase;
@@ -24,12 +28,12 @@ public class DebugTab extends ShuffleboardTabBase {
     
     public DebugTab(ShuffleboardTab tab) {
 
-        this.extendSpeed = tab.add("Extend Arm speed", ArmConstants.extendSped).withPosition(7, 1).getEntry();
-        this.pivot1Speed = tab.add("Pivot 1 Speed", ArmSubsystem.getInstance().getPivot1Velocity()).withPosition(8, 1).getEntry();
-        this.pivot2Speed = tab.add("Pivot 2 Speed", ArmSubsystem.getInstance().getPivot2Velocity()).withPosition(9, 1).getEntry();
-        this.rampTimeSeconds = tab.add("Ramp Time Seconds", OperatorConstants.rampTimeSeconds).withPosition(7, 2).getEntry();
-        this.armPosition = tab.add("Arm Position", ArmSubsystem.getInstance().getMeasurement()).withPosition(8, 2).withWidget(BuiltInWidgets.kEncoder).getEntry();
-        this.armOutput = tab.add("Arm Output", ArmSubsystem.getInstance().getMeasurement()).withPosition(9, 2).getEntry();
+        this.extendSpeed = tab.add("Extend Arm speed", ArmConstants.extendSped).withPosition(3, 1).getEntry();
+        this.pivot1Speed = tab.add("Pivot 1 Speed", ArmSubsystem.getInstance().getPivot1Velocity()).withPosition(4, 1).getEntry();
+        this.pivot2Speed = tab.add("Pivot 2 Speed", ArmSubsystem.getInstance().getPivot2Velocity()).withPosition(5, 1).getEntry();
+        this.rampTimeSeconds = tab.add("Ramp Time", OperatorConstants.rampTimeSeconds).withPosition(6, 1).getEntry();
+        this.armPosition = tab.add("Arm Position", ArmSubsystem.getInstance().getMeasurement()).withPosition(7, 1).withWidget(BuiltInWidgets.kGraph).getEntry();
+        this.armOutput = tab.add("Arm Output", ArmSubsystem.getInstance().getMeasurement()).withPosition(10, 1).getEntry();
 
     }
 
