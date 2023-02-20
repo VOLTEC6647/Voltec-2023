@@ -8,6 +8,8 @@ import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 
+import com.andromedalib.vision.LimelightCamera;
+
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -16,6 +18,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class VisionSubsystem extends SubsystemBase {
 
   private static VisionSubsystem instance;
+
+  DriveSubsystem drive;
 
   /*
    * AprilTag hi;
@@ -29,12 +33,15 @@ public class VisionSubsystem extends SubsystemBase {
    */
   /** Cretes a new VisionSubsystem. */
   AprilTagFieldLayout field;
-  PhotonCamera camera;
+  PhotonCamera photonCamera;
   PhotonPoseEstimator pose;
 
+  LimelightCamera limeCamera = new LimelightCamera("Limelight");
+
   public VisionSubsystem(String cameraName) {
-    camera = new PhotonCamera(cameraName);
-    camera.setPipelineIndex(0);
+    photonCamera = new PhotonCamera(cameraName);
+    photonCamera.setPipelineIndex(0);
+    drive = DriveSubsystem.getInstance();
 
     try {
       field = new AprilTagFieldLayout(AprilTagFields.k2023ChargedUp.m_resourceFile);
@@ -42,7 +49,7 @@ public class VisionSubsystem extends SubsystemBase {
       DriverStation.reportError("Cannot find field layout", false);
     }
 
-    pose = new PhotonPoseEstimator(field, PoseStrategy.CLOSEST_TO_LAST_POSE, camera, null);
+    pose = new PhotonPoseEstimator(field, PoseStrategy.CLOSEST_TO_CAMERA_HEIGHT, photonCamera, null);
   }
 
   /**
