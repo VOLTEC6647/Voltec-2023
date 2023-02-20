@@ -10,19 +10,20 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class RotateArm extends CommandBase {
   ArmSubsystem arm;
-  double speed;
+  double positionRads;
 
   /** Creates a new RotateArm. */
-  public RotateArm(double speed) {
+  public RotateArm(double positionRads) {
     arm = ArmSubsystem.getInstance();
-    this.speed = speed;
+    this.positionRads = positionRads;
 
     addRequirements(arm);
   }
 
   @Override
   public void initialize() {
-    arm.setAngle(speed, 2);
+    arm.setGoal(positionRads);
+    arm.enable();
   }
 
   @Override

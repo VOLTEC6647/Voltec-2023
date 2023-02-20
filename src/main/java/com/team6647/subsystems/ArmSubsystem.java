@@ -9,17 +9,15 @@ import com.andromedalib.motorControllers.IdleManager.GlobalIdleMode;
 import com.team6647.Constants.ArmConstants;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 
-/**
- * Singleton class
- */
-public class ArmSubsystem extends SubsystemBase {
+public class ArmSubsystem extends ProfiledPIDSubsystem {
   private static ArmSubsystem instance;
 
   private static SuperSparkMax pivotSpark1 = new SuperSparkMax(ArmConstants.armNeo1ID, GlobalIdleMode.brake, false, 50);
-  private static SuperSparkMax pivotSpark2 = new SuperSparkMax(ArmConstants.armNeo2ID, GlobalIdleMode.brake, true, 50);
+  private static SuperSparkMax pivotSpark2 = new SuperSparkMax(ArmConstants.armNeo2ID, GlobalIdleMode.brake, false, 50);
 
   private static SuperSparkMax extendingSpark = new SuperSparkMax(ArmConstants.extendNeoID, GlobalIdleMode.brake, true,
       50);
@@ -27,15 +25,27 @@ public class ArmSubsystem extends SubsystemBase {
   private static ArmFeedforward feedforward = new ArmFeedforward(ArmConstants.feedkS, ArmConstants.feedkG,
       ArmConstants.feedkV, ArmConstants.feedkA);
 
-  private static PIDController pidController = new PIDController(ArmConstants.pivotkP, ArmConstants.pivotkI,
-      ArmConstants.pivotkD);
+  private double output;
 
-  public double setpoint;
+  /** Creates a new NewArmSubsystem. */
+  public ArmSubsystem() {
+    super(
+        new ProfiledPIDController(
+            ArmConstants.pivotkP,
+            ArmConstants.pivotkI,
+            ArmConstants.pivotkD,
+            // The motion profile constraints
+            new TrapezoidProfile.Constraints(ArmConstants.kMaxVelocityRadPerSecond,
+                ArmConstants.kMaxAccelerationRadPerSecSquared)));
+    pivotSpark2.follow(pivotSpark1, true);
 
-  private ArmSubsystem() {
-    pivotSpark1.follow(pivotSpark1, true);
+    pivotSpark1.setPositionConversionFactor(ArmConstants.gearRatio);
+    pivotSpark2.setPositionConversionFactor(ArmConstants.gearRatio);
 
-    pidController.setTolerance(1.0);
+    pivotSpark1.setVelocityConversionFactor(ArmConstants.gearRatio / 60);
+    pivotSpark2.setVelocityConversionFactor(ArmConstants.gearRatio / 60);
+
+    setGoal(ArmConstants.startPositionRads);
   }
 
   /**
@@ -50,19 +60,33 @@ public class ArmSubsystem extends SubsystemBase {
     return instance;
   }
 
-  /**
-   * Sets the position to the corresponding angle and velocity
-   * 
-   * @param degree Desired degree
-   * @param velocity Desired velocity
-   */
-  public void setAngle(double degree, double velocity) {
-    setpoint = degree;
-    pivotSpark1.setVoltage(
-        feedforward.calculate(degree, velocity) + pidController.calculate(pivotSpark1.getPosition(), degree));
+  @Override
+  public void periodic() {
+    super.periodic();
   }
 
-  public void stopPivot(){
+  @Override
+  public void useOutput(double output, TrapezoidProfile.State setpoint) {
+    this.output = output;
+    double feedForwardValue = feedforward.calculate(setpoint.position, setpoint.velocity);
+
+    pivotSpark1.setVoltage(output + feedForwardValue);
+  }
+
+  @Override
+  public double getMeasurement() {
+    return pivotSpark1.getPosition() + ArmConstants.startPositionRads;
+  }
+
+  public double getOutput(){
+    return output;
+  }
+
+  /**
+   * Stops the PID control and sets the motors to 0
+   */
+  public void stopPivot() {
+    disable();
     pivotSpark1.set(0);
     pivotSpark2.set(0);
   }
@@ -108,9 +132,5 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public double getPivot2Velocity() {
     return pivotSpark2.getVelocity();
-  }
-
-  @Override
-  public void periodic() {
   }
 }

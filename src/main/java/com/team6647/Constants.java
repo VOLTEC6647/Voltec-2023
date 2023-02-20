@@ -52,14 +52,19 @@ public final class Constants {
     public static final int armNeo2ID = 6;
     public static final int extendNeoID = 7;
 
-    public static double armSpeed = 0.2;
     public static double extendSped = 0.2;
+
+    public static final double kMaxVelocityRadPerSecond = 594.38;
+    public static final double kMaxAccelerationRadPerSecSquared = 118.876;
 
     public static final int extendLimitSwitchPort = 0;
     public static final DigitalInput limitSwitch = new DigitalInput(extendLimitSwitchPort);
 
     // TODO SET
     public static final double forwardLimit = 0;
+
+    public static final double gearRatio = 1 / 94;
+    public static final double startPositionRads = (-Math.PI / 4);
 
     public static final double feedkS = 0.00;
     public static final double feedkG = 1.38;
