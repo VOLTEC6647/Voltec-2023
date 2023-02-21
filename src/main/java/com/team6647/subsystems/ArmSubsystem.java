@@ -24,7 +24,8 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
   private static ArmFeedforward feedforward = new ArmFeedforward(ArmConstants.feedkS, ArmConstants.feedkG,
       ArmConstants.feedkV, ArmConstants.feedkA);
 
-  private double output;
+  private double pidOutput;
+  private double feedOutput;
 
   /** Creates a new NewArmSubsystem. */
   public ArmSubsystem() {
@@ -66,9 +67,10 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
 
   @Override
   public void useOutput(double output, TrapezoidProfile.State setpoint) {
-    this.output = output;
+    this.pidOutput = output;
     double feedForwardValue = feedforward.calculate(setpoint.position, setpoint.velocity);
 
+    feedOutput = feedForwardValue;
     pivotSpark1.setVoltage(output + feedForwardValue);
   }
 
@@ -77,8 +79,8 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
     return pivotSpark1.getPosition() + ArmConstants.startPositionRads;
   }
 
-  public double getOutput(){
-    return output;
+  public double getPidOutput() {
+    return pidOutput;
   }
 
   /**
@@ -131,5 +133,22 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
    */
   public double getPivot2Velocity() {
     return pivotSpark2.getVelocity();
+  }
+
+  public double getPivo1Position(){
+    return pivotSpark1.getPosition();
+  }
+
+  /**
+   * Gets the voltage applied to Pivot1 Voltage
+   * 
+   * @return Voltage applied
+   */
+  public double getPivot1Voltage() {
+    return pivotSpark1.getBusVoltage();
+  }
+
+  public double getFeedOutput(){
+    return feedOutput;
   }
 }
