@@ -7,6 +7,7 @@ package com.team6647.subsystems;
 import com.andromedalib.sensors.SuperNavx;
 import com.team6647.Constants.DriveConstants;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
@@ -18,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * Singleton class. It controls autonomus movement and similar purposes
  */
 public class DriveSubsystem extends SubsystemBase {
+  private static PIDController anglePID = new PIDController(DriveConstants.kpDriveVelocity, 0, 0);
   private static DriveSubsystem instance;
 
   public SuperNavx navx = SuperNavx.getInstance();
@@ -29,10 +31,8 @@ public class DriveSubsystem extends SubsystemBase {
   DifferentialDrivePoseEstimator odometry;
 
   private DriveSubsystem() {
-    /*
-     * angleController = new PIDController(DriveConstants.angleKp,
-     * DriveConstants.angleKi, DriveConstants.angleKd);
-     */
+
+    anglePID.setTolerance(DriveConstants.angleTolerance);
 
     resetEncoders();
 
@@ -101,5 +101,17 @@ public class DriveSubsystem extends SubsystemBase {
   public void tankDriveVolts(double leftVolts, double rightVolts) {
     ChassisSubsystem.leftMotorController.setVoltage(leftVolts);
     ChassisSubsystem.rightMotorController.setVoltage(rightVolts);
+  }
+
+  public double calculatePID(){
+    return anglePID.calculate(navx.getPitch(), 0);
+  }
+
+  public boolean inTolerance(){
+    return anglePID.atSetpoint();
+  }
+
+  public double getNavxPitch(){
+    return navx.getPitch();
   }
 }

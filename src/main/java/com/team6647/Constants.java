@@ -26,7 +26,7 @@ public final class Constants {
     public static final double xMultiplier = 1;
     public static final double yMultiplier = 1;
 
-    public static double rampTimeSeconds = 2;
+    public static final double rampTimeSeconds = 2;
   }
 
   public static class ShuffleboardConstants {
@@ -52,7 +52,7 @@ public final class Constants {
     public static final int armNeo2ID = 6;
     public static final int extendNeoID = 7;
 
-    public static double extendSped = 0.2;
+    public static final double extendSped = 0.2;
 
     public static final double kMaxVelocityRadPerSecond = 594.38;
     public static final double kMaxAccelerationRadPerSecSquared = 118.876 * 2;
@@ -100,14 +100,13 @@ public final class Constants {
     public static final double kramseteB = 2;
     public static final double kRamseteZeta = 0.7;
 
-    /**
-     * Make sure that the reduction is not in place
-     */
     public static final double kGearRatio = 7.29;
 
     public static final double kWheelRadiusInches = 3;
     public static final double kWheelDiameterMeter = Units.inchesToMeters(kWheelRadiusInches * 2);
     public static final double kWheelCircumference = kWheelDiameterMeter * Math.PI;
+
+    public static final double angleTolerance = 1;
   }
 
   public static class VisionConstants {

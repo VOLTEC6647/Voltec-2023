@@ -5,6 +5,7 @@
 package com.team6647.subsystems;
 
 import com.andromedalib.motorControllers.SuperTalonFX;
+import com.andromedalib.motorControllers.IdleManager.GlobalIdleMode;
 import com.andromedalib.subsystems.DifferentialDriveSubsystem;
 import com.team6647.Constants.ChassisConstants;
 import com.team6647.Constants.DriveConstants;
@@ -83,5 +84,16 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
   public void tankDriveFeedForward(double leftSpeed, double rightSpeed) {
     leftMotorController.setVoltage(feedforward.calculate(leftSpeed));
     rightMotorController.setVoltage(feedforward.calculate(rightSpeed));
+  }
+
+  /**
+   * Sets all motors to brake
+   * Be careful to not damage motors
+   */
+  public void setBrake(){
+    frontLeft.setMode(GlobalIdleMode.brake);
+    frontRight.setMode(GlobalIdleMode.brake);
+    backLeft.setMode(GlobalIdleMode.brake);
+    backRight.setMode(GlobalIdleMode.brake);
   }
 }

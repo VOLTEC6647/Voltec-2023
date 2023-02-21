@@ -8,6 +8,7 @@ import com.andromedalib.auto.Load;
 import com.team6647.Constants.ArmConstants;
 import com.team6647.Constants.ClawConstants;
 import com.team6647.Constants.OperatorConstants;
+import com.team6647.commands.auto.AutoBalance;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
 import com.team6647.subsystems.ArmSubsystem;
@@ -85,6 +86,7 @@ public class RobotContainer {
     setChassisCommand();
 
     OperatorConstants.driverController1.y().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleReduction()));
+    OperatorConstants.driverController1.a().whileTrue(new AutoBalance());
 
     OperatorConstants.driverController2.x().onTrue(Commands.runOnce(() -> {arm.setGoal(Math.PI); arm.enable();}, arm));
     OperatorConstants.driverController2.b().onTrue(Commands.runOnce(() -> {arm.setGoal(0); arm.enable();}, arm));
