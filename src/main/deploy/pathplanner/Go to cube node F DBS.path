@@ -7,8 +7,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 16.689999999999998,
-        "y": 7.28
+        "x": 14.827709382849322,
+        "y": 7.235680059901787
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -45,5 +45,12 @@
       }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 0.545205965909091,
+      "names": [
+        "ReachedMid"
+      ]
+    }
+  ]
 }
