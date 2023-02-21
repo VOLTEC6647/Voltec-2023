@@ -55,7 +55,7 @@ public final class Constants {
     public static double extendSped = 0.2;
 
     public static final double kMaxVelocityRadPerSecond = 594.38;
-    public static final double kMaxAccelerationRadPerSecSquared = 118.876;
+    public static final double kMaxAccelerationRadPerSecSquared = 118.876 * 2;
 
     public static final int extendLimitSwitchPort = 0;
     public static final DigitalInput limitSwitch = new DigitalInput(extendLimitSwitchPort);
@@ -66,13 +66,13 @@ public final class Constants {
     public static final double gearRatio = 1 / 94;
     public static final double startPositionRads = (-Math.PI / 4);
 
-    public static final double feedkS = 0.00;
-    public static final double feedkG = 1.38;
-    public static final double feedkV = 0.12;
-    public static final double feedkA = 0.03;
+    public static final double feedkS = 0;
+    public static final double feedkG = 1.42; 
+    public static final double feedkV = 1.83; 
+    public static final double feedkA = 0.07; 
 
     public static final double pivotkP = 0;
-    public static final double pivotkI = 0;
+    public static final double pivotkI = 00;
     public static final double pivotkD = 0;
   }
 
