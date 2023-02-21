@@ -9,7 +9,6 @@ import com.team6647.Constants.ArmConstants;
 import com.team6647.Constants.ClawConstants;
 import com.team6647.Constants.OperatorConstants;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
-import com.team6647.commands.hybrid.Arm.RotateArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
 import com.team6647.subsystems.ArmSubsystem;
 import com.team6647.subsystems.ChassisSubsystem;
@@ -20,6 +19,7 @@ import com.team6647.utils.shuffleboard.ShuffleboardManager;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class RobotContainer {
@@ -31,6 +31,7 @@ public class RobotContainer {
 
   private ChassisSubsystem chassis;
   private ClawSubsytem claw;
+  private ArmSubsystem arm;
 
   private RobotContainer() {
   }
@@ -49,7 +50,7 @@ public class RobotContainer {
   public void initSubsystems() {
     chassis = ChassisSubsystem.getInstance();
     DriveSubsystem.getInstance();
-    ArmSubsystem.getInstance();
+    arm = ArmSubsystem.getInstance();
     claw = ClawSubsytem.getInstance();
 
   }
@@ -85,8 +86,12 @@ public class RobotContainer {
 
     OperatorConstants.driverController1.y().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleReduction()));
 
-    OperatorConstants.driverController2.x().whileTrue(new RotateArm(Math.PI));
-    OperatorConstants.driverController2.b().whileTrue(new RotateArm(0));
+    OperatorConstants.driverController2.x().onTrue(Commands.runOnce(() -> {arm.setGoal(0.5); arm.enable();}, arm));
+    OperatorConstants.driverController2.b().onTrue(Commands.runOnce(() -> {arm.setGoal(-0.5); arm.enable();}, arm));
+    
+/* 
+    OperatorConstants.driverController2.x().whileTrue(new RotateArm(0.5));
+    OperatorConstants.driverController2.b().whileTrue(new RotateArm(-0.5)); */
     OperatorConstants.driverController2.y().whileTrue(new ExtendArm(ArmConstants.extendSped));
     OperatorConstants.driverController2.a().whileTrue(new ExtendArm(-ArmConstants.extendSped));
 

@@ -22,12 +22,12 @@ public class RotateArm extends CommandBase {
 
   @Override
   public void initialize() {
-    arm.setGoal(positionRads);
-    arm.enable();
   }
 
   @Override
   public void execute() {
+    arm.setGoal(positionRads);
+    arm.enable();
   }
 
   // Called once the command ends or is interrupted.
