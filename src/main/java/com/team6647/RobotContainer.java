@@ -86,8 +86,8 @@ public class RobotContainer {
 
     OperatorConstants.driverController1.y().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleReduction()));
 
-    OperatorConstants.driverController2.x().onTrue(Commands.runOnce(() -> {arm.setGoal(0.5); arm.enable();}, arm));
-    OperatorConstants.driverController2.b().onTrue(Commands.runOnce(() -> {arm.setGoal(-0.5); arm.enable();}, arm));
+    OperatorConstants.driverController2.x().onTrue(Commands.runOnce(() -> {arm.setGoal(Math.PI); arm.enable();}, arm));
+    OperatorConstants.driverController2.b().onTrue(Commands.runOnce(() -> {arm.setGoal(0); arm.enable();}, arm));
     
 /* 
     OperatorConstants.driverController2.x().whileTrue(new RotateArm(0.5));
