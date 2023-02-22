@@ -20,7 +20,6 @@ import com.team6647.utils.shuffleboard.ShuffleboardManager;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class RobotContainer {
@@ -87,10 +86,10 @@ public class RobotContainer {
 
     OperatorConstants.driverController1.y().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleReduction()));
     OperatorConstants.driverController1.a().whileTrue(new AutoBalance());
-
+/* 
     OperatorConstants.driverController2.x().onTrue(Commands.runOnce(() -> {arm.setGoal(Math.PI); arm.enable();}, arm));
     OperatorConstants.driverController2.b().onTrue(Commands.runOnce(() -> {arm.setGoal(0); arm.enable();}, arm));
-    
+      */
 /* 
     OperatorConstants.driverController2.x().whileTrue(new RotateArm(0.5));
     OperatorConstants.driverController2.b().whileTrue(new RotateArm(-0.5)); */

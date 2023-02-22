@@ -13,7 +13,10 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public class DebugTab extends ShuffleboardTabBase {
 
+    
     static ShuffleboardTab tab;
+
+    GenericEntry limit; 
 
     GenericEntry pivot1Speed;
     GenericEntry pivot2Speed;
@@ -34,12 +37,13 @@ public class DebugTab extends ShuffleboardTabBase {
         this.armPositionGraph = tab.add("Arm Position", ArmSubsystem.getInstance().getMeasurement()).withPosition(4, 2).withWidget(BuiltInWidgets.kGraph).getEntry();
         this.armPositionDoubleRaw = tab.add("Arm Position RAW", ArmSubsystem.getInstance().getPivo1Position()).withPosition(7, 2).getEntry();
         this.armPositionDoublePID  = tab.add("Arm Position PID", ArmSubsystem.getInstance().getMeasurement()).withPosition(7,3).getEntry();
-        this.desiredPosition = tab.add("Desired Position", ArmSubsystem.getInstance().getController().getGoal().position).withPosition(5, 1).getEntry();
-        this.voltageApplied = tab.add("Voltage Applied", ArmSubsystem.getInstance().getPivot1Voltage()).withWidget(BuiltInWidgets.kVoltageView).withPosition(6, 1).getEntry();
+/*         this.desiredPosition = tab.add("Desired Position", ArmSubsystem.getInstance().getController().getGoal().position).withPosition(5, 1).getEntry();
+ */        this.voltageApplied = tab.add("Voltage Applied", ArmSubsystem.getInstance().getPivot1Voltage()).withWidget(BuiltInWidgets.kVoltageView).withPosition(6, 1).getEntry();
         this.feedOutput = tab.add("Feed output", ArmSubsystem.getInstance().getFeedOutput()).withPosition(8, 1).getEntry();
         this.pidOutput = tab.add("Arm Output", ArmSubsystem.getInstance().getPidOutput()).withPosition(9, 1).getEntry();
 
-    }
+        this.limit = tab.add("Limit switch", ArmSubsystem.getInstance().getLimitState()).withPosition(0, 4).getEntry();
+     }
 
     @Override
     public void updateTelemetry() {
@@ -48,9 +52,11 @@ public class DebugTab extends ShuffleboardTabBase {
         pivot2Speed.setDouble(ArmSubsystem.getInstance().getPivot2Velocity());
 
         armPositionGraph.setDouble(ArmSubsystem.getInstance().getMeasurement());
-        desiredPosition.setString(ArmSubsystem.getInstance().getController().getGoal().toString());
-        voltageApplied.setDouble(ArmSubsystem.getInstance().getPivot1Voltage());
+/*         desiredPosition.setString(ArmSubsystem.getInstance().getController().getGoal().toString());
+ */      voltageApplied.setDouble(ArmSubsystem.getInstance().getPivot1Voltage());
         feedOutput.setDouble(ArmSubsystem.getInstance().getFeedOutput());
         pidOutput.setDouble(ArmSubsystem.getInstance().getPidOutput());
-    }
+        
+        limit.setBoolean(ArmSubsystem.getInstance().getLimitState());
+     }
 }
