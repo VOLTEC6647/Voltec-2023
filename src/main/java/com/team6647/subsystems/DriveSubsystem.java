@@ -4,6 +4,10 @@
 
 package com.team6647.subsystems;
 
+import java.util.Optional;
+
+import org.photonvision.EstimatedRobotPose;
+
 import com.andromedalib.sensors.SuperNavx;
 import com.team6647.Constants.DriveConstants;
 
@@ -28,7 +32,9 @@ public class DriveSubsystem extends SubsystemBase {
    */ /* int angleSetpoint, velocitySetpoint; */
   Field2d field = new Field2d();
 
-  DifferentialDrivePoseEstimator odometry;
+  DifferentialDrivePoseEstimator poseEstimator;
+
+  VisionSubsystem visionSubystem = VisionSubsystem.getInstance("Photon");
 
   private DriveSubsystem() {
 
@@ -38,12 +44,12 @@ public class DriveSubsystem extends SubsystemBase {
 
     navx.zeroHeading();
 
-    odometry = new DifferentialDrivePoseEstimator(DriveConstants.kDrivekinematics, navx.getRotation(),
+    poseEstimator = new DifferentialDrivePoseEstimator(DriveConstants.kDrivekinematics, navx.getRotation(),
         ChassisSubsystem.frontLeft.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
         ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
         new Pose2d());
 
-    odometry.resetPosition(navx.getRotation(),
+    poseEstimator.resetPosition(navx.getRotation(),
         ChassisSubsystem.frontLeft.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
         ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
         new Pose2d());
@@ -68,16 +74,23 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   private void updateRotation2D() {
-    odometry.update(navx.getRotation(),
+    poseEstimator.update(navx.getRotation(),
         ChassisSubsystem.frontLeft.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
         ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio));
+
+    Optional<EstimatedRobotPose> result = visionSubystem.getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
+
+    if (result.isPresent()) {
+      EstimatedRobotPose pose = result.get();
+      poseEstimator.addVisionMeasurement(pose.estimatedPose.toPose2d(), pose.timestampSeconds);
+    }
   }
 
   public void resetOdometry(Pose2d pose) {
 
     resetEncoders();
 
-    odometry.resetPosition(navx.getRotation(),
+    poseEstimator.resetPosition(navx.getRotation(),
         ChassisSubsystem.frontLeft.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
         ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
         pose);
@@ -89,7 +102,7 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   public Pose2d getPose() {
-    return odometry.getEstimatedPosition();
+    return poseEstimator.getEstimatedPosition();
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
@@ -103,15 +116,15 @@ public class DriveSubsystem extends SubsystemBase {
     ChassisSubsystem.rightMotorController.setVoltage(rightVolts);
   }
 
-  public double calculatePID(){
+  public double calculatePID() {
     return anglePID.calculate(navx.getPitch(), 0);
   }
 
-  public boolean inTolerance(){
+  public boolean inTolerance() {
     return anglePID.atSetpoint();
   }
 
-  public double getNavxPitch(){
+  public double getNavxPitch() {
     return navx.getPitch();
   }
 }

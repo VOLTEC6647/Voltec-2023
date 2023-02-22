@@ -11,10 +11,13 @@ import com.team6647.Constants.OperatorConstants;
 import com.team6647.commands.auto.AutoBalance;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
+import com.team6647.commands.teleop.AprilAim;
+import com.team6647.commands.teleop.LimelightAim;
 import com.team6647.subsystems.ArmSubsystem;
 import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.subsystems.ClawSubsytem;
 import com.team6647.subsystems.DriveSubsystem;
+import com.team6647.subsystems.VisionSubsystem;
 import com.team6647.utils.shuffleboard.DriveModeSelector;
 import com.team6647.utils.shuffleboard.ShuffleboardManager;
 
@@ -52,9 +55,10 @@ public class RobotContainer {
     DriveSubsystem.getInstance();
     arm = ArmSubsystem.getInstance();
     claw = ClawSubsytem.getInstance();
-
+    VisionSubsystem.getInstance("Photon");
   }
 
+  
   /**
    * Initializes the sending of telemetry
    */
@@ -86,6 +90,8 @@ public class RobotContainer {
 
     OperatorConstants.driverController1.y().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleReduction()));
     OperatorConstants.driverController1.a().whileTrue(new AutoBalance());
+    OperatorConstants.driverController1.x().whileTrue(new AprilAim());
+    OperatorConstants.driverController1.b().whileTrue(new LimelightAim());
 /* 
     OperatorConstants.driverController2.x().onTrue(Commands.runOnce(() -> {arm.setGoal(Math.PI); arm.enable();}, arm));
     OperatorConstants.driverController2.b().onTrue(Commands.runOnce(() -> {arm.setGoal(0); arm.enable();}, arm));
