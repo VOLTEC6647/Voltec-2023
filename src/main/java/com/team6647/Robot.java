@@ -4,8 +4,6 @@
 
 package com.team6647;
 
-import com.team6647.commands.hybrid.Arm.RotateArm;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -25,11 +23,13 @@ public class Robot extends TimedRobot {
 
     addPeriodic(() -> {
       CommandScheduler.getInstance().run();
+
     }, 0.01);
   }
 
   @Override
   public void robotPeriodic() {
+
     robotContainer.updateTelemetry();
   }
 
@@ -43,12 +43,14 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    new RotateArm(Math.PI).schedule();
-    /* autonomousCommand = robotContainer.getAutonomousCommand();
-
-    if (autonomousCommand != null) {
-      autonomousCommand.schedule();
-    } */
+    // TODO UNCOMMENT
+    /*
+     * autonomousCommand = robotContainer.getAutonomousCommand();
+     * 
+     * if (autonomousCommand != null) {
+     * autonomousCommand.schedule();
+     * }
+     */
   }
 
   @Override
