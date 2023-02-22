@@ -8,7 +8,6 @@ import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -56,9 +55,6 @@ public final class Constants {
 
     public static final double kMaxVelocityRadPerSecond = 594.38;
     public static final double kMaxAccelerationRadPerSecSquared = 118.876 * 2;
-
-    public static final int extendLimitSwitchPort = 0;
-    public static final DigitalInput limitSwitch = new DigitalInput(extendLimitSwitchPort);
 
     // TODO SET
     public static final double forwardLimit = 0;
