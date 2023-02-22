@@ -16,9 +16,9 @@ public class AutoBalance extends CommandBase {
 
   double drivePower = 0;
 
-  public AutoBalance() {
-    chasssis = ChassisSubsystem.getInstance();
-    drive = DriveSubsystem.getInstance();
+  public AutoBalance(ChassisSubsystem chassis, DriveSubsystem drive) {
+    this.chasssis = chassis;
+    this.drive = drive;
 
     addRequirements(drive, chasssis);
   }

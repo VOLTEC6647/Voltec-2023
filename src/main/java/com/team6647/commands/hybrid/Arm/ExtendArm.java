@@ -13,8 +13,8 @@ public class ExtendArm extends CommandBase {
   ArmSubsystem arm;
   double speed;
 
-  public ExtendArm(double speed) {
-    arm = ArmSubsystem.getInstance();
+  public ExtendArm(ArmSubsystem arm, double speed) {
+    this.arm = arm;
     this.speed = speed;
 
     addRequirements(arm);

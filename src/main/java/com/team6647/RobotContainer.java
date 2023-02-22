@@ -32,9 +32,11 @@ public class RobotContainer {
   private DriveModeSelector selector;
   private ShuffleboardManager interactions;
 
+  private ArmSubsystem arm;
   private ChassisSubsystem chassis;
   private ClawSubsytem claw;
-  private ArmSubsystem arm;
+  private DriveSubsystem drive;
+  private VisionSubsystem vision;
 
   private RobotContainer() {
   }
@@ -51,11 +53,11 @@ public class RobotContainer {
    * {@link Robot} class
    */
   public void initSubsystems() {
-    chassis = ChassisSubsystem.getInstance();
-    DriveSubsystem.getInstance();
     arm = ArmSubsystem.getInstance();
+    chassis = ChassisSubsystem.getInstance();
     claw = ClawSubsytem.getInstance();
-    VisionSubsystem.getInstance("Photon");
+    drive = DriveSubsystem.getInstance();
+    vision = VisionSubsystem.getInstance("Photon");
   }
 
   
@@ -89,9 +91,9 @@ public class RobotContainer {
     setChassisCommand();
 
     OperatorConstants.driverController1.y().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleReduction()));
-    OperatorConstants.driverController1.a().whileTrue(new AutoBalance());
-    OperatorConstants.driverController1.x().whileTrue(new AprilAim());
-    OperatorConstants.driverController1.b().whileTrue(new LimelightAim());
+    OperatorConstants.driverController1.a().whileTrue(new AutoBalance(chassis, drive));
+    OperatorConstants.driverController1.x().whileTrue(new AprilAim(vision, chassis));
+    OperatorConstants.driverController1.b().whileTrue(new LimelightAim(vision, chassis));
 /* 
     OperatorConstants.driverController2.x().onTrue(Commands.runOnce(() -> {arm.setGoal(Math.PI); arm.enable();}, arm));
     OperatorConstants.driverController2.b().onTrue(Commands.runOnce(() -> {arm.setGoal(0); arm.enable();}, arm));
@@ -99,11 +101,11 @@ public class RobotContainer {
 /* 
     OperatorConstants.driverController2.x().whileTrue(new RotateArm(0.5));
     OperatorConstants.driverController2.b().whileTrue(new RotateArm(-0.5)); */
-    OperatorConstants.driverController2.y().whileTrue(new ExtendArm(ArmConstants.extendSped));
-    OperatorConstants.driverController2.a().whileTrue(new ExtendArm(-ArmConstants.extendSped));
+    OperatorConstants.driverController2.y().whileTrue(new ExtendArm(arm, ArmConstants.extendSped));
+    OperatorConstants.driverController2.a().whileTrue(new ExtendArm(arm, -ArmConstants.extendSped));
 
-    OperatorConstants.driverController2.rightTrigger(0.1).whileTrue(new MoveClaw(ClawConstants.clawSpeed));
-    OperatorConstants.driverController2.leftTrigger(0.1).whileTrue(new MoveClaw(-ClawConstants.clawSpeed));
+    OperatorConstants.driverController2.rightTrigger(0.1).whileTrue(new MoveClaw(claw, ClawConstants.clawSpeed));
+    OperatorConstants.driverController2.leftTrigger(0.1).whileTrue(new MoveClaw(claw, -ClawConstants.clawSpeed));
     OperatorConstants.driverController2.rightBumper().whileTrue(new InstantCommand(() -> {
       claw.ConeSet();
     }));

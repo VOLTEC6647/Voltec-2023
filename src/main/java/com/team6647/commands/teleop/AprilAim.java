@@ -13,9 +13,9 @@ public class AprilAim extends CommandBase {
   VisionSubsystem vision;
   ChassisSubsystem chassis;
 
-  public AprilAim() {
-    vision = VisionSubsystem.getInstance("Photon");
-    chassis = ChassisSubsystem.getInstance();
+  public AprilAim(VisionSubsystem vision, ChassisSubsystem chassis) {
+    this.vision = vision;
+    this.chassis = chassis;
     addRequirements(chassis, vision);
   }
 

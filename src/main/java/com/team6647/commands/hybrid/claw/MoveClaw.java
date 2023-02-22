@@ -12,8 +12,8 @@ public class MoveClaw extends CommandBase {
   ClawSubsytem claw;
   double speed;
 
-  public MoveClaw(double speed) {
-    claw = ClawSubsytem.getInstance();
+  public MoveClaw(ClawSubsytem claw, double speed) {
+    this.claw = claw;
     this.speed = speed;
 
     addRequirements(claw);

@@ -13,9 +13,9 @@ public class LimelightAim extends CommandBase {
   VisionSubsystem vision;
   ChassisSubsystem chassis;
 
-  public LimelightAim() {
-    vision = VisionSubsystem.getInstance("Photon");
-    chassis = ChassisSubsystem.getInstance();
+  public LimelightAim(VisionSubsystem vision, ChassisSubsystem chassis) {
+    this.vision = vision;
+    this.chassis = chassis;
     addRequirements(chassis, vision);
   }
 

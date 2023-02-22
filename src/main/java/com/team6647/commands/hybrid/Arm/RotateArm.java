@@ -13,8 +13,8 @@ public class RotateArm extends CommandBase {
   double positionRads;
 
   /** Creates a new RotateArm. */
-  public RotateArm(double positionRads) {
-    arm = ArmSubsystem.getInstance();
+  public RotateArm(ArmSubsystem arm, double positionRads) {
+    this.arm = arm;
     this.positionRads = positionRads;
 
     addRequirements(arm);
