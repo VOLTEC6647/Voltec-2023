@@ -1,5 +1,10 @@
 {
   "HALProvider": {
+    "DIO": {
+      "window": {
+        "visible": true
+      }
+    },
     "PWM Outputs": {
       "window": {
         "name": "Blinkin",
@@ -59,11 +64,6 @@
       "/SmartDashboard/DifferentialDrive[1]": {
         "window": {
           "name": "Differential Drive",
-          "visible": true
-        }
-      },
-      "/SmartDashboard/Field": {
-        "window": {
           "visible": true
         }
       }
