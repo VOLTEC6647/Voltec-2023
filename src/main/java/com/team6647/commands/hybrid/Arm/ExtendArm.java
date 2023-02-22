@@ -7,14 +7,11 @@ package com.team6647.commands.hybrid.Arm;
 import com.team6647.Constants.ArmConstants;
 import com.team6647.subsystems.ArmSubsystem;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ExtendArm extends CommandBase {
   ArmSubsystem arm;
   double speed;
-
-  DigitalInput extendLimitSwitch = ArmConstants.limitSwitch;
 
   public ExtendArm(double speed) {
     arm = ArmSubsystem.getInstance();
@@ -26,7 +23,7 @@ public class ExtendArm extends CommandBase {
   @Override
   public void initialize() {
     if (speed < 0) {
-      if (extendLimitSwitch.get()) {
+      if (!arm.getLimitState()) {
         arm.resetExtendPosition();
         arm.extendArm(0);
       } else {
@@ -45,13 +42,11 @@ public class ExtendArm extends CommandBase {
   public void execute() {
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     arm.extendArm(0);
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

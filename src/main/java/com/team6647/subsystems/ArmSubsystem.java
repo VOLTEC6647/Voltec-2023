@@ -10,6 +10,7 @@ import com.team6647.Constants.ArmConstants;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 
 public class ArmSubsystem extends ProfiledPIDSubsystem {
@@ -23,6 +24,8 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
 
   private static ArmFeedforward feedforward = new ArmFeedforward(ArmConstants.feedkS, ArmConstants.feedkG,
       ArmConstants.feedkV, ArmConstants.feedkA);
+
+  private static DigitalInput limitSwitch = new DigitalInput(3);
 
   private double pidOutput;
   private double feedOutput;
@@ -102,6 +105,15 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
   }
 
   /**
+   * Gets the state of the limit switch
+   * 
+   * @return
+   */
+  public boolean getLimitState(){
+    return limitSwitch.get();
+  }
+
+  /**
    * Gets the current position of the extending spark
    * 
    * @return Current position
@@ -135,7 +147,7 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
     return pivotSpark2.getVelocity();
   }
 
-  public double getPivo1Position(){
+  public double getPivo1Position() {
     return pivotSpark1.getPosition();
   }
 
@@ -148,7 +160,7 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
     return pivotSpark1.getBusVoltage();
   }
 
-  public double getFeedOutput(){
+  public double getFeedOutput() {
     return feedOutput;
   }
 }
