@@ -63,9 +63,9 @@ public final class Constants {
     public static final double startPositionRads = (-Math.PI / 4);
 
     public static final double feedkS = 0;
-    public static final double feedkG = 1.42; 
-    public static final double feedkV = 1.83; 
-    public static final double feedkA = 0.07; 
+    public static final double feedkG = 1.42;
+    public static final double feedkV = 1.83;
+    public static final double feedkA = 0.07;
 
     public static final double pivotkP = 0;
     public static final double pivotkI = 00;
@@ -106,9 +106,16 @@ public final class Constants {
   }
 
   public static class VisionConstants {
+    // ADJUST
     public static final double cameraHeight = Units.inchesToMeters(2);
     public static final double targetHeight = Units.inchesToMeters(27);
+    public static final double targetPitch = Units.inchesToMeters(0);
     public static final double cameraPitch = Units.degreesToRadians(0);
+    // DISTANCE TO SET THE ROBOT FROM GOAl
     public static final double goalRange = 0.36;
+
+    public static final double kpAim = 0.0;
+    public static final double kpDistance = 0.0;
+    public static final double min_aim_command = 0.0;
   }
 }
