@@ -14,6 +14,8 @@ public class AutoBalance extends CommandBase {
 
   boolean climbing = false;
 
+  double drivePower = 0;
+
   public AutoBalance() {
     chasssis = ChassisSubsystem.getInstance();
     drive = DriveSubsystem.getInstance();
@@ -28,7 +30,7 @@ public class AutoBalance extends CommandBase {
     if (drive.getNavxPitch() > 4) {
       climbing = true;
     }
-    if(climbing && drive.getNavxPitch() < 2){
+    if (climbing && drive.getNavxPitch() < 2) {
       execute();
     }
   }
@@ -36,14 +38,14 @@ public class AutoBalance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (drive.calculatePID() > 0.5) {
-      chasssis.tankDrive(0.5, 0.5);
-    } else if (drive.calculatePID() < -0.5) {
-      chasssis.tankDrive(-0.5, -0.5);
-    } else {
-      chasssis.tankDrive(drive.calculatePID(), drive.calculatePID());
+    drivePower = drive.calculatePID();
 
+    // This Limits max power
+    if (Math.abs(drivePower) > 0.5) {
+      drivePower = Math.copySign(0.5, drivePower);
     }
+    chasssis.tankDrive(drivePower, drivePower);
+
   }
 
   // Called once the command ends or is interrupted.
