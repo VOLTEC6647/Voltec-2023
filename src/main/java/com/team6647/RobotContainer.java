@@ -10,6 +10,7 @@ import com.team6647.Constants.ClawConstants;
 import com.team6647.Constants.OperatorConstants;
 import com.team6647.commands.auto.AutoBalance;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
+import com.team6647.commands.hybrid.Arm.StartArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
 import com.team6647.commands.teleop.AprilAim;
 import com.team6647.commands.teleop.LimelightAim;
@@ -23,6 +24,7 @@ import com.team6647.utils.shuffleboard.ShuffleboardManager;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class RobotContainer {
@@ -97,7 +99,7 @@ public class RobotContainer {
 /* 
     OperatorConstants.driverController2.x().onTrue(Commands.runOnce(() -> {arm.setGoal(Math.PI); arm.enable();}, arm));
     OperatorConstants.driverController2.b().onTrue(Commands.runOnce(() -> {arm.setGoal(0); arm.enable();}, arm));
-      */
+    */  
 /* 
     OperatorConstants.driverController2.x().whileTrue(new RotateArm(0.5));
     OperatorConstants.driverController2.b().whileTrue(new RotateArm(-0.5)); */
@@ -121,8 +123,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return Load.loadTrajectory(Filesystem.getDeployDirectory()
+    return new StartArm(arm);
+    /* return Load.loadTrajectory(Filesystem.getDeployDirectory()
         + "/pathplanner/generatedJSON/LeaveCommunityDown.wpilib.json",
-        true);
+        true); */
   }
 }
