@@ -12,6 +12,7 @@ import com.team6647.commands.auto.AutoBalance;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.Arm.StartArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
+import com.team6647.commands.hybrid.vision.ToggleVisionDevice;
 import com.team6647.commands.teleop.AprilAim;
 import com.team6647.commands.teleop.LimelightAim;
 import com.team6647.subsystems.ArmSubsystem;
@@ -96,6 +97,7 @@ public class RobotContainer {
     OperatorConstants.driverController1.a().whileTrue(new AutoBalance(chassis, drive));
     OperatorConstants.driverController1.x().whileTrue(new AprilAim(vision, chassis));
     OperatorConstants.driverController1.b().whileTrue(new LimelightAim(vision, chassis));
+    OperatorConstants.driverController1.rightBumper().whileTrue(new ToggleVisionDevice(vision));
 /* 
     OperatorConstants.driverController2.x().onTrue(Commands.runOnce(() -> {arm.setGoal(Math.PI); arm.enable();}, arm));
     OperatorConstants.driverController2.b().onTrue(Commands.runOnce(() -> {arm.setGoal(0); arm.enable();}, arm));

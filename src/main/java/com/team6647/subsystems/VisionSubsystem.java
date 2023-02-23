@@ -37,14 +37,17 @@ public class VisionSubsystem extends SubsystemBase {
   private PIDController forwardController = new PIDController(DriveConstants.kpDriveVelocity, 0, 0);
   private PIDController turnController = new PIDController(DriveConstants.kpDriveVelocity, 0, 0);
 
-  private LimelightCamera limelightCamera = new LimelightCamera("Limelight");
+  private LimelightCamera limelightCamera;
 
   private boolean aimingPhoton;
   private boolean aimingLimelight;
 
-  public VisionSubsystem(String cameraName) {
+  private VisionSubsystem(String cameraName) {
     photonCamera = new PhotonCamera(cameraName);
-    photonCamera.setPipelineIndex(0);
+    photonCamera.setPipelineIndex(VisionConstants.aprilPhotonPipe);
+
+    limelightCamera = new LimelightCamera();
+    limelightCamera.setPipeline(VisionConstants.retroLimePipe);
 
     try {
       field = new AprilTagFieldLayout(AprilTagFields.k2023ChargedUp.m_resourceFile);
@@ -75,8 +78,8 @@ public class VisionSubsystem extends SubsystemBase {
     if (aimingPhoton) {
       calculatePhoton();
     }
-    
-    if(aimingLimelight){
+
+    if (aimingLimelight) {
       calculateLime();
     }
   }
@@ -152,24 +155,62 @@ public class VisionSubsystem extends SubsystemBase {
 
   /**
    * Gets the status of the PhotonAim
+   * 
    * @return PhotonAim status
    */
-  public boolean getPhotonAim(){
+  public boolean getPhotonAim() {
     return aimingPhoton;
   }
 
   /**
    * Toggles the aim for LimelightCamera
    */
-  public void toggleLimelightAim(){
+  public void toggleLimelightAim() {
     aimingLimelight = !aimingLimelight;
   }
 
   /**
    * Gets the status of the LimelightAim
+   * 
    * @return LimelightAim status
    */
-  public boolean getLimelightAim(){
+  public boolean getLimelightAim() {
     return aimingLimelight;
+  }
+
+  /**
+   * Sets the {@link LimelightCamera} pipeline
+   * 
+   * @param pipeLine Pipeline to be used
+   */
+  public void setLimePipe(int pipeLine) {
+    limelightCamera.setPipeline(pipeLine);
+  }
+
+  /**
+   * Get current Limelight Pipe
+   * 
+   * @return Current Limelight pipeline
+   */
+  public int getLimePipe() {
+    return (int) limelightCamera.getPipeline();
+  }
+
+  /**
+   * Sets the {@link PhotonCamera} pipeline
+   * 
+   * @param pipeLine Pipeline to be used
+   */
+  public void setPhotonPipe(int pipeLine) {
+    photonCamera.setPipelineIndex(pipeLine);
+  }
+
+  /**
+   * Get current PhotonCamera Pipe
+   * 
+   * @return Current PhotonCamera pipeline
+   */
+  public int getPhotonPipe() {
+    return photonCamera.getPipelineIndex();
   }
 }
