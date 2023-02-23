@@ -22,15 +22,15 @@ public class ExtendArm extends CommandBase {
 
   @Override
   public void initialize() {
-    if (speed < 0) {
+    if (speed <= 0) {
       if (!arm.getLimitState()) {
         arm.resetExtendPosition();
         arm.extendArm(0);
       } else {
         arm.extendArm(speed);
       }
-    } else {
-      if (arm.getExtendPosition() >= ArmConstants.forwardLimit) {
+    } else if (speed > 0){
+      if (Math.abs(arm.getExtendPosition()) >= ArmConstants.forwardLimit) {
         arm.extendArm(0);
       } else {
         arm.extendArm(speed);

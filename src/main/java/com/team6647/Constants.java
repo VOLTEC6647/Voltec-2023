@@ -57,7 +57,7 @@ public final class Constants {
     public static final double kMaxAccelerationRadPerSecSquared = 118.876 * 2;
 
     // TODO SET
-    public static final double forwardLimit = 0;
+    public static final double forwardLimit = 40;
 
     public static final double gearRatio = 1 / 94;
     public static final double startPositionRads = (-Math.PI / 4);
