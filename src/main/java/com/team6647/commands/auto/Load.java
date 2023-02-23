@@ -2,7 +2,7 @@
  * Written by Juan Pablo Gutiérrez
  */
 
-package com.andromedalib.auto;
+package com.team6647.commands.auto;
 
 import java.io.IOException;
 import java.nio.file.Path;

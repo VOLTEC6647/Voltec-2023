@@ -16,14 +16,14 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public final class StartCommand {
+public final class ProtocolCommand {
     private ArmSubsystem arm;
     private ChassisSubsystem chassis;
     private ClawSubsytem claw;
     private DriveSubsystem drive;
     private VisionSubsystem vision;
 
-    public StartCommand(ArmSubsystem arm, ChassisSubsystem chassis, ClawSubsytem claw, DriveSubsystem drive,
+    public ProtocolCommand(ArmSubsystem arm, ChassisSubsystem chassis, ClawSubsytem claw, DriveSubsystem drive,
             VisionSubsystem vision) {
         this.arm = arm;
         this.chassis = chassis;
