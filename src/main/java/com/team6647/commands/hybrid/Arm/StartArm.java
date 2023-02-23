@@ -17,24 +17,21 @@ public class StartArm extends CommandBase {
     addRequirements(arm);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    while (arm.getLimitState()) {
-      arm.extendArm(-0.1);
-    } 
-    if(!arm.getLimitState()){
-      arm.extendArm(0);
-      arm.resetExtendPosition();
-      end(true);
-    }
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    if (arm.getLimitState()) {
+      arm.extendArm(-0.1);
+    }
+    if (!arm.getLimitState()) {
+      arm.extendArm(0);
+      arm.resetExtendPosition();
+      end(true);
+    }
   }
 
   // Called once the command ends or is interrupted.

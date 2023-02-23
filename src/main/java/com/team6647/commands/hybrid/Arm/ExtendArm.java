@@ -22,24 +22,26 @@ public class ExtendArm extends CommandBase {
 
   @Override
   public void initialize() {
-    if (speed <= 0) {
-      if (!arm.getLimitState()) {
-        arm.resetExtendPosition();
-        arm.extendArm(0);
-      } else {
-        arm.extendArm(speed);
-      }
-    } else if (speed > 0){
-      if (Math.abs(arm.getExtendPosition()) >= ArmConstants.forwardLimit) {
-        arm.extendArm(0);
-      } else {
-        arm.extendArm(speed);
-      }
-    }
   }
 
   @Override
   public void execute() {
+    if (speed <= 0) {
+      if (!arm.getLimitState()) {
+        arm.resetExtendPosition();
+        arm.extendArm(0);
+        end(true);
+      } else {
+        arm.extendArm(speed);
+      }
+    } else if (speed > 0) {
+      if (Math.abs(arm.getExtendPosition()) >= Math.abs(ArmConstants.forwardLimit)) {
+        arm.extendArm(0);
+        end(true);
+      } else {
+        arm.extendArm(speed);
+      }
+    }
   }
 
   @Override
