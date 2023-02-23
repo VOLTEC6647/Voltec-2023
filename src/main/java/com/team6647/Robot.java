@@ -24,13 +24,13 @@ public class Robot extends TimedRobot {
     robotContainer.configureBindings();
 
     addPeriodic(() -> {
-      CommandScheduler.getInstance().run();
 
     }, 0.01);
   }
 
   @Override
   public void robotPeriodic() {
+    CommandScheduler.getInstance().run();
 
     robotContainer.updateTelemetry();
   }
@@ -62,6 +62,8 @@ public class Robot extends TimedRobot {
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
+    robotContainer.resetArm();
+
     robotContainer.setChassisCommand();
   }
 
@@ -75,7 +77,7 @@ public class Robot extends TimedRobot {
 
     Command testCommand = robotContainer.getTestCommand();
 
-    if(testCommand != null){
+    if (testCommand != null) {
       testCommand.schedule();
     }
   }

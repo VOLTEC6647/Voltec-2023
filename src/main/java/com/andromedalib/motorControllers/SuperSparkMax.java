@@ -109,6 +109,7 @@ public class SuperSparkMax extends CANSparkMax implements HyperMotorController {
     public SuperSparkMax(int motorID, GlobalIdleMode mode, boolean isInverted, int currentLimit) {
         super(motorID, MotorType.kBrushless);
         restoreFactoryDefaults();
+        encoder.setPosition(0);
         setMode(mode);
         setInverted(isInverted);
         setSmartCurrentLimit(currentLimit);

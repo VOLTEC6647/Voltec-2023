@@ -28,8 +28,6 @@ public class StartArm extends CommandBase {
       arm.extendArm(-0.1);
     }
     if (!arm.getLimitState()) {
-      arm.extendArm(0);
-      arm.resetExtendPosition();
       end(true);
     }
   }
@@ -37,6 +35,9 @@ public class StartArm extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    arm.extendArm(0);
+    arm.resetExtendPosition();
+
   }
 
   // Returns true when the command should end.

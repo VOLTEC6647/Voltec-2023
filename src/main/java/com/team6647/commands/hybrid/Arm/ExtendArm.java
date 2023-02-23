@@ -36,7 +36,6 @@ public class ExtendArm extends CommandBase {
       }
     } else if (speed > 0) {
       if (Math.abs(arm.getExtendPosition()) >= Math.abs(ArmConstants.forwardLimit)) {
-        arm.extendArm(0);
         end(true);
       } else {
         arm.extendArm(speed);

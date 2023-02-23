@@ -26,7 +26,8 @@ public class RotateArm extends CommandBase {
 
   @Override
   public void execute() {
-    arm.setGoal(positionRads);
+/*     arm.resetEverything();
+ */    arm.setGoal(positionRads);
     arm.enable();
   }
 

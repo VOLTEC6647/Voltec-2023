@@ -3,6 +3,7 @@
  */
 package com.team6647.subsystems;
 
+import com.andromedalib.math.Conversions;
 import com.andromedalib.motorControllers.SuperSparkMax;
 import com.andromedalib.motorControllers.IdleManager.GlobalIdleMode;
 import com.team6647.Constants.ArmConstants;
@@ -41,11 +42,13 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
                 ArmConstants.kMaxAccelerationRadPerSecSquared)));
     pivotSpark2.follow(pivotSpark1, true);
 
-    pivotSpark1.setPositionConversionFactor(ArmConstants.gearRatio);
-    pivotSpark2.setPositionConversionFactor(ArmConstants.gearRatio);
-
-    pivotSpark1.setVelocityConversionFactor(ArmConstants.gearRatio / 60);
-    pivotSpark2.setVelocityConversionFactor(ArmConstants.gearRatio / 60);
+    /*
+     * pivotSpark1.setPositionConversionFactor(ArmConstants.gearRatio);
+     * pivotSpark2.setPositionConversionFactor(ArmConstants.gearRatio);
+     * 
+     * pivotSpark1.setVelocityConversionFactor(ArmConstants.gearRatio / 60);
+     * pivotSpark2.setVelocityConversionFactor(ArmConstants.gearRatio / 60);
+     */
 
     setGoal(ArmConstants.startPositionRads);
   }
@@ -73,7 +76,15 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
     double feedForwardValue = feedforward.calculate(setpoint.position, setpoint.velocity);
 
     feedOutput = feedForwardValue;
-    pivotSpark1.setVoltage(output + feedForwardValue);
+
+    pivotSpark1.setVoltage(feedForwardValue);
+
+  }
+
+  public void resetEverything() {
+    stopPivot();
+    pivotSpark1.resetEncoder();
+
   }
 
   @Override
@@ -148,7 +159,7 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
    * @return Pivot1 Position
    */
   public double getPivot1Position() {
-    return pivotSpark1.getPosition();
+    return Conversions.neoToDegrees(pivotSpark1.getPosition(), ArmConstants.gearRatio);
   }
 
   /**

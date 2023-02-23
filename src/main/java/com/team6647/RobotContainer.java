@@ -24,8 +24,10 @@ import com.team6647.subsystems.VisionSubsystem;
 import com.team6647.utils.shuffleboard.DriveModeSelector;
 import com.team6647.utils.shuffleboard.ShuffleboardManager;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class RobotContainer {
@@ -88,6 +90,10 @@ public class RobotContainer {
     chassis.setDefaultCommand(selector.getDriveMode());
   }
 
+  public void resetArm(){
+    arm.resetEverything();
+  }
+
   /**
    * Sets the button bidings
    */
@@ -99,9 +105,9 @@ public class RobotContainer {
     OperatorConstants.driverController1.x().whileTrue(new AprilAim(vision, chassis));
     OperatorConstants.driverController1.b().whileTrue(new LimelightAim(vision, chassis));
     OperatorConstants.driverController1.rightBumper().whileTrue(new ToggleVisionDevice(vision));
-/* 
-    OperatorConstants.driverController2.x().onTrue(Commands.runOnce(() -> {arm.setGoal(Math.PI); arm.enable();}, arm));
-    OperatorConstants.driverController2.b().onTrue(Commands.runOnce(() -> {arm.setGoal(0); arm.enable();}, arm));
+
+    OperatorConstants.driverController2.x().onTrue(Commands.runOnce(() -> {arm.setGoal(Units.degreesToRadians(-60)); arm.enable();}, arm));
+   /* OperatorConstants.driverController2.b().onTrue(Commands.runOnce(() -> {arm.setGoal(0); arm.enable();}, arm));
     */  
 /* 
     OperatorConstants.driverController2.x().whileTrue(new RotateArm(0.5));
