@@ -26,6 +26,17 @@ public class Conversions {
     }
 
     /**
+     * Converts raw Neo counts to degrees
+     * 
+     * @param counts    Neo counts
+     * @param gearRatio Gear ration between Neo and mechanism
+     * @return Degrees of rotation of mechanism
+     */
+    public static double neoToDegrees(double counts, double gearRatio) {
+        return counts / (42 * gearRatio);
+    }
+
+    /**
      * Converts degrees to raw Falcon counts
      * 
      * @param degrees   Degrees of rotation of Mechanism
@@ -34,6 +45,18 @@ public class Conversions {
      */
     public static double degreesToFalcon(double degrees, double gearRatio) {
         double ticks = degrees / (360.0 / (gearRatio * 2048.0));
+        return ticks;
+    }
+
+    /**
+     * Converts degrees to raw Neo counts
+     * 
+     * @param degrees   Degrees of rotation of Mechanism
+     * @param gearRatio Gear Ratio between Neo and Mechanism
+     * @return Neo Counts
+     */
+    public static double degreesToNeo(double degrees, double gearRatio) {
+        double ticks = degrees / (360.0 / (gearRatio * 4096));
         return ticks;
     }
 
