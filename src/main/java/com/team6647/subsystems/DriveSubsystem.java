@@ -27,9 +27,7 @@ public class DriveSubsystem extends SubsystemBase {
   private static DriveSubsystem instance;
 
   public SuperNavx navx = SuperNavx.getInstance();
-  /*
-   * PIDController angleController;//, velocityController;
-   */ /* int angleSetpoint, velocitySetpoint; */
+  
   private Field2d field = new Field2d();
 
   private DifferentialDrivePoseEstimator poseEstimator;
@@ -59,6 +57,11 @@ public class DriveSubsystem extends SubsystemBase {
     field.setRobotPose(getPose());
   }
 
+  /**
+   * Returns an instance of {@link DriveSubsystem} for singleton purposes.
+   * 
+   * @return {@link DriveSubsystem} global instance
+   */
   public static DriveSubsystem getInstance() {
     if (instance == null) {
       instance = new DriveSubsystem();
@@ -68,12 +71,16 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    updateRotation2D();
+    updatePosition2D();
     field.setRobotPose(getPose());
     SmartDashboard.putData(field);
   }
 
-  private void updateRotation2D() {
+  /**
+   * Updates the position from the {@link DifferentialDrivePoseEstimator}
+   * Also includes vision measurements if present to implement Kalman Filter
+   */
+  private void updatePosition2D() {
     poseEstimator.update(navx.getRotation(),
         ChassisSubsystem.frontLeft.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
         ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio));
@@ -86,6 +93,11 @@ public class DriveSubsystem extends SubsystemBase {
     }
   }
 
+  /**
+   * Resets the odometry position along with encoder reading
+   * 
+   * @param pose The position of the field that the robot is in
+   */
   public void resetOdometry(Pose2d pose) {
 
     resetEncoders();
@@ -96,34 +108,68 @@ public class DriveSubsystem extends SubsystemBase {
         pose);
   }
 
+  /**
+   * Sets encoder readings to zero
+   */
   public void resetEncoders() {
     ChassisSubsystem.frontLeft.resetEncoder();
     ChassisSubsystem.frontRight.resetEncoder();
   }
 
+  /**
+   * Get the position
+   * 
+   * @return Estimated position
+   */
   public Pose2d getPose() {
     return poseEstimator.getEstimatedPosition();
   }
 
+  /**
+   * Gets the speed of the Drive via {@link DifferentialDriveWheelSpeeds}
+   * 
+   * @return WheelSpeeds
+   */
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(
         ChassisSubsystem.frontLeft.getVelocity(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
         ChassisSubsystem.frontRight.getVelocity(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio));
   }
 
+  /**
+   * Sets the motor voltage output
+   * 
+   * @param leftVolts  Left side voltage applied
+   * @param rightVolts Right side voltage applied
+   */
   public void tankDriveVolts(double leftVolts, double rightVolts) {
     ChassisSubsystem.leftMotorController.setVoltage(leftVolts);
     ChassisSubsystem.rightMotorController.setVoltage(rightVolts);
   }
 
+  /**
+   * Calculates the PID output to be used for auto balancing
+   * 
+   * @return Autobalance PID result
+   */
   public double calculatePID() {
     return anglePID.calculate(navx.getPitch(), 0);
   }
 
+  /**
+   * Gets if PID is at setpoint
+   * 
+   * @return True if PID is at setpoint
+   */
   public boolean inTolerance() {
     return anglePID.atSetpoint();
   }
 
+  /**
+   * Gets current Navx Pitch
+   * 
+   * @return Navx Pitch
+   */
   public double getNavxPitch() {
     return navx.getPitch();
   }
