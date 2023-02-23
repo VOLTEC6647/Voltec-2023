@@ -1,5 +1,7 @@
 /**
  * Written by Juan Pablo Gutiérrez
+ * 
+ * In honor of HRGD
  */
 
 package com.team6647;
@@ -70,6 +72,12 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     CommandScheduler.getInstance().cancelAll();
+
+    Command testCommand = robotContainer.getTestCommand();
+
+    if(testCommand != null){
+      testCommand.schedule();
+    }
   }
 
   @Override

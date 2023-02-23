@@ -4,11 +4,12 @@
 
 package com.team6647;
 
-import com.andromedalib.auto.Load;
 import com.team6647.Constants.ArmConstants;
 import com.team6647.Constants.ClawConstants;
 import com.team6647.Constants.OperatorConstants;
 import com.team6647.commands.auto.AutoBalance;
+import com.team6647.commands.auto.Load;
+import com.team6647.commands.auto.ProtocolCommand;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.Arm.StartArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
@@ -25,7 +26,6 @@ import com.team6647.utils.shuffleboard.ShuffleboardManager;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class RobotContainer {
@@ -34,6 +34,7 @@ public class RobotContainer {
 
   private DriveModeSelector selector;
   private ShuffleboardManager interactions;
+  private ProtocolCommand protocolCommand;
 
   private ArmSubsystem arm;
   private ChassisSubsystem chassis;
@@ -41,8 +42,7 @@ public class RobotContainer {
   private DriveSubsystem drive;
   private VisionSubsystem vision;
 
-  private RobotContainer() {
-  }
+  private RobotContainer() {}
 
   public static RobotContainer getInstance() {
     if (instance == null) {
@@ -70,6 +70,7 @@ public class RobotContainer {
   public void initTelemetry() {
     selector = new DriveModeSelector();
     interactions = ShuffleboardManager.getInstance();
+    protocolCommand = new ProtocolCommand(arm, chassis, claw, drive, vision);
   }
 
   /**
@@ -129,5 +130,14 @@ public class RobotContainer {
     /* return Load.loadTrajectory(Filesystem.getDeployDirectory()
         + "/pathplanner/generatedJSON/LeaveCommunityDown.wpilib.json",
         true); */
+  }
+
+  /**
+   * Use this to pass the test command to the main {@link Robot} class.
+   *
+   * @return the command to run in test
+   */
+  public Command getTestCommand(){
+    return protocolCommand.getStartCommand();
   }
 }
