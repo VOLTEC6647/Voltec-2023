@@ -41,16 +41,54 @@ public class ClawSubsytem extends SubsystemBase {
   public void periodic() {
   }
 
+  /**
+   * Sets the Claw's velocity
+   * 
+   * @param speed Claw speed
+   */
   public void setVelocity(double speed) {
     neo1.set(speed);
     neo2.set(speed);
   }
 
-  public void cubeSet(){
+  /**
+   * Sets the Claw Solenoid State to Cube
+   */
+  public void cubeSet() {
     solenoid.set(Value.kReverse);
   }
 
-  public void ConeSet(){
+  /**
+   * Sets the Claw Solenoid State to Cone
+   */
+  public void ConeSet() {
     solenoid.set(Value.kForward);
+  }
+
+  /**
+   * Gets the Solenoid State
+   * 
+   * @return Solenoid state Value
+   */
+  public Value getSolenoidState() {
+    return solenoid.get();
+  }
+
+  /**
+   * Gets the neo1 velocity
+   * 
+   * @return Neo1 Velocity
+   */
+  public double getNeo1Velocity() {
+    return neo1.getVelocity();
+  }
+
+  /**
+   * Gets the neo2 velocity
+   * 
+   * @return Neo2 Velocity
+   */
+  public double getNeo2Velocity() {
+    return neo2.getVelocity();
   }
 }

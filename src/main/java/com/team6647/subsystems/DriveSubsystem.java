@@ -30,11 +30,11 @@ public class DriveSubsystem extends SubsystemBase {
   /*
    * PIDController angleController;//, velocityController;
    */ /* int angleSetpoint, velocitySetpoint; */
-  Field2d field = new Field2d();
+  private Field2d field = new Field2d();
 
-  DifferentialDrivePoseEstimator poseEstimator;
+  private DifferentialDrivePoseEstimator poseEstimator;
 
-  VisionSubsystem visionSubystem = VisionSubsystem.getInstance("Photon");
+  private VisionSubsystem visionSubystem = VisionSubsystem.getInstance("Photon");
 
   private DriveSubsystem() {
 

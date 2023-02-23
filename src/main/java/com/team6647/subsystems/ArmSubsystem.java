@@ -19,7 +19,7 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
   private static SuperSparkMax pivotSpark1 = new SuperSparkMax(ArmConstants.armNeo1ID, GlobalIdleMode.brake, false, 50);
   private static SuperSparkMax pivotSpark2 = new SuperSparkMax(ArmConstants.armNeo2ID, GlobalIdleMode.brake, true, 50);
 
-  private static SuperSparkMax extendingSpark = new SuperSparkMax(ArmConstants.extendNeoID, GlobalIdleMode.Coast, true,
+  private static SuperSparkMax extendingSpark = new SuperSparkMax(ArmConstants.extendNeoID, GlobalIdleMode.brake, true,
       50);
 
   private static ArmFeedforward feedforward = new ArmFeedforward(ArmConstants.feedkS, ArmConstants.feedkG,
@@ -30,7 +30,6 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
   private double pidOutput;
   private double feedOutput;
 
-  /** Creates a new NewArmSubsystem. */
   public ArmSubsystem() {
     super(
         new ProfiledPIDController(
@@ -82,10 +81,6 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
     return pivotSpark1.getPosition() + ArmConstants.startPositionRads;
   }
 
-  public double getPidOutput() {
-    return pidOutput;
-  }
-
   /**
    * Stops the PID control and sets the motors to 0
    */
@@ -109,7 +104,7 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
    * 
    * @return
    */
-  public boolean getLimitState(){
+  public boolean getLimitState() {
     return limitSwitch.get();
   }
 
@@ -147,7 +142,12 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
     return pivotSpark2.getVelocity();
   }
 
-  public double getPivo1Position() {
+  /**
+   * Gets the position of Pivo1
+   * 
+   * @return Pivot1 Position
+   */
+  public double getPivot1Position() {
     return pivotSpark1.getPosition();
   }
 
@@ -160,7 +160,21 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
     return pivotSpark1.getBusVoltage();
   }
 
+  /**
+   * Gets the FeedForward's Output
+   * 
+   * @return FeedForward output
+   */
   public double getFeedOutput() {
     return feedOutput;
+  }
+
+  /**
+   * Gets the PID output
+   * 
+   * @return PID Output
+   */
+  public double getPidOutput() {
+    return pidOutput;
   }
 }

@@ -151,9 +151,25 @@ public class VisionSubsystem extends SubsystemBase {
   }
 
   /**
+   * Gets the status of the PhotonAim
+   * @return PhotonAim status
+   */
+  public boolean getPhotonAim(){
+    return aimingPhoton;
+  }
+
+  /**
    * Toggles the aim for LimelightCamera
    */
   public void toggleLimelightAim(){
     aimingLimelight = !aimingLimelight;
+  }
+
+  /**
+   * Gets the status of the LimelightAim
+   * @return LimelightAim status
+   */
+  public boolean getLimelightAim(){
+    return aimingLimelight;
   }
 }
