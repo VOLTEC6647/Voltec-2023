@@ -8,9 +8,9 @@ import com.team6647.Constants.ArmConstants;
 import com.team6647.Constants.ClawConstants;
 import com.team6647.Constants.OperatorConstants;
 import com.team6647.commands.auto.AutoBalance;
-import com.team6647.commands.auto.Load;
 import com.team6647.commands.auto.ProtocolCommand;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
+import com.team6647.commands.hybrid.Arm.RotateArm;
 import com.team6647.commands.hybrid.Arm.StartArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
 import com.team6647.commands.hybrid.vision.ToggleVisionDevice;
@@ -24,10 +24,7 @@ import com.team6647.subsystems.VisionSubsystem;
 import com.team6647.utils.shuffleboard.DriveModeSelector;
 import com.team6647.utils.shuffleboard.ShuffleboardManager;
 
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class RobotContainer {
@@ -106,12 +103,11 @@ public class RobotContainer {
     OperatorConstants.driverController1.b().whileTrue(new LimelightAim(vision, chassis));
     OperatorConstants.driverController1.rightBumper().whileTrue(new ToggleVisionDevice(vision));
 
-    OperatorConstants.driverController2.x().onTrue(Commands.runOnce(() -> {arm.setGoal(Units.degreesToRadians(-60)); arm.enable();}, arm));
-   /* OperatorConstants.driverController2.b().onTrue(Commands.runOnce(() -> {arm.setGoal(0); arm.enable();}, arm));
-    */  
-/* 
-    OperatorConstants.driverController2.x().whileTrue(new RotateArm(0.5));
-    OperatorConstants.driverController2.b().whileTrue(new RotateArm(-0.5)); */
+/*     OperatorConstants.driverController2.x().onTrue(Commands.runOnce(() -> {arm.setGoal(Units.degreesToRadians(-45)); arm.enable();}, arm));
+ */    OperatorConstants.driverController2.b().whileTrue(new RotateArm(arm, ArmConstants.armSpeed));
+    OperatorConstants.driverController2.x().whileTrue(new RotateArm(arm, -ArmConstants.armSpeed));
+
+
     OperatorConstants.driverController2.y().whileTrue(new ExtendArm(arm, ArmConstants.extendSped));
     OperatorConstants.driverController2.a().whileTrue(new ExtendArm(arm, -ArmConstants.extendSped));
 

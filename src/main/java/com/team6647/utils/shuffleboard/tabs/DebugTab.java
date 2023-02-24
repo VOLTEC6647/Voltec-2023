@@ -57,7 +57,7 @@ public class DebugTab extends ShuffleboardTabBase {
         this.armPositionDoubleRaw = tab.add("Arm Position RAW", arm.getPivot1Position()).withPosition(6, 2).getEntry();
         this.armPositionDoublePID  = tab.add("Arm Position PID", arm.getMeasurement()).withPosition(6,3).getEntry();
         this.desiredPosition = tab.add("Desired Position", arm.getController().getGoal().position).withPosition(5, 1).getEntry();
-        this.voltageApplied = tab.add("Voltage Applied", arm.getPivot1Voltage()).withWidget(BuiltInWidgets.kVoltageView).withPosition(6, 0).getEntry();
+        this.voltageApplied = tab.add("Voltage Applied", arm.getPivot1Voltage()).withPosition(6, 0).getEntry();
         this.feedOutput = tab.add("Feed output", arm.getFeedOutput()).withPosition(7, 1).getEntry();
         this.pidOutput = tab.add("Arm Output", arm.getPidOutput()).withPosition(8, 1).getEntry();
 

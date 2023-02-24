@@ -42,14 +42,6 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
                 ArmConstants.kMaxAccelerationRadPerSecSquared)));
     pivotSpark2.follow(pivotSpark1, true);
 
-    /*
-     * pivotSpark1.setPositionConversionFactor(ArmConstants.gearRatio);
-     * pivotSpark2.setPositionConversionFactor(ArmConstants.gearRatio);
-     * 
-     * pivotSpark1.setVelocityConversionFactor(ArmConstants.gearRatio / 60);
-     * pivotSpark2.setVelocityConversionFactor(ArmConstants.gearRatio / 60);
-     */
-
     setGoal(ArmConstants.startPositionRads);
   }
 
@@ -76,20 +68,32 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
     double feedForwardValue = feedforward.calculate(setpoint.position, setpoint.velocity);
 
     feedOutput = feedForwardValue;
-
     pivotSpark1.setVoltage(feedForwardValue);
-
   }
 
-  public void resetEverything() {
-    stopPivot();
-    pivotSpark1.resetEncoder();
-
-  }
-
+  //TODO SET TO CORRECT CONVERSION
   @Override
   public double getMeasurement() {
     return pivotSpark1.getPosition() + ArmConstants.startPositionRads;
+  }
+
+  /**
+   * Sets the angle via a defined speed
+   * 
+   * @param speed Speed for the arm
+   */
+  public void setAngle(double speed) {
+    disable();
+    pivotSpark1.set(speed);
+    enable();
+  }
+
+  /**
+   * Completely resets setpoint & encoder data
+   */
+  public void resetEverything() {
+    stopPivot();
+    pivotSpark1.resetEncoder();
   }
 
   /**
