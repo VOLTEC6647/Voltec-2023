@@ -224,4 +224,22 @@ public class ArmSubsystem extends SubsystemBase {
   public double getTotal() {
     return totalOutput;
   }
+
+  /**
+   * Gets the temperature of Pivot1
+   * 
+   * @return Pivot1 Temperature
+   */
+  public double getPivot1Temp() {
+    return pivotSpark1.getMotorTemperature();
+  }
+
+  /**
+   * Gets tne temperature of Pivot2
+   * 
+   * @return Pivot2 Temperature
+   */
+  public double getPivot2Temp() {
+    return pivotSpark2.getMotorTemperature();
+  }
 }

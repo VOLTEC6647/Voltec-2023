@@ -5,7 +5,6 @@
 package com.team6647;
 
 import com.team6647.Constants.ArmConstants;
-import com.team6647.Constants.ClawConstants;
 import com.team6647.Constants.OperatorConstants;
 import com.team6647.commands.auto.AutoBalance;
 import com.team6647.commands.auto.ProtocolCommand;
@@ -97,11 +96,11 @@ public class RobotContainer {
     OperatorConstants.driverController1.a().whileTrue(new AutoBalance(chassis, drive));
     OperatorConstants.driverController1.x().whileTrue(new AprilAim(vision, chassis));
     OperatorConstants.driverController1.b().whileTrue(new LimelightAim(vision, chassis));
-    OperatorConstants.driverController1.rightBumper().whileTrue(new ToggleVisionDevice(vision));/* 
+    OperatorConstants.driverController1.rightBumper().whileTrue(new ToggleVisionDevice(vision));
 
     OperatorConstants.driverController2.y().whileTrue(new RunCommand((() -> {
       arm.changeSetpoint(-90);
-    }), arm)); */
+    }), arm));
 
     OperatorConstants.driverController2.x().whileTrue(new RunCommand(() -> {
       arm.manualControl(0.1);
@@ -111,11 +110,11 @@ public class RobotContainer {
       arm.manualControl(-0.1);
     }, arm));
 
-    OperatorConstants.driverController2.y().whileTrue(new ExtendArm(arm, ArmConstants.extendSped));
-    OperatorConstants.driverController2.a().whileTrue(new ExtendArm(arm, -ArmConstants.extendSped));
+/*     OperatorConstants.driverController2.y().whileTrue(new ExtendArm(arm, ArmConstants.extendSped));
+ */    OperatorConstants.driverController2.a().whileTrue(new ExtendArm(arm, -ArmConstants.extendSped));
 
-    OperatorConstants.driverController2.rightTrigger(0.1).whileTrue(new MoveClaw(claw, ClawConstants.clawSpeed));
-    OperatorConstants.driverController2.leftTrigger(0.1).whileTrue(new MoveClaw(claw, -ClawConstants.clawSpeed));
+    OperatorConstants.driverController2.rightTrigger(0.1).whileTrue(new MoveClaw(claw));
+    OperatorConstants.driverController2.leftTrigger(0.1).whileTrue(new MoveClaw(claw));
     OperatorConstants.driverController2.rightBumper().whileTrue(new InstantCommand(() -> {
       claw.ConeSet();
     }));

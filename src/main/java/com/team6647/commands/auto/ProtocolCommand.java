@@ -1,7 +1,6 @@
 package com.team6647.commands.auto;
 
 import com.team6647.Constants.ArmConstants;
-import com.team6647.Constants.ClawConstants;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.Arm.StartArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
@@ -50,8 +49,8 @@ public final class ProtocolCommand {
 
     private Command clawCommand() {
         return new SequentialCommandGroup(
-                new MoveClaw(claw, ClawConstants.clawSpeed).withTimeout(2),
-                new MoveClaw(claw, -ClawConstants.clawSpeed).withTimeout(2),
+                new MoveClaw(claw).withTimeout(2),
+                new MoveClaw(claw).withTimeout(2),
                 new InstantCommand(() -> claw.cubeSet(), claw).withTimeout(0.5),
                 new RunCommand(() -> {
                 }, claw).withTimeout(1),

@@ -61,12 +61,6 @@ public final class Constants {
     public static final double forwardLimit = 40;
 
     public static final double gearRatio = 94;
-    public static final double startPositionRads = 0;;
-
-    public static final double feedkS = 0;
-    public static final double feedkG = 0.82;
-    public static final double feedkV = 1.75;
-    public static final double feedkA = 0.03;
 
     public static final double pivotkP = 0.015;
 
@@ -80,7 +74,8 @@ public final class Constants {
     public static final int clawForwardPistonID = 7;
     public static final int clawBackwarddPistonID = 4;
 
-    public static final double clawSpeed = 1;
+    public static final double clawSpeedCones = 1;
+    public static final double clawSpeedCubes = 0.5;
   }
 
   public static class DriveConstants {

@@ -45,6 +45,9 @@ public class DebugTab extends ShuffleboardTabBase {
 
     GenericEntry limePipe;
     GenericEntry photonPipe;
+
+    GenericEntry pivot1Temp;
+    GenericEntry pivot2Temp;
     
     public DebugTab(ShuffleboardTab tab) {
 
@@ -67,7 +70,11 @@ public class DebugTab extends ShuffleboardTabBase {
         this.photonAim = tab.add("Photon aim", vision.getPhotonAim()).withPosition(2, 2).getEntry(); */
         this.limePipe = tab.add("Limelight pipe", vision.getLimePipe()).withPosition(1, 3).getEntry();
         this.photonPipe = tab.add("Photon pipe", vision.getPhotonPipe()).withPosition(2, 3).getEntry();
-     }
+     
+        this.pivot1Temp = tab.add("Pivot1 Temp", arm.getPivot1Temp()).withPosition(7, 0).getEntry();
+        this.pivot2Temp = tab.add("Pivot2 Temp", arm.getPivot2Temp()).withPosition(8, 0).getEntry();
+
+    }
 
     @Override
     public void updateTelemetry() {
@@ -91,5 +98,9 @@ public class DebugTab extends ShuffleboardTabBase {
 
         limePipe.setDouble(vision.getLimePipe());
         photonPipe.setDouble(vision.getPhotonPipe());
+
+        pivot1Temp.setDouble(arm.getPivot1Temp());
+        pivot2Temp.setDouble(arm.getPivot2Temp());
+
      }
 }
