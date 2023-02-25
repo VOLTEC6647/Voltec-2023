@@ -33,7 +33,7 @@ public class Conversions {
      * @return Degrees of rotation of mechanism
      */
     public static double neoToDegrees(double counts, double gearRatio) {
-        return counts / (42 * gearRatio);
+        return counts / ( gearRatio / 360);
     }
 
     /**
@@ -56,8 +56,7 @@ public class Conversions {
      * @return Neo Counts
      */
     public static double degreesToNeo(double degrees, double gearRatio) {
-        double ticks = degrees / (360.0 / (gearRatio * 4096));
-        return ticks;
+        return degrees * (gearRatio / 360);
     }
 
     /**

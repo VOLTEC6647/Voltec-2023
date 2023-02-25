@@ -17,4 +17,21 @@ public class Functions {
     public static double clamp(double num, double min, double max) {
         return Math.max(min, Math.min(max, num));
     }
+
+    /**
+     * Handles controller deathband
+     * 
+     * @param value    Controller stick value
+     * @param deadband Deathband
+     * @return Filtered value
+     */
+    public static double handleDeadband(double value, double deadband) {
+        deadband = Math.abs(deadband);
+        if (deadband == 1) {
+            return 0;
+        }
+        double scaledValue = (value + (value < 0 ? deadband : -deadband)) / (1 - deadband);
+
+        return (Math.abs(value) > Math.abs(deadband)) ? scaledValue : 0;
+    }
 }
