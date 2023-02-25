@@ -54,23 +54,23 @@ public final class Constants {
     public static final double extendSped = 0.2;
     public static final double armSpeed = 0.5;
 
-    public static final double kMaxVelocityRadPerSecond = 100.38;
+    public static final double kMaxVelocityRadPerSecond = 100.38 / 2;
     public static final double kMaxAccelerationRadPerSecSquared = 118.876 / 2;
 
     // TODO SET
     public static final double forwardLimit = 40;
 
-    public static final double gearRatio = 0.01063829787;
-    public static final double startPositionRads = (-Math.PI / 4);
+    public static final double gearRatio = 94;
+    public static final double startPositionRads = 0;;
 
     public static final double feedkS = 0;
     public static final double feedkG = 0.82;
     public static final double feedkV = 1.75;
     public static final double feedkA = 0.03;
 
-    public static final double pivotkP = 0;
-    public static final double pivotkI = 0;
-    public static final double pivotkD = 0;
+    public static final double pivotkP = 0.015;
+
+    public static final double dynamickP = 0.03;
   }
 
   public static class ClawConstants {

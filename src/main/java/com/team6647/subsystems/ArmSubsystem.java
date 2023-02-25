@@ -1,20 +1,19 @@
 /**
- * Written by Juan Pablo Gutiérrez
+ * Written by Juan Pablo Gutíerrez
  */
 package com.team6647.subsystems;
 
-import com.andromedalib.math.Conversions;
+import com.andromedalib.math.Functions;
 import com.andromedalib.motorControllers.SuperSparkMax;
 import com.andromedalib.motorControllers.IdleManager.GlobalIdleMode;
 import com.team6647.Constants.ArmConstants;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ArmSubsystem extends ProfiledPIDSubsystem {
+public class ArmSubsystem extends SubsystemBase {
   private static ArmSubsystem instance;
 
   private static SuperSparkMax pivotSpark1 = new SuperSparkMax(ArmConstants.armNeo1ID, GlobalIdleMode.brake, false, 50);
@@ -23,26 +22,23 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
   private static SuperSparkMax extendingSpark = new SuperSparkMax(ArmConstants.extendNeoID, GlobalIdleMode.brake, true,
       50);
 
-  private static ArmFeedforward feedforward = new ArmFeedforward(ArmConstants.feedkS, ArmConstants.feedkG,
-      ArmConstants.feedkV, ArmConstants.feedkA);
-
   private static DigitalInput limitSwitch = new DigitalInput(3);
+
+  private static PIDController pidController = new PIDController(ArmConstants.pivotkP, 0,
+      0);
+
+  private static PIDController dynamicController = new PIDController(ArmConstants.dynamickP, 0, 0);
 
   private double pidOutput;
   private double feedOutput;
 
+  private double setPoint;
+  private double totalOutput;
+
   public ArmSubsystem() {
-    super(
-        new ProfiledPIDController(
-            ArmConstants.pivotkP,
-            ArmConstants.pivotkI,
-            ArmConstants.pivotkD,
-            // The motion profile constraints
-            new TrapezoidProfile.Constraints(ArmConstants.kMaxVelocityRadPerSecond,
-                ArmConstants.kMaxAccelerationRadPerSecSquared)));
     pivotSpark2.follow(pivotSpark1, true);
 
-    setGoal(ArmConstants.startPositionRads);
+    this.setPoint = -140; // When initialize
   }
 
   /**
@@ -59,56 +55,83 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
 
   @Override
   public void periodic() {
-    super.periodic();
-  }
 
-  @Override
-  public void useOutput(double output, TrapezoidProfile.State setpoint) {
-    this.pidOutput = output;
-    double feedForwardValue = feedforward.calculate(setpoint.position, setpoint.velocity);
+    double actualPoint = getMeasurement();
 
-    feedOutput = feedForwardValue;
-    pivotSpark1.setVoltage(feedForwardValue);
-  }
+    double error = Math.abs(actualPoint - setPoint);
 
-  //TODO SET TO CORRECT CONVERSION
-  @Override
-  public double getMeasurement() {
-    return pivotSpark1.getPosition() + ArmConstants.startPositionRads;
+    double pidOut = 0;
+
+    if (error < 10) {
+      pidOut = dynamicController.calculate(actualPoint, this.setPoint);
+      pidOut = Functions.clamp(pidOut, -0.5, 0.5);
+    } else {
+      // MEJOR PARA EL MANUAl
+      pidOut = pidController.calculate(actualPoint, this.setPoint);
+      pidOut = Functions.clamp(pidOut, -0.4, 0.4);
+    }
+
+    double feedForwardValue = 0;
+
+    if (actualPoint > 0) {
+      feedForwardValue = (actualPoint / 143) * 0.31 * 12;
+      if (actualPoint > 90) {
+        feedForwardValue -= (actualPoint - 90) / 143 * 12;
+      }
+    } else {
+      feedForwardValue = (actualPoint / -148) * 0.31 * 12;
+      if (actualPoint < -90) {
+        feedForwardValue -= (actualPoint + 90) / -148 * 12;
+      }
+    }
+
+    this.feedOutput = feedForwardValue;
+    this.pidOutput = pidOut;
+
+    double total = (pidOut * 12) + feedForwardValue;
+
+    total = Functions.clamp(total, -12, 12);
+
+    this.totalOutput = total;
+
+    SmartDashboard.putNumber("Total:", total);
+    pivotSpark1.setVoltage(total);
   }
 
   /**
-   * Sets the angle via a defined speed
+   * Gets encoder measuremt converted to degrees
    * 
-   * @param speed Speed for the arm
+   * @return Encoder measurement
    */
-  public void setAngle(double speed) {
-    disable();
-    pivotSpark1.set(speed);
-    enable();
+  public double getMeasurement() {
+    return (pivotSpark1.getPosition() / ((double) 94 / 360)) - 148.7;
   }
 
   /**
-   * Completely resets setpoint & encoder data
+   * Security method for movement. Use this method always while moving the arm
+   * 
+   * @param change Setpoint change
    */
-  public void resetEverything() {
-    stopPivot();
-    pivotSpark1.resetEncoder();
+  public void changeSetpoint(double change) {
+    if (change < -148 || change > 143) // TUNE
+      change = Functions.clamp(change, -148, 143);
+
+    this.setPoint = change;
   }
 
   /**
-   * Stops the PID control and sets the motors to 0
+   * Adds a given value to the setpoint
+   * 
+   * @param value Value to be added
    */
-  public void stopPivot() {
-    disable();
-    pivotSpark1.set(0);
-    pivotSpark2.set(0);
+  public void manualControl(double value) {
+    changeSetpoint(setPoint + value * 1);
   }
 
   /**
    * Extends the arm at the desired speed
    * 
-   * @param speed
+   * @param speed Arm speed
    */
   public void extendArm(double speed) {
     extendingSpark.set(speed);
@@ -117,7 +140,7 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
   /**
    * Gets the state of the limit switch
    * 
-   * @return
+   * @return Current limit switch state
    */
   public boolean getLimitState() {
     return limitSwitch.get();
@@ -129,7 +152,7 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
    * @return Current position
    */
   public double getExtendPosition() {
-    return extendingSpark.getPosition();
+    return extendingSpark.get();
   }
 
   /**
@@ -158,15 +181,6 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
   }
 
   /**
-   * Gets the position of Pivo1
-   * 
-   * @return Pivot1 Position
-   */
-  public double getPivot1Position() {
-    return Conversions.neoToDegrees(pivotSpark1.getPosition(), ArmConstants.gearRatio);
-  }
-
-  /**
    * Gets the voltage applied to Pivot1 Voltage
    * 
    * @return Voltage applied
@@ -191,5 +205,23 @@ public class ArmSubsystem extends ProfiledPIDSubsystem {
    */
   public double getPidOutput() {
     return pidOutput;
+  }
+
+  /**
+   * Gets the current setpoint
+   * 
+   * @return Current setpoint
+   */
+  public double getSetpoint() {
+    return setPoint;
+  }
+
+  /**
+   * Gets total output applied to the motors
+   * 
+   * @return Output applied to the motors
+   */
+  public double getTotal() {
+    return totalOutput;
   }
 }

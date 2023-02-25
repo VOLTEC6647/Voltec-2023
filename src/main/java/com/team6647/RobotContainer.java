@@ -10,7 +10,6 @@ import com.team6647.Constants.OperatorConstants;
 import com.team6647.commands.auto.AutoBalance;
 import com.team6647.commands.auto.ProtocolCommand;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
-import com.team6647.commands.hybrid.Arm.RotateArm;
 import com.team6647.commands.hybrid.Arm.StartArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
 import com.team6647.commands.hybrid.vision.ToggleVisionDevice;
@@ -26,6 +25,7 @@ import com.team6647.utils.shuffleboard.ShuffleboardManager;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 
 public class RobotContainer {
 
@@ -41,7 +41,8 @@ public class RobotContainer {
   private DriveSubsystem drive;
   private VisionSubsystem vision;
 
-  private RobotContainer() {}
+  private RobotContainer() {
+  }
 
   public static RobotContainer getInstance() {
     if (instance == null) {
@@ -62,7 +63,6 @@ public class RobotContainer {
     vision = VisionSubsystem.getInstance("Photon");
   }
 
-  
   /**
    * Initializes the sending of telemetry
    */
@@ -87,10 +87,6 @@ public class RobotContainer {
     chassis.setDefaultCommand(selector.getDriveMode());
   }
 
-  public void resetArm(){
-    arm.resetEverything();
-  }
-
   /**
    * Sets the button bidings
    */
@@ -101,12 +97,19 @@ public class RobotContainer {
     OperatorConstants.driverController1.a().whileTrue(new AutoBalance(chassis, drive));
     OperatorConstants.driverController1.x().whileTrue(new AprilAim(vision, chassis));
     OperatorConstants.driverController1.b().whileTrue(new LimelightAim(vision, chassis));
-    OperatorConstants.driverController1.rightBumper().whileTrue(new ToggleVisionDevice(vision));
+    OperatorConstants.driverController1.rightBumper().whileTrue(new ToggleVisionDevice(vision));/* 
 
-/*     OperatorConstants.driverController2.x().onTrue(Commands.runOnce(() -> {arm.setGoal(Units.degreesToRadians(-45)); arm.enable();}, arm));
- */    OperatorConstants.driverController2.b().whileTrue(new RotateArm(arm, ArmConstants.armSpeed));
-    OperatorConstants.driverController2.x().whileTrue(new RotateArm(arm, -ArmConstants.armSpeed));
+    OperatorConstants.driverController2.y().whileTrue(new RunCommand((() -> {
+      arm.changeSetpoint(-90);
+    }), arm)); */
 
+    OperatorConstants.driverController2.x().whileTrue(new RunCommand(() -> {
+      arm.manualControl(0.1);
+    }, arm));
+
+    OperatorConstants.driverController2.b().whileTrue(new RunCommand(() -> {
+      arm.manualControl(-0.1);
+    }, arm));
 
     OperatorConstants.driverController2.y().whileTrue(new ExtendArm(arm, ArmConstants.extendSped));
     OperatorConstants.driverController2.a().whileTrue(new ExtendArm(arm, -ArmConstants.extendSped));
@@ -129,9 +132,11 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return new StartArm(arm);
-    /* return Load.loadTrajectory(Filesystem.getDeployDirectory()
-        + "/pathplanner/generatedJSON/LeaveCommunityDown.wpilib.json",
-        true); */
+    /*
+     * return Load.loadTrajectory(Filesystem.getDeployDirectory()
+     * + "/pathplanner/generatedJSON/LeaveCommunityDown.wpilib.json",
+     * true);
+     */
   }
 
   /**
@@ -139,7 +144,7 @@ public class RobotContainer {
    *
    * @return the command to run in test
    */
-  public Command getTestCommand(){
+  public Command getTestCommand() {
     return protocolCommand.getStartCommand();
   }
 }

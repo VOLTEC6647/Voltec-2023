@@ -33,12 +33,12 @@ public class DebugTab extends ShuffleboardTabBase {
     GenericEntry extendingPosition;
 
     GenericEntry armPositionGraph;
-    GenericEntry armPositionDoubleRaw;
     GenericEntry armPositionDoublePID;
     GenericEntry desiredPosition;
     GenericEntry voltageApplied;
     GenericEntry feedOutput;
     GenericEntry pidOutput;
+    GenericEntry totalOutput;
 
     GenericEntry limeAim;
     GenericEntry photonAim;
@@ -51,15 +51,15 @@ public class DebugTab extends ShuffleboardTabBase {
         this.pivot1Speed = tab.add("Pivot 1 Speed", arm.getPivot1Velocity()).withPosition(3, 1).getEntry();
         this.pivot2Speed = tab.add("Pivot 2 Speed", arm.getPivot2Velocity()).withPosition(4, 1).getEntry();
 
-        this.extendingPosition = tab.add("Extend postion", arm.getExtendPosition()).withPosition(7, 2).getEntry();
+        this.extendingPosition = tab.add("Extend postion", arm.getExtendPosition()).withPosition(6, 2).getEntry();
 
-        this.armPositionGraph = tab.add("Arm Position", arm.getMeasurement()).withPosition(3, 2).withWidget(BuiltInWidgets.kGraph).getEntry();
-        this.armPositionDoubleRaw = tab.add("Arm Position RAW", arm.getPivot1Position()).withPosition(6, 2).getEntry();
-        this.armPositionDoublePID  = tab.add("Arm Position PID", arm.getMeasurement()).withPosition(6,3).getEntry();
-        this.desiredPosition = tab.add("Desired Position", arm.getController().getGoal().position).withPosition(5, 1).getEntry();
+        this.armPositionGraph = tab.add("Arm Position Graph", arm.getMeasurement()).withPosition(3, 2).withWidget(BuiltInWidgets.kGraph).getEntry();
+        this.armPositionDoublePID  = tab.add("Arm Position", arm.getMeasurement()).withPosition(6,3).getEntry();
+        this.desiredPosition = tab.add("Desired Position", arm.getSetpoint()).withPosition(5, 1).getEntry();
         this.voltageApplied = tab.add("Voltage Applied", arm.getPivot1Voltage()).withPosition(6, 0).getEntry();
         this.feedOutput = tab.add("Feed output", arm.getFeedOutput()).withPosition(7, 1).getEntry();
         this.pidOutput = tab.add("Arm Output", arm.getPidOutput()).withPosition(8, 1).getEntry();
+        this.totalOutput = tab.add("Total Output", arm.getTotal()).withPosition(6, 1).getEntry();
 
         this.limit = tab.add("Limit switch", arm.getLimitState()).withPosition(0, 2).getEntry();
 
@@ -78,12 +78,12 @@ public class DebugTab extends ShuffleboardTabBase {
         extendingPosition.setDouble(arm.getExtendPosition());
 
         armPositionDoublePID.setDouble(arm.getMeasurement());
-        armPositionDoubleRaw.setDouble(arm.getPivot1Position());
-        desiredPosition.setDouble(arm.getController().getGoal().position);
+        desiredPosition.setDouble(arm.getSetpoint());
         voltageApplied.setDouble(arm.getPivot1Voltage());
         feedOutput.setDouble(arm.getFeedOutput());
         pidOutput.setDouble(arm.getPidOutput());
-        
+        totalOutput.setDouble(arm.getTotal());
+
         limit.setBoolean(arm.getLimitState());
 
         /* limeAim.setBoolean(vision.getLimelightAim());
