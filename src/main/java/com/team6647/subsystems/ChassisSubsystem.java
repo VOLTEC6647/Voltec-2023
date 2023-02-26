@@ -11,8 +11,9 @@ import com.team6647.Constants.ChassisConstants;
 import com.team6647.Constants.DriveConstants;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 /**
  * Singleton class. It controls the actual movement and interactions in the
@@ -33,10 +34,8 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
   private static SuperTalonFX[] listLeft = { frontLeft, backLeft };
   private static SuperTalonFX[] listRight = { frontRight, backRight };
 
-  private static Solenoid forwardSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM,
-      ChassisConstants.forwardSolenoidID);
-  private static Solenoid backSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM,
-      ChassisConstants.backwardSolenoidID);
+  private static DoubleSolenoid gearSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,
+      ChassisConstants.forwardSolenoidID, ChassisConstants.backwardSolenoidID);
 
   // TOOD DEBUG
   private SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(DriveConstants.ksVolts,
@@ -69,10 +68,18 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
    * Changes reduction state
    */
   public static void toggleReduction() {
-    var currentState = forwardSolenoid.get();
+    Value currentState = gearSolenoid.get();
 
-    forwardSolenoid.set(!currentState);
-    backSolenoid.set(currentState);
+    switch (currentState) {
+      case kForward:
+        gearSolenoid.set(Value.kReverse);
+        break;
+      case kReverse:
+        gearSolenoid.set(Value.kForward);
+      default:
+        gearSolenoid.set(Value.kForward);
+        break;
+    }
   }
 
   /**
@@ -90,7 +97,7 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
    * Sets all motors to brake
    * Be careful to not damage motors
    */
-  public void setBrake(){
+  public void setBrake() {
     frontLeft.setMode(GlobalIdleMode.brake);
     frontRight.setMode(GlobalIdleMode.brake);
     backLeft.setMode(GlobalIdleMode.brake);
