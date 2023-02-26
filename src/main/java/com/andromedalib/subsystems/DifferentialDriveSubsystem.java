@@ -19,7 +19,7 @@ public class DifferentialDriveSubsystem extends SubsystemBase {
   private double leftSpeed = 0.0;
   private double rightSpeed = 0.0;
 
-  public DifferentialDrive drive;
+  private DifferentialDrive drive;
 
   private boolean driveInverted = false;
 
