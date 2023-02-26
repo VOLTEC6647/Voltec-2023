@@ -79,7 +79,6 @@ public final class Constants {
   }
 
   public static class DriveConstants {
-    // TODO SET
     public static final double ksVolts = 0.23409; // 0.3434
     public static final double kvVoltSecondsPerMeter = 1.5886; // 1.6277 //0.63 //2.4174
     public static final double kaVoltSecondsSquaredPerMeter = 0.453; // 0.22002 //0.03
