@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 import com.team6647.Constants.DriveConstants;
+import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.subsystems.DriveSubsystem;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -24,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class Load {
     static DriveSubsystem drive = DriveSubsystem.getInstance();
+    static ChassisSubsystem chassis = ChassisSubsystem.getInstance();
 
     /**
      * Loads a JSON Path file into a command
@@ -54,7 +56,7 @@ public class Load {
                 DriveConstants.kDrivekinematics, drive::getWheelSpeeds,
                 new PIDController(DriveConstants.kpDriveVelocity, 0, 0),
                 new PIDController(DriveConstants.kpDriveVelocity, 0, 0),
-                drive::tankDriveVolts, drive);
+                drive::tankDriveVolts, drive, chassis);
 
         if (resetOdometry) {
             return new SequentialCommandGroup(
