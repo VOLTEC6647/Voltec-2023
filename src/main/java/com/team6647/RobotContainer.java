@@ -4,12 +4,12 @@
 
 package com.team6647;
 
+import com.team6647.commands.auto.Load;
 import com.team6647.Constants.ArmConstants;
 import com.team6647.Constants.OperatorConstants;
 import com.team6647.commands.auto.AutoBalance;
 import com.team6647.commands.auto.ProtocolCommand;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
-import com.team6647.commands.hybrid.Arm.StartArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
 import com.team6647.commands.hybrid.vision.ToggleVisionDevice;
 import com.team6647.commands.teleop.AprilAim;
@@ -22,6 +22,7 @@ import com.team6647.subsystems.VisionSubsystem;
 import com.team6647.utils.shuffleboard.DriveModeSelector;
 import com.team6647.utils.shuffleboard.ShuffleboardManager;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -98,23 +99,27 @@ public class RobotContainer {
     OperatorConstants.driverController1.b().whileTrue(new LimelightAim(vision, chassis));
     OperatorConstants.driverController1.rightBumper().whileTrue(new ToggleVisionDevice(vision));
 
-    OperatorConstants.driverController2.y().whileTrue(new RunCommand((() -> {
-      arm.changeSetpoint(-90);
-    }), arm));
-
     OperatorConstants.driverController2.x().whileTrue(new RunCommand(() -> {
-      arm.manualControl(0.1);
+      arm.manualControl(0.5);
     }, arm));
 
     OperatorConstants.driverController2.b().whileTrue(new RunCommand(() -> {
-      arm.manualControl(-0.1);
+      arm.manualControl(-0.5);
     }, arm));
 
-/*     OperatorConstants.driverController2.y().whileTrue(new ExtendArm(arm, ArmConstants.extendSped));
- */    OperatorConstants.driverController2.a().whileTrue(new ExtendArm(arm, -ArmConstants.extendSped));
+    OperatorConstants.driverController2.pov(0).whileTrue(new RunCommand(() -> {
+      arm.changeSetpoint(-90);
+    }, arm));
 
-    OperatorConstants.driverController2.rightTrigger(0.1).whileTrue(new MoveClaw(claw));
-    OperatorConstants.driverController2.leftTrigger(0.1).whileTrue(new MoveClaw(claw));
+    OperatorConstants.driverController2.pov(180).whileTrue(new RunCommand(() -> {
+      arm.changeSetpoint(-130);
+    }, arm));
+
+    OperatorConstants.driverController2.y().whileTrue(new ExtendArm(arm, ArmConstants.extendSped));
+    OperatorConstants.driverController2.a().whileTrue(new ExtendArm(arm, -ArmConstants.extendSped));
+
+    OperatorConstants.driverController2.rightTrigger(0.1).whileTrue(new MoveClaw(claw, 1));
+    OperatorConstants.driverController2.leftTrigger(0.1).whileTrue(new MoveClaw(claw, -1));
     OperatorConstants.driverController2.rightBumper().whileTrue(new InstantCommand(() -> {
       claw.ConeSet();
     }));
@@ -130,12 +135,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new StartArm(arm);
-    /*
-     * return Load.loadTrajectory(Filesystem.getDeployDirectory()
-     * + "/pathplanner/generatedJSON/LeaveCommunityDown.wpilib.json",
-     * true);
-     */
+    return Load.loadTrajectory(Filesystem.getDeployDirectory()
+        + "/pathplanner/generatedJSON/Basic.wpilib.json",
+        true);
   }
 
   /**
