@@ -49,8 +49,8 @@ public final class ProtocolCommand {
 
     private Command clawCommand() {
         return new SequentialCommandGroup(
-                new MoveClaw(claw).withTimeout(2),
-                new MoveClaw(claw).withTimeout(2),
+                new MoveClaw(claw, 1).withTimeout(2),
+                new MoveClaw(claw, -1).withTimeout(2),
                 new InstantCommand(() -> claw.cubeSet(), claw).withTimeout(0.5),
                 new RunCommand(() -> {
                 }, claw).withTimeout(1),

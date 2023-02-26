@@ -13,9 +13,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class MoveClaw extends CommandBase {
   ClawSubsytem claw;
   double speed;
+  int mult;
 
-  public MoveClaw(ClawSubsytem claw) {
+  public MoveClaw(ClawSubsytem claw, int mult) {
     this.claw = claw;
+    this.mult = mult;
 
     addRequirements(claw);
   }
@@ -23,9 +25,9 @@ public class MoveClaw extends CommandBase {
   @Override
   public void initialize() {
     if (claw.getSolenoidState() == Value.kForward) {
-      speed = ClawConstants.clawSpeedCones;
+      speed = ClawConstants.clawSpeedCones * mult;
     } else {
-      speed = ClawConstants.clawSpeedCubes;
+      speed = ClawConstants.clawSpeedCubes * mult;
     }
     claw.setVelocity(speed);
   }
