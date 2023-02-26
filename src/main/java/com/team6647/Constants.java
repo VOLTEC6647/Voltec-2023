@@ -71,8 +71,8 @@ public final class Constants {
     public static final int clawNeo1ID = 8;
     public static final int clawNeo2ID = 9;
 
-    public static final int clawForwardPistonID = 7;
-    public static final int clawBackwarddPistonID = 4;
+    public static final int clawForwardPistonID = 6;
+    public static final int clawBackwarddPistonID = 5;
 
     public static final double clawSpeedCones = 1;
     public static final double clawSpeedCubes = 0.5;
@@ -80,10 +80,10 @@ public final class Constants {
 
   public static class DriveConstants {
     // TODO SET
-    public static final double ksVolts = 0.59085; // 0.1519
-    public static final double kvVoltSecondsPerMeter = 2.4174; // 1.6277 //0.63 //2.4174
-    public static final double kaVoltSecondsSquaredPerMeter = 0.14582; // 0.22002 //0.03
-    public static final double kpDriveVelocity = 2.5106; // 2.0958 //0.2
+    public static final double ksVolts = 0.23409; // 0.3434
+    public static final double kvVoltSecondsPerMeter = 1.5886; // 1.6277 //0.63 //2.4174
+    public static final double kaVoltSecondsSquaredPerMeter = 0.453; // 0.22002 //0.03
+    public static final double kpDriveVelocity = 2.4813; // 2.0958 //0.2
 
     public static final double kTrackWidthMeters = Units.inchesToMeters(19);
     public static final DifferentialDriveKinematics kDrivekinematics = new DifferentialDriveKinematics(
