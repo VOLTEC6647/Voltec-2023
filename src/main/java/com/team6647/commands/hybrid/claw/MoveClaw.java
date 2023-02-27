@@ -25,9 +25,9 @@ public class MoveClaw extends CommandBase {
   @Override
   public void initialize() {
     if (claw.getSolenoidState() == Value.kForward) {
-      speed = ClawConstants.clawSpeedCones * mult;
-    } else {
       speed = ClawConstants.clawSpeedCubes * mult;
+    } else {
+      speed = ClawConstants.clawSpeedCones * mult;
     }
     claw.setVelocity(speed);
   }
