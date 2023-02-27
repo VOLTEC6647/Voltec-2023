@@ -74,8 +74,8 @@ public final class Constants {
     public static final int clawForwardPistonID = 6;
     public static final int clawBackwarddPistonID = 5;
 
-    public static final double clawSpeedCones = 1;
-    public static final double clawSpeedCubes = 0.5;
+    public static final double clawSpeedCones = 0.5;
+    public static final double clawSpeedCubes = 0.3;
   }
 
   public static class DriveConstants {
