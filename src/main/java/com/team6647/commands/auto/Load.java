@@ -7,6 +7,8 @@ package com.team6647.commands.auto;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPRamseteCommand;
 import com.team6647.Constants.DriveConstants;
 import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.subsystems.DriveSubsystem;
@@ -34,7 +36,7 @@ public class Load {
      * @param resetOdometry Reset odometry status
      * @return JSON Path command
      */
-    public static Command loadTrajectory(String filename, boolean resetOdometry) {
+    public static Command loadWPITrajectory(String filename, boolean resetOdometry) {
         Trajectory trajectory;
         try {
             /* Searchs for trajectory in deploy directory */
@@ -65,5 +67,33 @@ public class Load {
         } else {
             return ramseteCommand;
         }
+    }
+
+    /**
+     * Loads a {@link PathPlannerTrajectory} into a command
+     * 
+     * @param filename      Path for the trajectory
+     * @param resetOdometry Reset odometry status
+     * @return Path command
+     */
+    public static Command loadPathTrajectory(PathPlannerTrajectory trajectory, boolean resetOdometry) {
+        return new SequentialCommandGroup(
+                new InstantCommand(() -> {
+                    if (resetOdometry) {
+                        drive.resetOdometry(trajectory.getInitialPose());
+                    }
+                }),
+                new PPRamseteCommand(trajectory, drive::getPose,
+                        new RamseteController(DriveConstants.kramseteB, DriveConstants.kRamseteZeta),
+                        new SimpleMotorFeedforward(
+                                DriveConstants.ksVolts,
+                                DriveConstants.kvVoltSecondsPerMeter,
+                                DriveConstants.kaVoltSecondsSquaredPerMeter),
+                        DriveConstants.kDrivekinematics, drive::getWheelSpeeds,
+                        new PIDController(DriveConstants.kpDriveVelocity, 0, 0),
+                        new PIDController(DriveConstants.kpDriveVelocity, 0, 0), drive::tankDriveVolts,
+                        false,
+                        drive,
+                        chassis));
     }
 }
