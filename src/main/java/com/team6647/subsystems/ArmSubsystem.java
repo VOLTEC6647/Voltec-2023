@@ -34,6 +34,7 @@ public class ArmSubsystem extends SubsystemBase {
 
   private double setPoint;
   private double totalOutput;
+  private double error;
 
   public ArmSubsystem() {
     pivotSpark2.follow(pivotSpark1, true);
@@ -59,6 +60,7 @@ public class ArmSubsystem extends SubsystemBase {
     double actualPoint = getMeasurement();
 
     double error = Math.abs(actualPoint - setPoint);
+    this.error = error;
 
     double pidOut = 0;
 
@@ -223,6 +225,15 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public double getTotal() {
     return totalOutput;
+  }
+
+  /**
+   * Gets the difference between the setpoint and the current position;
+   * 
+   * @return Arm error
+   */
+  public double getError() {
+    return error;
   }
 
   /**
