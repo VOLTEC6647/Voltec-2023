@@ -7,8 +7,6 @@ import com.team6647.commands.hybrid.claw.MoveClaw;
 import com.team6647.subsystems.ArmSubsystem;
 import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.subsystems.ClawSubsytem;
-import com.team6647.subsystems.DriveSubsystem;
-import com.team6647.subsystems.VisionSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -19,24 +17,20 @@ public final class ProtocolCommand {
     private ArmSubsystem arm;
     private ChassisSubsystem chassis;
     private ClawSubsytem claw;
-    private DriveSubsystem drive;
-    private VisionSubsystem vision;
 
-    public ProtocolCommand(ArmSubsystem arm, ChassisSubsystem chassis, ClawSubsytem claw, DriveSubsystem drive,
-            VisionSubsystem vision) {
+    public ProtocolCommand(ArmSubsystem arm, ChassisSubsystem chassis, ClawSubsytem claw) {
         this.arm = arm;
         this.chassis = chassis;
         this.claw = claw;
-        this.drive = drive;
-        this.vision = vision;
-
     }
 
     public Command getStartCommand() {
         return new SequentialCommandGroup(
                 chassisCommand(),
                 clawCommand(),
-                extendArm());
+                extendArm(),
+                moveArm());
+
     }
 
     private Command chassisCommand() {
@@ -63,4 +57,17 @@ public final class ProtocolCommand {
                 new ExtendArm(arm, -ArmConstants.extendSped),
                 new ExtendArm(arm, ArmConstants.extendSped));
     }
+
+    private Command moveArm() {
+        return new SequentialCommandGroup(
+                AutonomousPaths.moveArmAuto(-120),
+                AutonomousPaths.moveArmAuto(-90),
+                AutonomousPaths.moveArmAuto(20),
+                new RunCommand(() -> {
+                }, arm).withTimeout(2),
+                AutonomousPaths.moveArmAuto(-45),
+                AutonomousPaths.moveArmAuto(-90),
+                AutonomousPaths.moveArmAuto(-120));
+    }
+
 }
