@@ -32,14 +32,6 @@ public class ArcadeDriveCommand extends CommandBase {
     forwardY = -controller.getLeftY() * OperatorConstants.yMultiplier;
     turnX = -controller.getRightX() * OperatorConstants.xMultiplier;
 
-    if (controller.y().getAsBoolean()) {
-      chassis.toggleInverted();
-    }
-    if (chassis.isInverted()) {
-      forwardY = -forwardY;
-      turnX = -turnX;
-    }
-
     chassis.arcadeDrive(forwardY, turnX);
   }
 

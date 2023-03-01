@@ -29,14 +29,6 @@ public class TankDriveCommand extends CommandBase {
     leftY = -controller.getLeftY() * OperatorConstants.xMultiplier;
     rightY = -controller.getRightY() * OperatorConstants.xMultiplier;
 
-    if (controller.y().getAsBoolean()) {
-      chassis.toggleInverted();
-    }
-    if (chassis.isInverted()) {
-      leftY = -leftY;
-      rightY = -rightY;
-    }
-
     chassis.tankDrive(leftY, rightY);
   }
 
