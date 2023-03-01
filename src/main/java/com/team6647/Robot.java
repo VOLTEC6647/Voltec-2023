@@ -1,7 +1,6 @@
 /**
  * Written by Juan Pablo Gutiérrez
  * 
- * In honor of HRGD
  */
 
 package com.team6647;
