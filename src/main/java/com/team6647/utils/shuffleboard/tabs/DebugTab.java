@@ -68,7 +68,6 @@ public class DebugTab extends ShuffleboardTabBase {
      
         this.pivot1Temp = tab.add("Pivot1 Temp", arm.getPivot1Temp()).withPosition(7, 0).getEntry();
         this.pivot2Temp = tab.add("Pivot2 Temp", arm.getPivot2Temp()).withPosition(8, 0).getEntry();
-
     }
 
     @Override
