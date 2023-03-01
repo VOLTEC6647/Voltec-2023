@@ -85,10 +85,6 @@ public class AutonomousPaths {
                 new AutoBalance(chassis, drive));
     }
 
-    public static Command armCommand() {
-        return moveArmAuto(-90);
-    }
-
     /**
      * Drops a cone, and grabs a cone and places it again.
      * Then, climbs the charge station
@@ -124,7 +120,6 @@ public class AutonomousPaths {
 
         double q2 = error / 2;
         double q1 = q2 / 4;
-        double q3 = q2 + q1;
 
         double first = current += q1;
         double second = current += q1;
