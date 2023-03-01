@@ -1,7 +1,6 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
+/**
+ * Written by Juan Pablo Gutiérrez
+ */
 package com.team6647.commands.hybrid.vision;
 
 import com.team6647.Constants.VisionConstants;
@@ -31,10 +30,12 @@ public class ToggleVisionDevice extends CommandBase {
   }
 
   @Override
-  public void execute() {}
+  public void execute() {
+  }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   @Override
   public boolean isFinished() {
