@@ -4,12 +4,13 @@
 
 package com.team6647;
 
-import com.team6647.commands.auto.Load;
 import com.team6647.Constants.ArmConstants;
 import com.team6647.Constants.OperatorConstants;
 import com.team6647.commands.auto.AutoBalance;
+import com.team6647.commands.auto.AutonomousPaths;
 import com.team6647.commands.auto.ProtocolCommand;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
+import com.team6647.commands.hybrid.Arm.StartArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
 import com.team6647.commands.hybrid.vision.ToggleVisionDevice;
 import com.team6647.commands.teleop.AprilAim;
@@ -22,8 +23,8 @@ import com.team6647.subsystems.VisionSubsystem;
 import com.team6647.utils.shuffleboard.DriveModeSelector;
 import com.team6647.utils.shuffleboard.ShuffleboardManager;
 
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
@@ -69,7 +70,7 @@ public class RobotContainer {
   public void initTelemetry() {
     selector = new DriveModeSelector();
     interactions = ShuffleboardManager.getInstance();
-    protocolCommand = new ProtocolCommand(arm, chassis, claw, drive, vision);
+    protocolCommand = new ProtocolCommand(arm, chassis, claw);
   }
 
   /**
@@ -112,11 +113,11 @@ public class RobotContainer {
     }, arm));
 
     OperatorConstants.driverController2.pov(180).whileTrue(new RunCommand(() -> {
-      arm.changeSetpoint(-130);
+      arm.changeSetpoint(-129);
     }, arm));
 
-    OperatorConstants.driverController2.y().whileTrue(new ExtendArm(arm, ArmConstants.extendSped));
-    OperatorConstants.driverController2.a().whileTrue(new ExtendArm(arm, -ArmConstants.extendSped));
+    OperatorConstants.driverController2.y().whileTrue(new ExtendArm(arm, ArmConstants.extendSped)).toggleOnFalse(new RunCommand(() -> arm.extendArm(0), arm));
+    OperatorConstants.driverController2.a().whileTrue(new ExtendArm(arm, -ArmConstants.extendSped)).toggleOnFalse(new RunCommand(() -> arm.extendArm(0), arm));
 
     OperatorConstants.driverController2.rightTrigger(0.1).whileTrue(new MoveClaw(claw, 1));
     OperatorConstants.driverController2.leftTrigger(0.1).whileTrue(new MoveClaw(claw, -1));
@@ -126,18 +127,20 @@ public class RobotContainer {
     OperatorConstants.driverController2.leftBumper().whileTrue(new InstantCommand(() -> {
       claw.cubeSet();
     }));
-
   }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
+   * Always retract arm before any autonomous
    *
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return Load.loadTrajectory(Filesystem.getDeployDirectory()
-        + "/pathplanner/generatedJSON/Basic.wpilib.json",
-        true);
+    //Maybe use Commands.sequence
+    return Commands.sequence(
+      new StartArm(arm),
+      AutonomousPaths.dropCubeAndCone()
+    );
   }
 
   /**
