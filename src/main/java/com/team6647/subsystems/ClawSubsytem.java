@@ -48,7 +48,6 @@ public class ClawSubsytem extends SubsystemBase {
    */
   public void setVelocity(double speed) {
     neo1.set(speed);
-    neo2.set(speed);
   }
 
   /**
