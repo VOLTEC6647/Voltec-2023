@@ -98,6 +98,9 @@ public final class Constants {
     public static final double kWheelCircumference = kWheelDiameterMeter * Math.PI;
 
     public static final double angleTolerance = 1;
+    public static final double balanceGoal = 0;
+    public static final double balanceKp = 2.4813;
+    public static final double balanceTolerance = 1;
   }
 
   public static class VisionConstants {
