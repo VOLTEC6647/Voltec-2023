@@ -51,8 +51,7 @@ public final class Constants {
     public static final int armNeo2ID = 6;
     public static final int extendNeoID = 7;
 
-    public static final double extendSped = 0.2;
-    public static final double armSpeed = 0.5;
+    public static final double extendSped = 0.5;
 
     public static final double kMaxVelocityRadPerSecond = 100.38 / 2;
     public static final double kMaxAccelerationRadPerSecSquared = 118.876 / 2;
