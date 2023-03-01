@@ -163,24 +163,6 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   /**
-   * Gets the velocity of pivot1
-   * 
-   * @return Pivot1 Velocity
-   */
-  public double getPivot1Velocity() {
-    return pivotSpark1.getVelocity();
-  }
-
-  /**
-   * Gets the velocity of pivot2
-   * 
-   * @return Pivot2 Velocity
-   */
-  public double getPivot2Velocity() {
-    return pivotSpark2.getVelocity();
-  }
-
-  /**
    * Gets the voltage applied to Pivot1 Voltage
    * 
    * @return Voltage applied
