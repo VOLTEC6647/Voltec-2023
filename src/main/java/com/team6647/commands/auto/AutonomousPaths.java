@@ -39,8 +39,31 @@ public class AutonomousPaths {
         return trajectory1;
     }
 
+    public static Command leaveCommunity(String position) {
+        switch (position) {
+            case "Top":
+                return Commands.sequence(Load.loadPathTrajectory(
+                        PathPlanner.loadPath("LeaveCommunityTop", new PathConstraints(1, 2)), true));
+
+            case "Mid Top":
+                return Commands.sequence(Load.loadPathTrajectory(
+                        PathPlanner.loadPath("MidLeaveCommunityTop", new PathConstraints(1, 2)), true));
+
+            case "Mid Bottom":
+
+                return Commands.sequence(Load.loadPathTrajectory(
+                        PathPlanner.loadPath("MidLeaveCommunityDown", new PathConstraints(1, 2)), true));
+            case "Botom":
+
+                return Commands.sequence(Load.loadPathTrajectory(
+                        PathPlanner.loadPath("MidLeaveCommunityDown", new PathConstraints(1, 2)), true));
+            default:
+                return null;
+        }
+    }
+
     /**
-     * Drops a cube, and grabs a piece and places it again.
+     * Drops a cube, and grabs a cone and places it again.
      * Then, climbs the charge station
      * 
      * @return
@@ -58,6 +81,34 @@ public class AutonomousPaths {
                 Load.loadPathTrajectory(PathPlanner.loadPath("3-LeaveCone", new PathConstraints(1, 2)), false),
                 new InstantCommand(() -> claw.cubeSet(), claw).withTimeout(0.5),
                 Load.loadPathTrajectory(PathPlanner.loadPath("4-GoToChargeStation", new PathConstraints(1, 2)), false),
+                Load.loadPathTrajectory(PathPlanner.loadPath("5-ClimbChargeStation", new PathConstraints(1, 2)), false),
+                new AutoBalance(chassis, drive));
+    }
+
+    public static Command armCommand() {
+        return moveArmAuto(-90);
+    }
+
+    /**
+     * Drops a cone, and grabs a cone and places it again.
+     * Then, climbs the charge station
+     * 
+     * @return
+     */
+    public static Command dropConeAndCone() {
+        return Commands.sequence(
+                moveArmAuto(30).withTimeout(1),
+                new MoveClaw(claw, -1).withTimeout(2),
+                moveArmAuto(-125),
+                Load.loadPathTrajectory(PathPlanner.loadPath("1-ConeLeave", new PathConstraints(1, 2)), true),
+                Load.loadPathTrajectory(PathPlanner.loadPath("2-GrabPiece", new PathConstraints(1, 2)), false),
+                moveArmAuto(-130),
+                new InstantCommand(() -> claw.ConeSet(), claw).withTimeout(0.5),
+                moveArmAuto(-90),
+                Load.loadPathTrajectory(PathPlanner.loadPath("3-LeaveCone", new PathConstraints(1, 2)), false),
+                new InstantCommand(() -> claw.cubeSet(), claw).withTimeout(0.5),
+                Load.loadPathTrajectory(PathPlanner.loadPath("4-GoToChargeStation", new PathConstraints(1, 2)), false),
+                Load.loadPathTrajectory(PathPlanner.loadPath("5-ClimbChargeStation", new PathConstraints(1, 2)), false),
                 new AutoBalance(chassis, drive));
     }
 
@@ -72,15 +123,38 @@ public class AutonomousPaths {
         double error = (arm.getMeasurement() - position) * -1;
 
         double q2 = error / 2;
-        double q1 = q2 / 2;
+        double q1 = q2 / 4;
         double q3 = q2 + q1;
-        System.out.println("First: " + q1 + " Second: " + q2 + " Third: " + q3);
-        System.out.println("First: " + (current + q1) + " Second: " + (current + q2) + " Third: " + (current + q3));
-        Commands.waitSeconds(5);
+
+        double first = current += q1;
+        double second = current += q1;
+        double third = current += q1;
+        double fourth = current += q1;
+        double fifth = current += q1;
+        double sixth = current += q1;
+        double seventh = current += q1;
+        double eigth = current += q1;
+
+        System.out.println("First: " + first + " Second: " + second + " Third: " + third + " Fourth: " + fourth
+                + " Fifth: " + fifth + " Sixth: " + sixth + " Seventh: " + seventh + " Eight: " + eigth);
+
         return Commands.sequence(
-                new RunCommand(() -> arm.changeSetpoint(current + q1), arm).withTimeout(2),
-                new RunCommand(() -> arm.changeSetpoint(current + q2), arm).withTimeout(2),
-                new RunCommand(() -> arm.changeSetpoint(current + q3), arm).withTimeout(2));
+                new RunCommand(() -> arm.changeSetpoint(first),
+                        arm).withTimeout(0.2),
+                new RunCommand(() -> arm.changeSetpoint(second),
+                        arm).withTimeout(0.2),
+                new RunCommand(() -> arm.changeSetpoint(third),
+                        arm).withTimeout(0.2),
+                new RunCommand(() -> arm.changeSetpoint(fourth),
+                        arm).withTimeout(0.2),
+                new RunCommand(() -> arm.changeSetpoint(fifth),
+                        arm).withTimeout(0.2),
+                new RunCommand(() -> arm.changeSetpoint(sixth),
+                        arm).withTimeout(0.2),
+                new RunCommand(() -> arm.changeSetpoint(seventh),
+                        arm).withTimeout(0.2),
+                new RunCommand(() -> arm.changeSetpoint(eigth),
+                        arm).withTimeout(0.2));
 
     }
 }
