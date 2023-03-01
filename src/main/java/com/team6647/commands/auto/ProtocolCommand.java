@@ -1,3 +1,7 @@
+/**
+ * Written by Juan Pablo Gutiérrez
+ */
+
 package com.team6647.commands.auto;
 
 import com.team6647.Constants.ArmConstants;
