@@ -11,9 +11,9 @@ import org.photonvision.EstimatedRobotPose;
 import com.andromedalib.sensors.SuperNavx;
 import com.team6647.Constants.DriveConstants;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,11 +23,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  * Singleton class. It controls autonomus movement and similar purposes
  */
 public class DriveSubsystem extends SubsystemBase {
-  private static PIDController anglePID = new PIDController(DriveConstants.kpDriveVelocity, 0, 0);
   private static DriveSubsystem instance;
 
   public SuperNavx navx = SuperNavx.getInstance();
-  
+
   private Field2d field = new Field2d();
 
   private DifferentialDrivePoseEstimator poseEstimator;
@@ -35,24 +34,21 @@ public class DriveSubsystem extends SubsystemBase {
   private VisionSubsystem visionSubystem = VisionSubsystem.getInstance("Photon");
 
   private DriveSubsystem() {
-
-    anglePID.setTolerance(DriveConstants.angleTolerance);
-
     resetEncoders();
 
     navx.zeroHeading();
 
     poseEstimator = new DifferentialDrivePoseEstimator(DriveConstants.kDrivekinematics, navx.getRotation(),
         ChassisSubsystem.frontLeft.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
-        ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
+        -ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
         new Pose2d());
 
     poseEstimator.resetPosition(navx.getRotation(),
         ChassisSubsystem.frontLeft.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
-        ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
+        -ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
         new Pose2d());
 
-    resetOdometry(new Pose2d());
+    resetOdometry(new Pose2d(4.29, 1.5, Rotation2d.fromDegrees(0)));
 
     field.setRobotPose(getPose());
   }
@@ -83,8 +79,9 @@ public class DriveSubsystem extends SubsystemBase {
   private void updatePosition2D() {
     poseEstimator.update(navx.getRotation(),
         ChassisSubsystem.frontLeft.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
-        ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio));
+        -ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio));
 
+    // TOOD CHECK IF THIS WORKS
     Optional<EstimatedRobotPose> result = visionSubystem.getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
 
     if (result.isPresent()) {
@@ -104,7 +101,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     poseEstimator.resetPosition(navx.getRotation(),
         ChassisSubsystem.frontLeft.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
-        ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
+        -ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
         pose);
   }
 
@@ -133,7 +130,7 @@ public class DriveSubsystem extends SubsystemBase {
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
     return new DifferentialDriveWheelSpeeds(
         ChassisSubsystem.frontLeft.getVelocity(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
-        ChassisSubsystem.frontRight.getVelocity(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio));
+        -ChassisSubsystem.frontRight.getVelocity(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio));
   }
 
   /**
@@ -145,24 +142,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void tankDriveVolts(double leftVolts, double rightVolts) {
     ChassisSubsystem.leftMotorController.setVoltage(leftVolts);
     ChassisSubsystem.rightMotorController.setVoltage(rightVolts);
-  }
-
-  /**
-   * Calculates the PID output to be used for auto balancing
-   * 
-   * @return Autobalance PID result
-   */
-  public double calculatePID() {
-    return anglePID.calculate(navx.getPitch(), 0);
-  }
-
-  /**
-   * Gets if PID is at setpoint
-   * 
-   * @return True if PID is at setpoint
-   */
-  public boolean inTolerance() {
-    return anglePID.atSetpoint();
+    ChassisSubsystem.getInstance().getDrive().feed();
   }
 
   /**
@@ -172,5 +152,12 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public double getNavxPitch() {
     return navx.getPitch();
+  }
+
+  /**
+   * Resets navx
+   */
+  public void resetNavx() {
+    navx.reset();
   }
 }
