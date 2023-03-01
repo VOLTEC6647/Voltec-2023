@@ -4,8 +4,6 @@
 
 package com.team6647.commands.hybrid.Arm;
 
-import org.opencv.objdetect.FaceDetectorYN;
-
 import com.team6647.Constants.ArmConstants;
 import com.team6647.subsystems.ArmSubsystem;
 
@@ -25,34 +23,23 @@ public class ExtendArm extends CommandBase {
   @Override
   public void initialize() {
     System.out.println(speed);
-    if (!arm.getLimitState()) {
+
+   /*  if (speed > 0 && !arm.getLimitState()) {
+      System.out.println("TAAAAA");
+      arm.extendArm(speed);
+    } else if (speed < 0 && Math.abs(arm.getExtendPosition()) >= Math.abs(ArmConstants.forwardLimit)) {
+      System.out.println("WAAA");
+      arm.extendArm(speed);
+    } else if (!arm.getLimitState()) {
       arm.resetExtendPosition();
+      System.out.println("TOUCHED");
       end(true);
       return;
     } else if (Math.abs(arm.getExtendPosition()) >= Math.abs(ArmConstants.forwardLimit)) {
       end(true);
+      System.out.println("AAAA");
       return;
-    }
-    /*
-     * if (speed > 0 && !arm.getLimitState()) {
-     * System.out.println("TAAAAA");
-     * arm.extendArm(speed);
-     * } else if (speed < 0 && Math.abs(arm.getExtendPosition()) >=
-     * Math.abs(ArmConstants.forwardLimit)) {
-     * System.out.println("WAAA");
-     * arm.extendArm(speed);
-     * } else if (!arm.getLimitState()) {
-     * arm.resetExtendPosition();
-     * System.out.println("TOUCHED");
-     * end(true);
-     * return;
-     * } else if (Math.abs(arm.getExtendPosition()) >=
-     * Math.abs(ArmConstants.forwardLimit)) {
-     * end(true);
-     * System.out.println("AAAA");
-     * return;
-     * }
-     */
+    } */
 
     arm.extendArm(speed);
 
@@ -69,8 +56,7 @@ public class ExtendArm extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    if ((speed > 0 && !arm.getLimitState())
-        || (speed < 0 && Math.abs(arm.getExtendPosition()) >= Math.abs(ArmConstants.forwardLimit))) {
+    if (speed > 0 && !arm.getLimitState()) {
       System.out.println("FINISSSSAA");
       return false;
     }

@@ -1,6 +1,6 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+/**
+ * Written by Juan Pablo Gutiérrez
+ */
 
 package com.team6647.commands.hybrid.Arm;
 
@@ -24,17 +24,13 @@ public class StartArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (arm.getLimitState()) {
-      arm.extendArm(-0.1);
-    }
-    if (!arm.getLimitState()) {
-      end(true);
-    }
+    arm.extendArm(-0.1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    arm.changeSetpoint(-130);
     arm.extendArm(0);
     arm.resetExtendPosition();
 
@@ -43,6 +39,6 @@ public class StartArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return !arm.getLimitState();
   }
 }
