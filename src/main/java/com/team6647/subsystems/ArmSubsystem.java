@@ -10,7 +10,6 @@ import com.team6647.Constants.ArmConstants;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ArmSubsystem extends SubsystemBase {
@@ -96,7 +95,6 @@ public class ArmSubsystem extends SubsystemBase {
 
     this.totalOutput = total;
 
-    SmartDashboard.putNumber("Total:", total);
     pivotSpark1.setVoltage(total);
   }
 
