@@ -39,6 +39,12 @@ public class AutonomousPaths {
         return trajectory1;
     }
 
+    /**
+     * Command for only leaving the community
+     * 
+     * @param position Begin position String (Top/MidTop/MidBottom/Bottom)
+     * @return
+     */
     public static Command leaveCommunity(String position) {
         switch (position) {
             case "Top":
@@ -53,10 +59,10 @@ public class AutonomousPaths {
 
                 return Commands.sequence(Load.loadPathTrajectory(
                         PathPlanner.loadPath("MidLeaveCommunityDown", new PathConstraints(1, 2)), true));
-            case "Botom":
+            case "Bottom":
 
                 return Commands.sequence(Load.loadPathTrajectory(
-                        PathPlanner.loadPath("MidLeaveCommunityDown", new PathConstraints(1, 2)), true));
+                        PathPlanner.loadPath("1-CubeLeave", new PathConstraints(1, 2)), true));
             default:
                 return null;
         }
