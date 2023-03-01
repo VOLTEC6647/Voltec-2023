@@ -1,62 +1,69 @@
 /**
  * Written by Juan Pablo Gutiérrez
  */
+
 package com.team6647.commands.auto;
 
+import com.andromedalib.math.Functions;
+import com.team6647.Constants.DriveConstants;
 import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class AutoBalance extends CommandBase {
-  ChassisSubsystem chasssis;
+  ChassisSubsystem chassis;
   DriveSubsystem drive;
 
   boolean climbing = false;
 
   double drivePower = 0;
+  double currentAngle = 0;
+  double error = 0;
 
   public AutoBalance(ChassisSubsystem chassis, DriveSubsystem drive) {
-    this.chasssis = chassis;
+    this.chassis = chassis;
     this.drive = drive;
 
-    addRequirements(drive, chasssis);
+    addRequirements(drive, chassis);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    chasssis.tankDrive(0.2, 0.2);
+    /* chasssis.tankDrive(0.2, 0.2);
     if (drive.getNavxPitch() > 4) {
       climbing = true;
     }
     if (climbing && drive.getNavxPitch() < 2) {
       execute();
-    }
+    } */
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivePower = drive.calculatePID();
+    currentAngle = drive.getNavxPitch();
 
-    // This Limits max power
-    if (Math.abs(drivePower) > 0.5) {
-      drivePower = Math.copySign(0.5, drivePower);
-    }
-    chasssis.tankDrive(drivePower, drivePower);
+    error = DriveConstants.balanceGoal - currentAngle;
+    drivePower = -Math.min(DriveConstants.balanceKp * error, 1);
+
+    drivePower = Functions.clamp(drivePower, -0.4, 0.4);
+    
+    chassis.tankDrive(drivePower, drivePower);
 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    chasssis.setBrake();
+    chassis.tankDrive(0, 0);
+    chassis.setBrake();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return drive.inTolerance();
+    return Math.abs(error) < DriveConstants.balanceTolerance;
   }
 }
