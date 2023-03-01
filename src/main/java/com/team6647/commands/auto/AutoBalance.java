@@ -44,14 +44,14 @@ public class AutoBalance extends CommandBase {
   @Override
   public void execute() {
     currentAngle = drive.getNavxPitch();
+    System.out.println(currentAngle);
 
     error = DriveConstants.balanceGoal - currentAngle;
     drivePower = -Math.min(DriveConstants.balanceKp * error, 1);
 
-    drivePower = Functions.clamp(drivePower, -0.4, 0.4);
+    drivePower = Functions.clamp(drivePower, -0.5, 0.5);
     
-    chassis.tankDrive(drivePower, drivePower);
-
+    chassis.tankDrive(-drivePower, -drivePower);
   }
 
   // Called once the command ends or is interrupted.
