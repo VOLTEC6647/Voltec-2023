@@ -7,7 +7,6 @@ package com.team6647;
 import com.team6647.Constants.ArmConstants;
 import com.team6647.Constants.OperatorConstants;
 import com.team6647.commands.auto.AutoBalance;
-import com.team6647.commands.auto.AutonomousPaths;
 import com.team6647.commands.auto.ProtocolCommand;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.Arm.StartArm;
@@ -20,6 +19,7 @@ import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.subsystems.ClawSubsytem;
 import com.team6647.subsystems.DriveSubsystem;
 import com.team6647.subsystems.VisionSubsystem;
+import com.team6647.utils.shuffleboard.AutoModeSelector;
 import com.team6647.utils.shuffleboard.DriveModeSelector;
 import com.team6647.utils.shuffleboard.ShuffleboardManager;
 
@@ -32,7 +32,8 @@ public class RobotContainer {
 
   private static RobotContainer instance;
 
-  private DriveModeSelector selector;
+  private DriveModeSelector driveSelector;
+  private AutoModeSelector autoSelector;
   private ShuffleboardManager interactions;
   private ProtocolCommand protocolCommand;
 
@@ -68,7 +69,8 @@ public class RobotContainer {
    * Initializes the sending of telemetry
    */
   public void initTelemetry() {
-    selector = new DriveModeSelector();
+    driveSelector = new DriveModeSelector();
+    autoSelector = new AutoModeSelector();
     interactions = ShuffleboardManager.getInstance();
     protocolCommand = new ProtocolCommand(arm, chassis, claw);
   }
@@ -85,7 +87,7 @@ public class RobotContainer {
    * Sets the {@link ChassisSubsystem} default command
    */
   public void setChassisCommand() {
-    chassis.setDefaultCommand(selector.getDriveMode());
+    chassis.setDefaultCommand(driveSelector.getDriveMode());
   }
 
   /**
@@ -139,7 +141,7 @@ public class RobotContainer {
     //Maybe use Commands.sequence
     return Commands.sequence(
       new StartArm(arm),
-      AutonomousPaths.dropCubeAndCone()
+      autoSelector.getAutoMode()
     );
   }
 
