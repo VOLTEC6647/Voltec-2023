@@ -48,7 +48,7 @@ public class DebugTab extends ShuffleboardTabBase {
     
     public DebugTab(ShuffleboardTab tab) {
 
-        this.extendingPosition = tab.add("Extend postion", arm.getExtendPosition()).withPosition(6, 0).getEntry();
+        this.extendingPosition = tab.add("Extend postion", arm.getExtendPosition()).withPosition(7, 0).getEntry();
 
         this.armPositionDoublePID  = tab.add("Arm Position", arm.getMeasurement()).withPosition(3,1).getEntry();
         this.desiredPosition = tab.add("Desired Position", arm.getSetpoint()).withPosition(4, 1).getEntry();
