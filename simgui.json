@@ -43,6 +43,7 @@
       "/LiveWindow/Ungrouped/Spark[0]": "Motor Controller",
       "/LiveWindow/Ungrouped/navX-Sensor[4]": "Gyro",
       "/Shuffleboard/Motor debug info/Drive Mode": "String Chooser",
+      "/Shuffleboard/Team 6647/Auto Mode": "String Chooser",
       "/Shuffleboard/Team 6647/Differential Drive": "DifferentialDrive",
       "/Shuffleboard/Team 6647/Drive Mode": "String Chooser",
       "/SmartDashboard/ChassisSubsystem": "Subsystem",

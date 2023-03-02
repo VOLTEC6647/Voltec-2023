@@ -49,20 +49,20 @@ public class AutonomousPaths {
         switch (position) {
             case "Top":
                 return Commands.sequence(Load.loadPathTrajectory(
-                        PathPlanner.loadPath("LeaveCommunityTop", new PathConstraints(1, 2)), true));
+                        PathPlanner.loadPath("1-LeaveCommunityTop", new PathConstraints(1, 2)), true));
 
             case "Mid Top":
                 return Commands.sequence(Load.loadPathTrajectory(
-                        PathPlanner.loadPath("MidLeaveCommunityTop", new PathConstraints(1, 2)), true));
+                        PathPlanner.loadPath("1-MidLeaveCommunityTop", new PathConstraints(1, 2)), true));
 
             case "Mid Bottom":
 
                 return Commands.sequence(Load.loadPathTrajectory(
-                        PathPlanner.loadPath("MidLeaveCommunityDown", new PathConstraints(1, 2)), true));
+                        PathPlanner.loadPath("1-MidLeaveCommunityDown", new PathConstraints(1, 2)), true));
             case "Bottom":
 
                 return Commands.sequence(Load.loadPathTrajectory(
-                        PathPlanner.loadPath("1-CubeLeave", new PathConstraints(1, 2)), true));
+                        PathPlanner.loadPath("1-ConeLeaveBottom", new PathConstraints(1, 2)), true));
             default:
                 return null;
         }
@@ -74,19 +74,19 @@ public class AutonomousPaths {
      * 
      * @return
      */
-    public static Command dropCubeAndCone() {
+    public static Command dropCubeAndConeBottom() {
         return Commands.sequence(
                 moveArmAuto(20).withTimeout(1),
                 new MoveClaw(claw, -1).withTimeout(2),
                 moveArmAuto(-125),
-                Load.loadPathTrajectory(PathPlanner.loadPath("1-CubeLeave", new PathConstraints(1, 2)), true),
-                Load.loadPathTrajectory(PathPlanner.loadPath("2-GrabPiece", new PathConstraints(1, 2)), false),
+                Load.loadPathTrajectory(PathPlanner.loadPath("1-CubeLeaveBottom", new PathConstraints(1, 2)), true),
+                Load.loadPathTrajectory(PathPlanner.loadPath("2-GrabPieceBottom", new PathConstraints(1, 2)), false),
                 moveArmAuto(-130),
                 new InstantCommand(() -> claw.ConeSet(), claw).withTimeout(0.5),
                 moveArmAuto(-90),
-                Load.loadPathTrajectory(PathPlanner.loadPath("3-LeaveCone", new PathConstraints(1, 2)), false),
+                Load.loadPathTrajectory(PathPlanner.loadPath("3-LeaveConeBottom", new PathConstraints(1, 2)), false),
                 new InstantCommand(() -> claw.cubeSet(), claw).withTimeout(0.5),
-                Load.loadPathTrajectory(PathPlanner.loadPath("4-GoToChargeStation", new PathConstraints(1, 2)), false),
+                Load.loadPathTrajectory(PathPlanner.loadPath("4-GoToChargeStationBottom", new PathConstraints(1, 2)), false),
                 Load.loadPathTrajectory(PathPlanner.loadPath("5-ClimbChargeStation", new PathConstraints(1, 2)), false),
                 new AutoBalance(chassis, drive));
     }
@@ -97,19 +97,134 @@ public class AutonomousPaths {
      * 
      * @return
      */
-    public static Command dropConeAndCone() {
+    public static Command dropConeAndConeBottom() {
         return Commands.sequence(
                 moveArmAuto(30).withTimeout(1),
                 new MoveClaw(claw, -1).withTimeout(2),
                 moveArmAuto(-125),
-                Load.loadPathTrajectory(PathPlanner.loadPath("1-ConeLeave", new PathConstraints(1, 2)), true),
-                Load.loadPathTrajectory(PathPlanner.loadPath("2-GrabPiece", new PathConstraints(1, 2)), false),
+                Load.loadPathTrajectory(PathPlanner.loadPath("1-ConeLeaveBottom", new PathConstraints(1, 2)), true),
+                Load.loadPathTrajectory(PathPlanner.loadPath("2-GrabPieceBottom", new PathConstraints(1, 2)), false),
                 moveArmAuto(-130),
                 new InstantCommand(() -> claw.ConeSet(), claw).withTimeout(0.5),
                 moveArmAuto(-90),
-                Load.loadPathTrajectory(PathPlanner.loadPath("3-LeaveCone", new PathConstraints(1, 2)), false),
+                Load.loadPathTrajectory(PathPlanner.loadPath("3-LeaveConeBottom", new PathConstraints(1, 2)), false),
                 new InstantCommand(() -> claw.cubeSet(), claw).withTimeout(0.5),
-                Load.loadPathTrajectory(PathPlanner.loadPath("4-GoToChargeStation", new PathConstraints(1, 2)), false),
+                Load.loadPathTrajectory(PathPlanner.loadPath("4-GoToChargeStationBottom", new PathConstraints(1, 2)), false),
+                Load.loadPathTrajectory(PathPlanner.loadPath("5-ClimbChargeStation", new PathConstraints(1, 2)), false),
+                new AutoBalance(chassis, drive));
+    }
+
+    /**
+     * Drops a cube, and grabs a cone and places it again.
+     * Then, climbs the charge station
+     * 
+     * @return
+     */
+    public static Command dropCubeAndConeMidTop() {
+        return Commands.sequence(
+                moveArmAuto(20).withTimeout(1),
+                new MoveClaw(claw, -1).withTimeout(2),
+                moveArmAuto(-125),
+                Load.loadPathTrajectory(PathPlanner.loadPath("1-MidLeaveCommunityTop", new PathConstraints(1, 2)), true),
+                Load.loadPathTrajectory(PathPlanner.loadPath("2-GrabPieceTop", new PathConstraints(1, 2)), false),
+                moveArmAuto(-130),
+                new InstantCommand(() -> claw.ConeSet(), claw).withTimeout(0.5),
+                moveArmAuto(-90),
+                Load.loadPathTrajectory(PathPlanner.loadPath("3-LeaveConeTop", new PathConstraints(1, 2)), false),
+                new InstantCommand(() -> claw.cubeSet(), claw).withTimeout(0.5),
+                Load.loadPathTrajectory(PathPlanner.loadPath("4-GoToChargeStationTop", new PathConstraints(1, 2)), false),
+                Load.loadPathTrajectory(PathPlanner.loadPath("5-ClimbChargeStation", new PathConstraints(1, 2)), false),
+                new AutoBalance(chassis, drive));
+    }
+
+    /**
+     * Drops a cube, and grabs a cone and places it again.
+     * Then, climbs the charge station
+     * 
+     * @return
+     */
+    public static Command dropCubeAndConeMidBottom() {
+        return Commands.sequence(
+                moveArmAuto(20).withTimeout(1),
+                new MoveClaw(claw, -1).withTimeout(2),
+                moveArmAuto(-125),
+                Load.loadPathTrajectory(PathPlanner.loadPath("1-MidLeaveCommunityDown", new PathConstraints(1, 2)), true),
+                Load.loadPathTrajectory(PathPlanner.loadPath("1-GrabPieceMidBottom", new PathConstraints(1, 2)), false),
+                moveArmAuto(-130),
+                new InstantCommand(() -> claw.ConeSet(), claw).withTimeout(0.5),
+                moveArmAuto(-90),
+                Load.loadPathTrajectory(PathPlanner.loadPath("3-LeaveConeTopFromBottom", new PathConstraints(1, 2)), false),
+                new InstantCommand(() -> claw.cubeSet(), claw).withTimeout(0.5),
+                Load.loadPathTrajectory(PathPlanner.loadPath("4-GoToChargeStationTop", new PathConstraints(1, 2)), false),
+                Load.loadPathTrajectory(PathPlanner.loadPath("5-ClimbChargeStation", new PathConstraints(1, 2)), false),
+                new AutoBalance(chassis, drive));
+    }
+
+    /**
+     * Drops a cone, and grabs a cone and places it again.
+     * Then, climbs the charge station
+     * 
+     * @return
+     */
+    public static Command dropConeAndConeMidTop() {
+        return Commands.sequence(
+                moveArmAuto(20).withTimeout(1),
+                new MoveClaw(claw, -1).withTimeout(2),
+                moveArmAuto(-125),
+                Load.loadPathTrajectory(PathPlanner.loadPath("1-MidConeLeaveCommunityTop", new PathConstraints(1, 2)), true),
+                Load.loadPathTrajectory(PathPlanner.loadPath("2-GrabPieceTop", new PathConstraints(1, 2)), false),
+                moveArmAuto(-130),
+                new InstantCommand(() -> claw.ConeSet(), claw).withTimeout(0.5),
+                moveArmAuto(-90),
+                Load.loadPathTrajectory(PathPlanner.loadPath("3-LeaveConeTop", new PathConstraints(1, 2)), false),
+                new InstantCommand(() -> claw.cubeSet(), claw).withTimeout(0.5),
+                Load.loadPathTrajectory(PathPlanner.loadPath("4-GoToChargeStationTop", new PathConstraints(1, 2)), false),
+                Load.loadPathTrajectory(PathPlanner.loadPath("5-ClimbChargeStation", new PathConstraints(1, 2)), false),
+                new AutoBalance(chassis, drive));
+    }
+
+    /**
+     * Drops a cube, and grabs a cone and places it again.
+     * Then, climbs the charge station
+     * 
+     * @return
+     */
+    public static Command dropCubeAndConeTop() {
+        return Commands.sequence(
+                moveArmAuto(20).withTimeout(1),
+                new MoveClaw(claw, -1).withTimeout(2),
+                moveArmAuto(-125),
+                Load.loadPathTrajectory(PathPlanner.loadPath("1-LeaveCommunityTop", new PathConstraints(1, 2)), true),
+                Load.loadPathTrajectory(PathPlanner.loadPath("2-GrabPieceTop", new PathConstraints(1, 2)), false),
+                moveArmAuto(-130),
+                new InstantCommand(() -> claw.ConeSet(), claw).withTimeout(0.5),
+                moveArmAuto(-90),
+                Load.loadPathTrajectory(PathPlanner.loadPath("3-LeaveConeTop", new PathConstraints(1, 2)), false),
+                new InstantCommand(() -> claw.cubeSet(), claw).withTimeout(0.5),
+                Load.loadPathTrajectory(PathPlanner.loadPath("4-GoToChargeStationTop", new PathConstraints(1, 2)), false),
+                Load.loadPathTrajectory(PathPlanner.loadPath("5-ClimbChargeStation", new PathConstraints(1, 2)), false),
+                new AutoBalance(chassis, drive));
+    }
+
+     /**
+     * Drops a cube, and grabs a cone and places it again.
+     * Then, climbs the charge station
+     * 
+     * @return
+     */
+    public static Command dropConeAndConeTop() {
+        return Commands.sequence(
+                moveArmAuto(20).withTimeout(1),
+                new MoveClaw(claw, -1).withTimeout(2),
+                moveArmAuto(-125),
+                Load.loadPathTrajectory(PathPlanner.loadPath("1-ConeLeaveCommunityTop", new PathConstraints(1, 2)), true),
+                Load.loadPathTrajectory(PathPlanner.loadPath("2-GrabPieceTop", new PathConstraints(1, 2)), false),
+                moveArmAuto(-130),
+                new InstantCommand(() -> claw.ConeSet(), claw).withTimeout(0.5),
+                moveArmAuto(-90),
+                Load.loadPathTrajectory(PathPlanner.loadPath("3-LeaveConeTop", new PathConstraints(1, 2)), false),
+                new InstantCommand(() -> claw.cubeSet(), claw).withTimeout(0.5),
+                Load.loadPathTrajectory(PathPlanner.loadPath("4-GoToChargeStationTop", new PathConstraints(1, 2)), false),
                 Load.loadPathTrajectory(PathPlanner.loadPath("5-ClimbChargeStation", new PathConstraints(1, 2)), false),
                 new AutoBalance(chassis, drive));
     }
