@@ -1,6 +1,5 @@
 package com.team6647.utils.shuffleboard;
 
-import com.ctre.phoenix.platform.can.AutocacheState;
 import com.team6647.Constants.ShuffleboardConstants;
 import com.team6647.commands.auto.AutonomousPaths;
 
