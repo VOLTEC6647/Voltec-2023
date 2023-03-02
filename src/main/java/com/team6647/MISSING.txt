@@ -1,9 +1,0 @@
-- Check if Navx Inversion helped
-- Check if addVisionMeasurement helped
-- Add Command that retracts the arm after placing
-- Add Vision
-- Add Autonomous & Selection
-- The autonomous repeats infinitely
-- Test protocol command
-- Create auto mode selector
-- [x] Fix arm extension infinitely
