@@ -103,4 +103,15 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
     backLeft.setMode(GlobalIdleMode.brake);
     backRight.setMode(GlobalIdleMode.brake);
   }
+
+  /**
+   * Sets all motors to brake
+   * Be careful to not damage motors
+   */
+  public void setCoast() {
+    frontLeft.setMode(GlobalIdleMode.Coast);
+    frontRight.setMode(GlobalIdleMode.Coast);
+    backLeft.setMode(GlobalIdleMode.Coast);
+    backRight.setMode(GlobalIdleMode.Coast);
+  }
 }

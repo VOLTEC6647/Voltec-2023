@@ -11,7 +11,6 @@ import com.team6647.commands.auto.ProtocolCommand;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.Arm.StartArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
-import com.team6647.commands.hybrid.vision.ToggleVisionDevice;
 import com.team6647.commands.teleop.AprilAim;
 import com.team6647.commands.teleop.LimelightAim;
 import com.team6647.subsystems.ArmSubsystem;
@@ -100,7 +99,8 @@ public class RobotContainer {
     OperatorConstants.driverController1.a().whileTrue(new AutoBalance(chassis, drive));
     OperatorConstants.driverController1.x().whileTrue(new AprilAim(vision, chassis));
     OperatorConstants.driverController1.b().whileTrue(new LimelightAim(vision, chassis));
-    OperatorConstants.driverController1.rightBumper().whileTrue(new ToggleVisionDevice(vision));
+    OperatorConstants.driverController1.rightBumper().toggleOnTrue(new RunCommand(() -> chassis.setBrake(), chassis))
+        .toggleOnFalse(new RunCommand(() -> chassis.setCoast(), chassis));
 
     OperatorConstants.driverController2.x().whileTrue(new RunCommand(() -> {
       arm.manualControl(0.5);
@@ -118,8 +118,10 @@ public class RobotContainer {
       arm.changeSetpoint(-129);
     }, arm));
 
-    OperatorConstants.driverController2.y().whileTrue(new ExtendArm(arm, ArmConstants.extendSped)).toggleOnFalse(new RunCommand(() -> arm.extendArm(0), arm));
-    OperatorConstants.driverController2.a().whileTrue(new ExtendArm(arm, -ArmConstants.extendSped)).toggleOnFalse(new RunCommand(() -> arm.extendArm(0), arm));
+    OperatorConstants.driverController2.y().whileTrue(new ExtendArm(arm, ArmConstants.extendSped))
+        .toggleOnFalse(new RunCommand(() -> arm.extendArm(0), arm));
+    OperatorConstants.driverController2.a().whileTrue(new ExtendArm(arm, -ArmConstants.extendSped))
+        .toggleOnFalse(new RunCommand(() -> arm.extendArm(0), arm));
 
     OperatorConstants.driverController2.rightTrigger(0.1).whileTrue(new MoveClaw(claw, 1));
     OperatorConstants.driverController2.leftTrigger(0.1).whileTrue(new MoveClaw(claw, -1));
@@ -138,11 +140,10 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    //Maybe use Commands.sequence
+    // Maybe use Commands.sequence
     return Commands.sequence(
-      new StartArm(arm),
-      autoSelector.getAutoMode()
-    );
+        new StartArm(arm),
+        autoSelector.getAutoMode());
   }
 
   /**
