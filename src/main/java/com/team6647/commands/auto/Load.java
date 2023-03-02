@@ -92,7 +92,7 @@ public class Load {
                         DriveConstants.kDrivekinematics, drive::getWheelSpeeds,
                         new PIDController(DriveConstants.kpDriveVelocity, 0, 0),
                         new PIDController(DriveConstants.kpDriveVelocity, 0, 0), drive::tankDriveVolts,
-                        false,
+                        true,
                         drive,
                         chassis));
     }
