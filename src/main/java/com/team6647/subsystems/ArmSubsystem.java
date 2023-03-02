@@ -67,7 +67,6 @@ public class ArmSubsystem extends SubsystemBase {
       pidOut = dynamicController.calculate(actualPoint, this.setPoint);
       pidOut = Functions.clamp(pidOut, -0.5, 0.5);
     } else {
-      // MEJOR PARA EL MANUAl
       pidOut = pidController.calculate(actualPoint, this.setPoint);
       pidOut = Functions.clamp(pidOut, -0.4, 0.4);
     }

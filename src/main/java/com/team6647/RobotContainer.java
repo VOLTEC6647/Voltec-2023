@@ -152,6 +152,6 @@ public class RobotContainer {
    * @return the command to run in test
    */
   public Command getTestCommand() {
-    return protocolCommand.getStartCommand();
+    return Commands.sequence(new StartArm(arm), protocolCommand.getStartCommand());
   }
 }
