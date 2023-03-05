@@ -4,9 +4,9 @@
 
 package com.team6647;
 
-import com.pathplanner.lib.server.PathPlannerServer;
 import com.team6647.subsystems.DriveSubsystem;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -24,8 +24,7 @@ public class Robot extends TimedRobot {
     robotContainer.initTelemetry();
     robotContainer.configureBindings();
 
-    PathPlannerServer.startServer(5811);
-
+    CameraServer.startAutomaticCapture();
     addPeriodic(() -> {
 
     }, 0.01);
