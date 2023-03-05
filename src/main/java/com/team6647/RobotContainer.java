@@ -99,8 +99,7 @@ public class RobotContainer {
     OperatorConstants.driverController1.a().whileTrue(new AutoBalance(chassis, drive));
     OperatorConstants.driverController1.x().whileTrue(new AprilAim(vision, chassis));
     OperatorConstants.driverController1.b().whileTrue(new LimelightAim(vision, chassis));
-    OperatorConstants.driverController1.rightBumper().toggleOnTrue(new RunCommand(() -> chassis.setBrake(), chassis))
-        .toggleOnFalse(new RunCommand(() -> chassis.setCoast(), chassis));
+    OperatorConstants.driverController1.rightBumper().whileTrue(new InstantCommand(() -> chassis.setBrake(), chassis)).whileFalse(new InstantCommand(() -> chassis.setCoast(), chassis));
 
     OperatorConstants.driverController2.x().whileTrue(new RunCommand(() -> {
       arm.manualControl(0.5);
@@ -111,11 +110,11 @@ public class RobotContainer {
     }, arm));
 
     OperatorConstants.driverController2.pov(0).whileTrue(new RunCommand(() -> {
-      arm.changeSetpoint(-90);
+      arm.changeSetpoint(-70);
     }, arm));
 
     OperatorConstants.driverController2.pov(180).whileTrue(new RunCommand(() -> {
-      arm.changeSetpoint(-129);
+      arm.changeSetpoint(-120);
     }, arm));
 
     OperatorConstants.driverController2.y().whileTrue(new ExtendArm(arm, ArmConstants.extendSped))
@@ -126,10 +125,10 @@ public class RobotContainer {
     OperatorConstants.driverController2.rightTrigger(0.1).whileTrue(new MoveClaw(claw, 1));
     OperatorConstants.driverController2.leftTrigger(0.1).whileTrue(new MoveClaw(claw, -1));
     OperatorConstants.driverController2.rightBumper().whileTrue(new InstantCommand(() -> {
-      claw.ConeSet();
+      claw.CubeSet();
     }));
     OperatorConstants.driverController2.leftBumper().whileTrue(new InstantCommand(() -> {
-      claw.cubeSet();
+      claw.ConeSet();
     }));
   }
 
@@ -139,8 +138,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // Maybe use Commands.sequence
+  public Command getAutonomousCommand() {        
     return Commands.sequence(
         new StartArm(arm),
         autoSelector.getAutoMode());
