@@ -38,7 +38,7 @@ public class ArmSubsystem extends SubsystemBase {
   public ArmSubsystem() {
     pivotSpark2.follow(pivotSpark1, true);
 
-    this.setPoint = -140; // When initialize
+    this.setPoint = -148.7; // When initialize
   }
 
   /**
