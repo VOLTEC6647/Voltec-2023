@@ -70,6 +70,7 @@ public class DriveSubsystem extends SubsystemBase {
     updatePosition2D();
     field.setRobotPose(getPose());
     SmartDashboard.putData(field);
+
   }
 
   /**
@@ -152,6 +153,10 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public double getNavxPitch() {
     return navx.getPitch();
+  }
+
+  public double getNavxRoll(){
+    return navx.getRoll();
   }
 
   /**
