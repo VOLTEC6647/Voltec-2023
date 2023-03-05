@@ -45,6 +45,8 @@ public class DebugTab extends ShuffleboardTabBase {
 
     GenericEntry pivot1Temp;
     GenericEntry pivot2Temp;
+
+    GenericEntry chassisAngle;
     
     public DebugTab(ShuffleboardTab tab) {
 
@@ -61,13 +63,12 @@ public class DebugTab extends ShuffleboardTabBase {
 
         this.limit = tab.add("Limit switch", arm.getLimitState()).withPosition(3, 2).getEntry();
 
-        /* this.limeAim = tab.add("Limelight aim", vision.getLimelightAim()).withPosition(1, 4).getEntry();
-        this.photonAim = tab.add("Photon aim", vision.getPhotonAim()).withPosition(4, 4).getEntry(); */
-        this.limePipe = tab.add("Limelight pipe", vision.getLimePipe()).withPosition(3, 3).getEntry();
-        this.photonPipe = tab.add("Photon pipe", vision.getPhotonPipe()).withPosition(4, 3).getEntry();
-     
+        this.limeAim = tab.add("Limelight aim", vision.getLimelightAim()).withPosition(4, 2).getEntry();
+        this.photonAim = tab.add("Photon aim", vision.getPhotonAim()).withPosition(5, 2).getEntry();
+        
         this.pivot1Temp = tab.add("Pivot1 Temp", arm.getPivot1Temp()).withPosition(7, 0).getEntry();
         this.pivot2Temp = tab.add("Pivot2 Temp", arm.getPivot2Temp()).withPosition(8, 0).getEntry();
+        this.chassisAngle = tab.add("Chassis Angle", drive.getNavxRoll()).withPosition(6, 2).getEntry();
     }
 
     @Override
@@ -84,14 +85,13 @@ public class DebugTab extends ShuffleboardTabBase {
 
         limit.setBoolean(arm.getLimitState());
 
-        /* limeAim.setBoolean(vision.getLimelightAim());
-        photonAim.setBoolean(vision.getPhotonAim()); */
-
-        limePipe.setDouble(vision.getLimePipe());
-        photonPipe.setDouble(vision.getPhotonPipe());
+        limeAim.setBoolean(vision.getLimelightAim());
+        photonAim.setBoolean(vision.getPhotonAim());
 
         pivot1Temp.setDouble(arm.getPivot1Temp());
         pivot2Temp.setDouble(arm.getPivot2Temp());
+
+        chassisAngle.setDouble(drive.getNavxRoll());
 
      }
 }
