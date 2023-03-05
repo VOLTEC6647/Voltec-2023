@@ -30,6 +30,7 @@ public final class ProtocolCommand {
 
     public Command getStartCommand() {
         return new SequentialCommandGroup(
+                chassisCommand(),
                 clawCommand(),
                 extendArm(),
                 moveArm());

@@ -121,19 +121,6 @@ public class AutonomousPaths {
 
         }
 
-        /*
-         * public static Command basicAuto() {
-         * return Commands.sequence(
-         * new RunCommand(() -> chassis.tankDrive(-0.5, -0.5),
-         * chassis).withTimeout(0.3),
-         * Load.loadPathTrajectory(
-         * PathPlanner.loadPath("1-ConeLeaveBottom",
-         * new PathConstraints(0.5, 0.2)),
-         * true));
-         * 
-         * }
-         */
-
         public static Command leaveCommunity() {
                 return new RunCommand(() -> chassis.tankDrive(-0.4, -0.4), chassis).withTimeout(7);
         }
