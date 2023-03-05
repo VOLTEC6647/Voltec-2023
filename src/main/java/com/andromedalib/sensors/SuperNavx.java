@@ -62,6 +62,6 @@ public class SuperNavx extends AHRS {
      * @return Current rotation as a negative {@link edu.wpi.first.math.geometry.Rotation2d}
      */
     public Rotation2d getRotation() {
-        return getRotation2d();
+        return getRotation2d().times(-1);
     }
 }
