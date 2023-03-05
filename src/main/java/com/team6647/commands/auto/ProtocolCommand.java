@@ -48,10 +48,10 @@ public final class ProtocolCommand {
         return new SequentialCommandGroup(
                 new MoveClaw(claw, 1).withTimeout(2),
                 new MoveClaw(claw, -1).withTimeout(2),
-                new InstantCommand(() -> claw.cubeSet(), claw).withTimeout(0.5),
+                new InstantCommand(() -> claw.ConeSet(), claw).withTimeout(0.5),
                 new RunCommand(() -> {
                 }, claw).withTimeout(1),
-                new InstantCommand(() -> claw.ConeSet(), claw).withTimeout(0.5));
+                new InstantCommand(() -> claw.CubeSet(), claw).withTimeout(0.5));
     }
 
     private Command extendArm() {
