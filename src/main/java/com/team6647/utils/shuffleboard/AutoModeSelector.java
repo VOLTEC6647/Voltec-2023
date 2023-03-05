@@ -12,50 +12,54 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class AutoModeSelector {
     private enum AutoSelection {
-        LeaveTop,
-        LeaveMidTop,
-        LeaveMidBottom,
-        LeaveBottom,
-        CubeAndCone,
-        ConeAndCone,
+        LeaveCommunity,
+        BottomAutoCone,
+        BottomAutoCube,
+        MidAutoCone,
+        MidAutoCube,
+        TopAutoCone,
+        TopAutoCube
     }
 
     private SendableChooser<AutoSelection> autoChooser = new SendableChooser<>();
 
     Command[] autoModes = {
-            AutonomousPaths.leaveCommunity("Top"),
-            AutonomousPaths.leaveCommunity("Mid Top"),
-            AutonomousPaths.leaveCommunity("Mid Bottom"),
-            AutonomousPaths.leaveCommunity("Bottom"),
-            AutonomousPaths.dropCubeAndConeBottom(),
-            AutonomousPaths.dropConeAndConeBottom()
+            AutonomousPaths.leaveCommunity(),
+            AutonomousPaths.bottomAutoCone(),
+            AutonomousPaths.bottomAutoCube(),
+            AutonomousPaths.midAutoCone(),
+            AutonomousPaths.midAutoCube(),
+            AutonomousPaths.topAutoCone(),
+            AutonomousPaths.topAutoCube()
     };
 
     public AutoModeSelector() {
-        autoChooser.setDefaultOption("Leave Top", AutoSelection.LeaveTop);
-        autoChooser.addOption("Leave Mid Top", AutoSelection.LeaveMidTop);
-        autoChooser.addOption("Leave Mid Bottom", AutoSelection.LeaveMidBottom);
-        autoChooser.addOption("Leave Bottom", AutoSelection.LeaveBottom);
-        autoChooser.addOption("Cube and Cone", AutoSelection.CubeAndCone);
-        autoChooser.addOption("Cone and Cone", AutoSelection.ConeAndCone);
-
+        autoChooser.addOption("Leave Communty", AutoSelection.LeaveCommunity);
+        autoChooser.addOption("Bottom Auto Cone", AutoSelection.BottomAutoCone);
+        autoChooser.addOption("Bottom Auto Cube", AutoSelection.BottomAutoCube);
+        autoChooser.setDefaultOption("Mid Auto Cone", AutoSelection.MidAutoCone);
+        autoChooser.addOption("Mid Auto Cube", AutoSelection.MidAutoCube);
+        autoChooser.addOption("Top Auto Cube", AutoSelection.TopAutoCone);
+        autoChooser.addOption("Top Auto Cube", AutoSelection.TopAutoCube);
         ShuffleboardConstants.kShuffleboardTab.add("Auto Mode", autoChooser).withPosition(6, 0);
     }
 
     public Command getAutoMode() {
         switch (autoChooser.getSelected()) {
-            case LeaveTop:
+            case LeaveCommunity:
                 return autoModes[0];
-            case LeaveMidTop:
+            case BottomAutoCone:
                 return autoModes[1];
-            case LeaveMidBottom:
+            case BottomAutoCube:
                 return autoModes[2];
-            case LeaveBottom:
+            case MidAutoCone:
                 return autoModes[3];
-            case CubeAndCone:
+            case MidAutoCube:
                 return autoModes[4];
-            case ConeAndCone:
+            case TopAutoCone:
                 return autoModes[5];
+            case TopAutoCube:
+                return autoModes[6];
 
         }
         return null;
