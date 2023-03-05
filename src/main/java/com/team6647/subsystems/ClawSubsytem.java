@@ -53,14 +53,14 @@ public class ClawSubsytem extends SubsystemBase {
   /**
    * Sets the Claw Solenoid State to Cube
    */
-  public void cubeSet() {
+  public void ConeSet() {
     solenoid.set(Value.kReverse);
   }
 
   /**
    * Sets the Claw Solenoid State to Cone
    */
-  public void ConeSet() {
+  public void CubeSet() {
     solenoid.set(Value.kForward);
   }
 
