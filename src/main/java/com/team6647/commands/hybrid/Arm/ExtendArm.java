@@ -24,23 +24,6 @@ public class ExtendArm extends CommandBase {
   public void initialize() {
     System.out.println(speed);
 
-   /*  if (speed > 0 && !arm.getLimitState()) {
-      System.out.println("TAAAAA");
-      arm.extendArm(speed);
-    } else if (speed < 0 && Math.abs(arm.getExtendPosition()) >= Math.abs(ArmConstants.forwardLimit)) {
-      System.out.println("WAAA");
-      arm.extendArm(speed);
-    } else if (!arm.getLimitState()) {
-      arm.resetExtendPosition();
-      System.out.println("TOUCHED");
-      end(true);
-      return;
-    } else if (Math.abs(arm.getExtendPosition()) >= Math.abs(ArmConstants.forwardLimit)) {
-      end(true);
-      System.out.println("AAAA");
-      return;
-    } */
-
     arm.extendArm(speed);
 
   }
@@ -52,6 +35,8 @@ public class ExtendArm extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     arm.extendArm(0);
+    if (!arm.getLimitState())
+      arm.resetExtendPosition();
   }
 
   @Override

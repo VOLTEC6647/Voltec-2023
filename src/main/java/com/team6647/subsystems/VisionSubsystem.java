@@ -59,6 +59,8 @@ public class VisionSubsystem extends SubsystemBase {
     }
 
     chassis = ChassisSubsystem.getInstance();
+
+    setLimeLEDMode(1);
   }
 
   /**
@@ -81,6 +83,8 @@ public class VisionSubsystem extends SubsystemBase {
 
     if (aimingLimelight) {
       calculateLime();
+    } else {
+      setLimeLEDMode(1);
     }
   }
 
@@ -127,6 +131,7 @@ public class VisionSubsystem extends SubsystemBase {
    * Calculates the position to the Limelight Target and applies it to the chassis
    */
   public void calculateLime() {
+    setLimeLEDMode(3);
     if (!limelightCamera.hasValidTarget())
       return;
 
@@ -144,6 +149,13 @@ public class VisionSubsystem extends SubsystemBase {
     double rightSpeed = distanceAdjust - steeringAdjust;
 
     chassis.tankDrive((leftSpeed) * 0.5, (rightSpeed) * 0.5);
+  }
+
+  /**
+   * Sets the Limelight LED mode
+   */
+  public void setLimeLEDMode(int mode){
+    limelightCamera.setLedMode(mode);
   }
 
   /**
