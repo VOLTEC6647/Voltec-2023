@@ -4,13 +4,13 @@
 
 package com.team6647.utils.shuffleboard;
 
-import com.team6647.Constants.OperatorConstants;
-import com.team6647.Constants.ShuffleboardConstants;
 import com.team6647.commands.teleop.ArcadeDriveCommand;
 import com.team6647.commands.teleop.CurvatureDriveCommand;
 import com.team6647.commands.teleop.TankDriveCommand;
 import com.team6647.commands.teleop.TankDriveFeedForward;
 import com.team6647.subsystems.ChassisSubsystem;
+import com.team6647.utils.Constants.OperatorConstants;
+import com.team6647.utils.Constants.ShuffleboardConstants;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;

@@ -1,7 +1,7 @@
 package com.team6647.utils.shuffleboard;
 
-import com.team6647.Constants.ShuffleboardConstants;
 import com.team6647.commands.auto.AutonomousPaths;
+import com.team6647.utils.Constants.ShuffleboardConstants;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;

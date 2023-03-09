@@ -9,7 +9,7 @@ import java.util.Optional;
 import org.photonvision.EstimatedRobotPose;
 
 import com.andromedalib.sensors.SuperNavx;
-import com.team6647.Constants.DriveConstants;
+import com.team6647.utils.Constants.DriveConstants;
 
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;

@@ -14,8 +14,8 @@ import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import com.andromedalib.vision.LimelightCamera;
-import com.team6647.Constants.DriveConstants;
-import com.team6647.Constants.VisionConstants;
+import com.team6647.utils.Constants.DriveConstants;
+import com.team6647.utils.Constants.VisionConstants;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;

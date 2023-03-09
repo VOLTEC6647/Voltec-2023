@@ -6,7 +6,7 @@ package com.team6647.subsystems;
 import com.andromedalib.math.Functions;
 import com.andromedalib.motorControllers.SuperSparkMax;
 import com.andromedalib.motorControllers.IdleManager.GlobalIdleMode;
-import com.team6647.Constants.ArmConstants;
+import com.team6647.utils.Constants.ArmConstants;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;

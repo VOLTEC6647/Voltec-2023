@@ -6,8 +6,8 @@ package com.team6647.utils.shuffleboard;
 
 import com.andromedalib.shuffleboard.ShuffleboardTabBase;
 import com.andromedalib.shuffleboard.tabs.DifferentialDriveInfo;
-import com.team6647.Constants.ShuffleboardConstants;
 import com.team6647.subsystems.ChassisSubsystem;
+import com.team6647.utils.Constants.ShuffleboardConstants;
 import com.team6647.utils.shuffleboard.tabs.DebugTab;
 import com.team6647.utils.shuffleboard.tabs.DefaultTab;
 

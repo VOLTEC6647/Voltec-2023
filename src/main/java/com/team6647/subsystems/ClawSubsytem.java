@@ -6,7 +6,7 @@ package com.team6647.subsystems;
 
 import com.andromedalib.motorControllers.SuperSparkMax;
 import com.andromedalib.motorControllers.IdleManager.GlobalIdleMode;
-import com.team6647.Constants.ClawConstants;
+import com.team6647.utils.Constants.ClawConstants;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;

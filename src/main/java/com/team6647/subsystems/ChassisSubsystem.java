@@ -7,8 +7,8 @@ package com.team6647.subsystems;
 import com.andromedalib.motorControllers.SuperTalonFX;
 import com.andromedalib.motorControllers.IdleManager.GlobalIdleMode;
 import com.andromedalib.subsystems.DifferentialDriveSubsystem;
-import com.team6647.Constants.ChassisConstants;
-import com.team6647.Constants.DriveConstants;
+import com.team6647.utils.Constants.ChassisConstants;
+import com.team6647.utils.Constants.DriveConstants;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
