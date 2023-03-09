@@ -9,34 +9,34 @@ import com.team6647.subsystems.DriveSubsystem;
 import com.team6647.subsystems.VisionSubsystem;
 import com.team6647.utils.Constants.DriveConstants;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class AutoBalance extends CommandBase {
   ChassisSubsystem chassis;
   DriveSubsystem drive;
-
-  boolean climbing = false;
+  VisionSubsystem vision;
 
   double drivePower = 0;
   double currentAngle = 0;
   double error = 0;
-
   public AutoBalance(ChassisSubsystem chassis, DriveSubsystem drive) {
     this.chassis = chassis;
     this.drive = drive;
+    this.vision = VisionSubsystem.getInstance("Photon");
 
     addRequirements(drive, chassis);
   }
 
   @Override
   public void initialize() {
-    VisionSubsystem.getInstance("Photon").setLimeLEDMode(2);
+    vision.setLimeLEDMode(2);
   }
 
   @Override
   public void execute() {
-    VisionSubsystem.getInstance("Photon").setLimeLEDMode(2);
+    vision.setLimeLEDMode(2);
 
     currentAngle = drive.getNavxRoll();
     error = DriveConstants.balanceGoal - currentAngle;
@@ -64,11 +64,17 @@ public class AutoBalance extends CommandBase {
   public void end(boolean interrupted) {
     chassis.tankDrive(0, 0);
     chassis.setBrake();
-    VisionSubsystem.getInstance("Photon").setLimeLEDMode(1);
+   vision.setLimeLEDMode(1);
   }
 
   @Override
   public boolean isFinished() {
-    return Math.abs(error) < DriveConstants.balanceTolerance;
+    if (Math.abs(error) < DriveConstants.balanceTolerance){
+      double fpgaTimestamp = Timer.getFPGATimestamp();
+      if(Math.abs(Timer.getFPGATimestamp() - fpgaTimestamp) > 2){
+        return true;
+      }
+    }
+    return false;
   }
 }
