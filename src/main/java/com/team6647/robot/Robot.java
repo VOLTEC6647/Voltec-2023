@@ -2,7 +2,7 @@
  * Written by Juan Pablo Gutiérrez
  */
 
-package com.team6647;
+package com.team6647.robot;
 
 import com.team6647.subsystems.DriveSubsystem;
 

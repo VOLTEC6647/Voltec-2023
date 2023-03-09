@@ -2,7 +2,7 @@
  * Written by Juan Pablo Gutiérrez
  */
 
-package com.team6647;
+package com.team6647.utils;
 
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 
@@ -98,8 +98,8 @@ public final class Constants {
 
     public static final double angleTolerance = 1;
     public static final double balanceGoal = 0;
-    public static final double balanceKp = 1.5;
-    public static final double balanceTolerance = 1;
+    public static final double balanceKp = 0.65;
+    public static final double balanceTolerance = 3;
   }
 
   public static class VisionConstants {

@@ -21,13 +21,11 @@ public class StartArm extends CommandBase {
   public void initialize() {
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     arm.extendArm(-0.1);
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     arm.changeSetpoint(-130);
@@ -36,7 +34,6 @@ public class StartArm extends CommandBase {
 
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return !arm.getLimitState();

@@ -4,11 +4,12 @@
 
 package com.team6647.commands.auto;
 
-import com.team6647.Constants.DriveConstants;
 import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.subsystems.DriveSubsystem;
 import com.team6647.subsystems.VisionSubsystem;
+import com.team6647.utils.Constants.DriveConstants;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class AutoBalance extends CommandBase {
@@ -28,40 +29,44 @@ public class AutoBalance extends CommandBase {
     addRequirements(drive, chassis);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     VisionSubsystem.getInstance("Photon").setLimeLEDMode(2);
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    VisionSubsystem.getInstance("Photon").setLimeLEDMode(2);
+
     currentAngle = drive.getNavxRoll();
     error = DriveConstants.balanceGoal - currentAngle;
 
     drivePower = -Math.min(DriveConstants.balanceKp * error, 1);
 
+    SmartDashboard.putNumber("Drivepower 2: " , drivePower);
 
-    if(Math.abs(drivePower) > 0.5){
-      drivePower = Math.copySign(0.4, drivePower);
+    if(drivePower < 0){
+      drivePower *= 0.8; //1.35
+    }
+
+    if(Math.abs(drivePower) > 0.35){
+      drivePower = Math.copySign(0.35, drivePower);
     }
 
     chassis.tankDrive(drivePower, drivePower);
-    System.out.println("Angle: " + currentAngle);
-    System.out.println("Error: " + error);
-    System.out.println("Drivepower: " + drivePower);
+    SmartDashboard.putNumber("Angle: ",currentAngle);
+    SmartDashboard.putNumber("Error: " , error);
+    SmartDashboard.putNumber("Drivepower: " , drivePower);
 
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     chassis.tankDrive(0, 0);
+    chassis.setBrake();
     VisionSubsystem.getInstance("Photon").setLimeLEDMode(1);
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return Math.abs(error) < DriveConstants.balanceTolerance;

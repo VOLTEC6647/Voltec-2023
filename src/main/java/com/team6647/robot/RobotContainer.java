@@ -2,10 +2,8 @@
  * Written by Juan Pablo Gutiérrez
  */
 
-package com.team6647;
+package com.team6647.robot;
 
-import com.team6647.Constants.ArmConstants;
-import com.team6647.Constants.OperatorConstants;
 import com.team6647.commands.auto.AutoBalance;
 import com.team6647.commands.auto.ProtocolCommand;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
@@ -18,6 +16,8 @@ import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.subsystems.ClawSubsytem;
 import com.team6647.subsystems.DriveSubsystem;
 import com.team6647.subsystems.VisionSubsystem;
+import com.team6647.utils.Constants.ArmConstants;
+import com.team6647.utils.Constants.OperatorConstants;
 import com.team6647.utils.shuffleboard.AutoModeSelector;
 import com.team6647.utils.shuffleboard.DriveModeSelector;
 import com.team6647.utils.shuffleboard.ShuffleboardManager;
@@ -124,6 +124,7 @@ public class RobotContainer {
 
     OperatorConstants.driverController2.rightTrigger(0.1).whileTrue(new MoveClaw(claw, 1));
     OperatorConstants.driverController2.leftTrigger(0.1).whileTrue(new MoveClaw(claw, -1));
+    OperatorConstants.driverController2.pov(270).whileTrue(new MoveClaw(claw, 0));
     OperatorConstants.driverController2.rightBumper().whileTrue(new InstantCommand(() -> {
       claw.CubeSet();
     }));

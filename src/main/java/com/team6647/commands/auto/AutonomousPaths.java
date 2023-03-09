@@ -147,13 +147,22 @@ public class AutonomousPaths {
                                 new AutoBalance(chassis, drive));
         }
 
-        public static Command midAutoCone() {
+        /* public static Command midAutoCone() {
                 return Commands.sequence(
                                 putCone(),
                                 Commands.waitSeconds(0.5),
                                 new RunCommand(() -> chassis.tankDrive(-0.5, -0.5), chassis).withTimeout(3.8),
                                 new RunCommand(() -> chassis.setBrake(), chassis)
-                /* new AutoBalance(chassis, drive) */);
+                new AutoBalance(chassis, drive));
+        } */
+
+        public static Command midAutoCone() {
+                return Commands.sequence(
+                        Load.loadPathTrajectory(
+                                PathPlanner.loadPath("Test",
+                                                new PathConstraints(0.2, 0.2)),
+                                true)
+            );
         }
 
         public static Command midAutoCube() {

@@ -4,8 +4,8 @@
 
 package com.team6647.commands.hybrid.Arm;
 
-import com.team6647.Constants.ArmConstants;
 import com.team6647.subsystems.ArmSubsystem;
+import com.team6647.utils.Constants.ArmConstants;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -22,10 +22,7 @@ public class ExtendArm extends CommandBase {
 
   @Override
   public void initialize() {
-    System.out.println(speed);
-
     arm.extendArm(speed);
-
   }
 
   @Override

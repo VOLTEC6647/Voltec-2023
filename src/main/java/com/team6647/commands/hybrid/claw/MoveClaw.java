@@ -4,8 +4,8 @@
 
 package com.team6647.commands.hybrid.claw;
 
-import com.team6647.Constants.ClawConstants;
 import com.team6647.subsystems.ClawSubsytem;
+import com.team6647.utils.Constants.ClawConstants;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -36,7 +36,6 @@ public class MoveClaw extends CommandBase {
   public void execute() {
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     claw.setVelocity(0);

@@ -4,8 +4,8 @@
 
 package com.team6647.commands.teleop;
 
-import com.team6647.Constants.OperatorConstants;
 import com.team6647.subsystems.ChassisSubsystem;
+import com.team6647.utils.Constants.OperatorConstants;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -18,7 +18,6 @@ public class CurvatureDriveCommand extends CommandBase {
   double turnX;
   SlewRateLimiter slewFilter;
 
-  /** Creates a new ArcadeDriveCommand. */
   public CurvatureDriveCommand(ChassisSubsystem chassis, CommandXboxController controller) {
     this.chassis = chassis;
     this.controller = controller;
