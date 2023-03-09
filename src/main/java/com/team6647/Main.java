@@ -3,9 +3,6 @@
  * In honor of HRGD
  * 
  * Team 6647
- * 
- * "The difference in winning & losing is most often, not quitting"
- * Walt Disney
  */
 
 package com.team6647;
