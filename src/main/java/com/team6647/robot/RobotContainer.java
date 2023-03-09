@@ -4,6 +4,7 @@
 
 package com.team6647.robot;
 
+import com.andromedalib.robot.SuperRobotContainer;
 import com.team6647.commands.auto.AutoBalance;
 import com.team6647.commands.auto.ProtocolCommand;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
@@ -20,20 +21,18 @@ import com.team6647.utils.Constants.ArmConstants;
 import com.team6647.utils.Constants.OperatorConstants;
 import com.team6647.utils.shuffleboard.AutoModeSelector;
 import com.team6647.utils.shuffleboard.DriveModeSelector;
-import com.team6647.utils.shuffleboard.ShuffleboardManager;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
-public class RobotContainer {
+public class RobotContainer extends SuperRobotContainer{
 
   private static RobotContainer instance;
 
   private DriveModeSelector driveSelector;
   private AutoModeSelector autoSelector;
-  private ShuffleboardManager interactions;
   private ProtocolCommand protocolCommand;
 
   private ArmSubsystem arm;
@@ -42,8 +41,7 @@ public class RobotContainer {
   private DriveSubsystem drive;
   private VisionSubsystem vision;
 
-  private RobotContainer() {
-  }
+  private RobotContainer() {}
 
   public static RobotContainer getInstance() {
     if (instance == null) {
@@ -70,16 +68,8 @@ public class RobotContainer {
   public void initTelemetry() {
     driveSelector = new DriveModeSelector();
     autoSelector = new AutoModeSelector();
-    interactions = ShuffleboardManager.getInstance();
+    super.initTelemetry();
     protocolCommand = new ProtocolCommand(arm, chassis, claw);
-  }
-
-  /**
-   * Constantly updates Telemetry data.
-   * Call this function from the {@link Robot} class
-   */
-  public void updateTelemetry() {
-    interactions.updateTelemetry();
   }
 
   /**
@@ -90,7 +80,7 @@ public class RobotContainer {
   }
 
   /**
-   * Sets the button bidings
+   * Sets the button bindings
    */
   public void configureBindings() {
     setChassisCommand();

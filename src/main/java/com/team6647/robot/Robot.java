@@ -4,83 +4,31 @@
 
 package com.team6647.robot;
 
+import com.andromedalib.robot.SuperRobot;
 import com.team6647.subsystems.DriveSubsystem;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
-public class Robot extends TimedRobot {
-  private Command autonomousCommand;
+public class Robot extends SuperRobot {
 
   private RobotContainer robotContainer;
 
   @Override
-  public void robotInit() {
+  public void robotInit(){
     robotContainer = RobotContainer.getInstance();
+    setRobotContainer(robotContainer); 
 
-    robotContainer.initSubsystems();
-    robotContainer.initTelemetry();
-    robotContainer.configureBindings();
-
-    CameraServer.startAutomaticCapture();
-    addPeriodic(() -> {
-      CommandScheduler.getInstance().run();
-    }, 0.01);
-  }
-
-  @Override
-  public void robotPeriodic() {
-
-    robotContainer.updateTelemetry();
-  }
-
-  @Override
-  public void disabledInit() {
-  }
-
-  @Override
-  public void disabledPeriodic() {
+    super.robotInit();
   }
 
   @Override
   public void autonomousInit() {
     DriveSubsystem.getInstance().resetNavx();
     DriveSubsystem.getInstance().resetEncoders();
-
-    autonomousCommand = robotContainer.getAutonomousCommand();
-
-    if (autonomousCommand != null) {
-      autonomousCommand.schedule();
-    }
+    super.autonomousInit();
   }
-
-  @Override
-  public void autonomousPeriodic() {}
 
   @Override
   public void teleopInit() {
-    if (autonomousCommand != null) {
-      autonomousCommand.cancel();
-    }
+    super.teleopInit();
     robotContainer.setChassisCommand();
   }
-
-  @Override
-  public void teleopPeriodic() {}
-
-  @Override
-  public void testInit() {
-    CommandScheduler.getInstance().cancelAll();
-
-    Command testCommand = robotContainer.getTestCommand();
-
-    if (testCommand != null) {
-      testCommand.schedule();
-    }
-  }
-
-  @Override
-  public void testPeriodic() {}
 }
