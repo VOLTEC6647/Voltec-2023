@@ -46,19 +46,18 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    DriveSubsystem.getInstance().resetNavx();
+    DriveSubsystem.getInstance().resetEncoders();
+
     autonomousCommand = robotContainer.getAutonomousCommand();
 
     if (autonomousCommand != null) {
       autonomousCommand.schedule();
     }
-
-    DriveSubsystem.getInstance().resetNavx();
-    DriveSubsystem.getInstance().resetEncoders();
   }
 
   @Override
-  public void autonomousPeriodic() {
-  }
+  public void autonomousPeriodic() {}
 
   @Override
   public void teleopInit() {
@@ -69,8 +68,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopPeriodic() {
-  }
+  public void teleopPeriodic() {}
 
   @Override
   public void testInit() {
@@ -84,14 +82,5 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void testPeriodic() {
-  }
-
-  @Override
-  public void simulationInit() {
-  }
-
-  @Override
-  public void simulationPeriodic() {
-  }
+  public void testPeriodic() {}
 }
