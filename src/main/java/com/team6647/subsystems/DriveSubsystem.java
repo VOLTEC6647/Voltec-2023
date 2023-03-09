@@ -82,7 +82,6 @@ public class DriveSubsystem extends SubsystemBase {
         ChassisSubsystem.frontLeft.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
         -ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio));
 
-    // TOOD CHECK IF THIS WORKS
     Optional<EstimatedRobotPose> result = visionSubystem.getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
 
     if (result.isPresent()) {

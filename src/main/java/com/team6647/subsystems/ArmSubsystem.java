@@ -55,7 +55,14 @@ public class ArmSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    calculateArm();
+  }
 
+  /**
+   * Calculates the Arm PID and FeedForward
+   * Applies these values
+   */
+  public void calculateArm() {
     double actualPoint = getMeasurement();
 
     double error = Math.abs(actualPoint - setPoint);

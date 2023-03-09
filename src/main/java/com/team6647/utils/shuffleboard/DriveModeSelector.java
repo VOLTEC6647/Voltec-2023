@@ -7,7 +7,6 @@ package com.team6647.utils.shuffleboard;
 import com.team6647.commands.teleop.ArcadeDriveCommand;
 import com.team6647.commands.teleop.CurvatureDriveCommand;
 import com.team6647.commands.teleop.TankDriveCommand;
-import com.team6647.commands.teleop.TankDriveFeedForward;
 import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.utils.Constants.OperatorConstants;
 import com.team6647.utils.Constants.ShuffleboardConstants;
@@ -24,7 +23,6 @@ public class DriveModeSelector {
         TANK,
         ARCADE,
         CURVATURE,
-        FEEDFORWARD
     }
 
     private SendableChooser<DriveMode> driveModeChooser = new SendableChooser<>();
@@ -35,9 +33,7 @@ public class DriveModeSelector {
             new ArcadeDriveCommand(ChassisSubsystem.getInstance(),
                     OperatorConstants.driverController1),
             new CurvatureDriveCommand(ChassisSubsystem.getInstance(),
-                    OperatorConstants.driverController1),
-            new TankDriveFeedForward(ChassisSubsystem.getInstance(),
-                    OperatorConstants.driverController1),
+                    OperatorConstants.driverController1)
     };
 
     /**
@@ -47,7 +43,6 @@ public class DriveModeSelector {
         driveModeChooser.setDefaultOption("Tank", DriveMode.TANK);
         driveModeChooser.addOption("Arcade", DriveMode.ARCADE);
         driveModeChooser.addOption("Curvature", DriveMode.CURVATURE);
-        driveModeChooser.addOption("Feed Forward", DriveMode.FEEDFORWARD);
 
         ShuffleboardConstants.kShuffleboardTab.add("Drive Mode", driveModeChooser).withPosition(5, 0);
     }
@@ -65,8 +60,6 @@ public class DriveModeSelector {
                 return driveModes[1];
             case CURVATURE:
                 return driveModes[2];
-            case FEEDFORWARD:
-                return driveModes[3];
             default:
                 return driveModes[0];
         }
