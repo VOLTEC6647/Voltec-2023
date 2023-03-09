@@ -26,13 +26,12 @@ public class Robot extends TimedRobot {
 
     CameraServer.startAutomaticCapture();
     addPeriodic(() -> {
-
+      CommandScheduler.getInstance().run();
     }, 0.01);
   }
 
   @Override
   public void robotPeriodic() {
-    CommandScheduler.getInstance().run();
 
     robotContainer.updateTelemetry();
   }
