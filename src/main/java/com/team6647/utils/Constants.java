@@ -56,8 +56,7 @@ public final class Constants {
     public static final double kMaxVelocityRadPerSecond = 100.38 / 2;
     public static final double kMaxAccelerationRadPerSecSquared = 118.876 / 2;
 
-    // TODO SET
-    public static final double forwardLimit = 40;
+    public static final double forwardLimit = 42;
 
     public static final double gearRatio = 94;
 
