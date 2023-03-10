@@ -85,9 +85,10 @@ public class RobotContainer extends SuperRobotContainer{
   public void configureBindings() {
     setChassisCommand();
 
-    OperatorConstants.driverController1.y().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleReduction()));
+    OperatorConstants.driverController1.x().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleFirstGear()));
+    OperatorConstants.driverController1.y().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleSecondGear()));
     OperatorConstants.driverController1.a().whileTrue(new AutoBalance(chassis, drive));
-    OperatorConstants.driverController1.x().whileTrue(new AprilAim(vision, chassis));
+    /* OperatorConstants.driverController1.x().whileTrue(new AprilAim(vision, chassis)); */
     OperatorConstants.driverController1.b().whileTrue(new LimelightAim(vision, chassis));
     OperatorConstants.driverController1.rightBumper().whileTrue(new InstantCommand(() -> chassis.setBrake(), chassis)).whileFalse(new InstantCommand(() -> chassis.setCoast(), chassis));
 
