@@ -39,10 +39,11 @@ public class ExtendArm extends CommandBase {
   @Override
   public boolean isFinished() {
     if (speed > 0 && !arm.getLimitState()) {
-      System.out.println("FINISSSSAA");
       return false;
     }
-    System.out.println("SDBIUAFBD");
+    if (speed < 0 && Math.abs(arm.getExtendPosition()) >= Math.abs(ArmConstants.forwardLimit)) {
+      return false;
+    }
     return !arm.getLimitState() || (Math.abs(arm.getExtendPosition()) >= Math.abs(ArmConstants.forwardLimit));
   }
 }

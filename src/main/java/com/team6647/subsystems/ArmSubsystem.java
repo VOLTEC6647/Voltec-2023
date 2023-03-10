@@ -158,7 +158,7 @@ public class ArmSubsystem extends SubsystemBase {
    * @return Current position
    */
   public double getExtendPosition() {
-    return extendingSpark.get();
+    return extendingSpark.getPosition();
   }
 
   /**
