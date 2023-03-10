@@ -31,7 +31,6 @@ public class AutoBalance extends CommandBase {
 
   @Override
   public void initialize() {
-    vision.setLimeLEDMode(2);
   }
 
   @Override
@@ -64,7 +63,7 @@ public class AutoBalance extends CommandBase {
   public void end(boolean interrupted) {
     chassis.tankDrive(0, 0);
     chassis.setBrake();
-   vision.setLimeLEDMode(1);
+    vision.setLimeLEDMode(1);
   }
 
   @Override

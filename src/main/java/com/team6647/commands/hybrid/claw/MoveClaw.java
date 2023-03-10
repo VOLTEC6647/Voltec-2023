@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class MoveClaw extends CommandBase {
   ClawSubsytem claw;
   double speed;
-  int mult;
+  double mult;
 
-  public MoveClaw(ClawSubsytem claw, int mult) {
+  public MoveClaw(ClawSubsytem claw, double mult) {
     this.claw = claw;
     this.mult = mult;
 
