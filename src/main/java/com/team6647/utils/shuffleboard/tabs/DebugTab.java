@@ -50,24 +50,24 @@ public class DebugTab extends ShuffleboardTabBase {
     
     public DebugTab(ShuffleboardTab tab) {
 
-        this.extendingPosition = tab.add("Extend postion", arm.getExtendPosition()).withPosition(7, 0).getEntry();
+        this.extendingPosition = tab.add("Extend postion", arm.getExtendPosition()).withPosition(5,1).getEntry();
 
         this.armPositionDoublePID  = tab.add("Arm Position", arm.getMeasurement()).withPosition(3,1).getEntry();
         this.desiredPosition = tab.add("Desired Position", arm.getSetpoint()).withPosition(4, 1).getEntry();
-        this.totalOutput = tab.add("Total Output", arm.getTotal()).withPosition(5, 1).getEntry();
-        this.pidOutput = tab.add("Arm Output", arm.getPidOutput()).withPosition(6, 1).getEntry();
-        this.feedOutput = tab.add("Feed output", arm.getFeedOutput()).withPosition(7, 1).getEntry();
-        this.voltageApplied = tab.add("Voltage Applied", arm.getPivot1Voltage()).withPosition(8, 1).getEntry();
+        this.pidOutput = tab.add("Arm Output", arm.getPidOutput()).withPosition(5, 2).getEntry();
+        this.feedOutput = tab.add("Feed output", arm.getFeedOutput()).withPosition(4, 2).getEntry();
+        this.totalOutput = tab.add("Total Output", arm.getTotal()).withPosition(3, 2).getEntry();
+        this.voltageApplied = tab.add("Voltage Applied", arm.getPivot1Voltage()).withPosition(6, 1).getEntry();
 
         this.armPositionGraph = tab.add("Arm Position Graph", arm.getMeasurement()).withPosition(0, 2).withWidget(BuiltInWidgets.kGraph).getEntry();
 
-        this.limit = tab.add("Limit switch", arm.getLimitState()).withPosition(3, 2).getEntry();
+        this.limit = tab.add("Limit switch", arm.getLimitState()).withPosition(3, 3).getEntry();
 
-        this.limeAim = tab.add("Limelight aim", vision.getLimelightAim()).withPosition(4, 2).getEntry();
-        this.photonAim = tab.add("Photon aim", vision.getPhotonAim()).withPosition(5, 2).getEntry();
+        this.limeAim = tab.add("Limelight aim", vision.getLimelightAim()).withPosition(4, 3).getEntry();
+        this.photonAim = tab.add("Photon aim", vision.getPhotonAim()).withPosition(5, 3).getEntry();
         
-        this.pivot1Temp = tab.add("Pivot1 Temp", arm.getPivot1Temp()).withPosition(7, 0).getEntry();
-        this.pivot2Temp = tab.add("Pivot2 Temp", arm.getPivot2Temp()).withPosition(8, 0).getEntry();
+        this.pivot1Temp = tab.add("Pivot1 Temp", arm.getPivot1Temp()).withPosition(6, 3).getEntry();
+        this.pivot2Temp = tab.add("Pivot2 Temp", arm.getPivot2Temp()).withPosition(7, 3).getEntry();
         this.chassisAngle = tab.add("Chassis Angle", drive.getNavxRoll()).withPosition(6, 2).getEntry();
     }
 
