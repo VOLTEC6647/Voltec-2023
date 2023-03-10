@@ -58,22 +58,12 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
   public void outputTelemetry() {
   }
 
-  /**
-   * Changes reduction state
-   */
-  public static void toggleReduction() {
-    Value currentState = gearSolenoid.get();
+  public static void toggleFirstGear(){
+    gearSolenoid.set(Value.kForward);
+  }
 
-    switch (currentState) {
-      case kForward:
-        gearSolenoid.set(Value.kReverse);
-        break;
-      case kReverse:
-        gearSolenoid.set(Value.kForward);
-      default:
-        gearSolenoid.set(Value.kForward);
-        break;
-    }
+  public static void toggleSecondGear(){
+    gearSolenoid.set(Value.kReverse);
   }
 
   /**
