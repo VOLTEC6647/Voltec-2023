@@ -2,7 +2,7 @@
  * Written by Juan Pablo Gutiérrez
  */
 
-package com.team6647.commands.auto;
+package com.team6647.utils;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -37,10 +37,11 @@ public class Load {
      * @return JSON Path command
      */
     public static Command loadWPITrajectory(String filename, boolean resetOdometry) {
+        String completeFileName = Filesystem.getDeployDirectory() + "/pathplanner/generatedJSON/" + filename;
         Trajectory trajectory;
         try {
             /* Searchs for trajectory in deploy directory */
-            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(filename);
+            Path trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(completeFileName);
             trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
         } catch (IOException e) {
             /* Prints error message */
