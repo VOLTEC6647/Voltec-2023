@@ -47,6 +47,7 @@ public class DebugTab extends ShuffleboardTabBase {
     GenericEntry pivot2Temp;
 
     GenericEntry chassisAngle;
+    GenericEntry navxAngle;
     
     public DebugTab(ShuffleboardTab tab) {
 
@@ -69,7 +70,8 @@ public class DebugTab extends ShuffleboardTabBase {
         this.pivot1Temp = tab.add("Pivot1 Temp", arm.getPivot1Temp()).withPosition(6, 3).getEntry();
         this.pivot2Temp = tab.add("Pivot2 Temp", arm.getPivot2Temp()).withPosition(7, 3).getEntry();
         this.chassisAngle = tab.add("Chassis Angle", drive.getNavxRoll()).withPosition(6, 2).getEntry();
-    }
+        this.navxAngle = tab.add("Navx", drive.getNavxAngle()).withPosition(8, 3).getEntry();
+   }
 
     @Override
     public void updateTelemetry() {
@@ -92,6 +94,7 @@ public class DebugTab extends ShuffleboardTabBase {
         pivot2Temp.setDouble(arm.getPivot2Temp());
 
         chassisAngle.setDouble(drive.getNavxRoll());
+        navxAngle.setString(drive.getNavxAngle());
 
      }
 }
