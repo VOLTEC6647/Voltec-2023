@@ -60,6 +60,7 @@
       "/Shuffleboard/Team 6647/Auto Mode": "String Chooser",
       "/Shuffleboard/Team 6647/Differential Drive": "DifferentialDrive",
       "/Shuffleboard/Team 6647/Drive Mode": "String Chooser",
+      "/Shuffleboard/Team 6647/Grid Placement": "String Chooser",
       "/SmartDashboard/ChassisSubsystem": "Subsystem",
       "/SmartDashboard/DifferentialDrive[1]": "DifferentialDrive",
       "/SmartDashboard/DifferentialDrive[3]": "DifferentialDrive",
