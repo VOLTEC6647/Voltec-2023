@@ -31,6 +31,7 @@ public class AutoModeSelector {
             AutonomousPaths.midAutoCube(),
             AutonomousPaths.topAutoCone(),
             AutonomousPaths.topAutoCube()
+
     };
 
     public AutoModeSelector() {
@@ -39,8 +40,9 @@ public class AutoModeSelector {
         autoChooser.addOption("Bottom Auto Cube", AutoSelection.BottomAutoCube);
         autoChooser.setDefaultOption("Mid Auto Cone", AutoSelection.MidAutoCone);
         autoChooser.addOption("Mid Auto Cube", AutoSelection.MidAutoCube);
-        autoChooser.addOption("Top Auto Cube", AutoSelection.TopAutoCone);
-        autoChooser.addOption("Top Auto Cube", AutoSelection.TopAutoCube);
+        autoChooser.addOption("Top Auto Cone", AutoSelection.TopAutoCone);
+        autoChooser.addOption("BotToptom Auto Cone", AutoSelection.TopAutoCube);
+
         ShuffleboardConstants.kShuffleboardTab.add("Auto Mode", autoChooser).withPosition(6, 0);
     }
 
@@ -60,7 +62,6 @@ public class AutoModeSelector {
                 return autoModes[5];
             case TopAutoCube:
                 return autoModes[6];
-
         }
         return null;
     }
