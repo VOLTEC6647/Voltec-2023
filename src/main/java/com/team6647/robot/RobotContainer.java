@@ -6,7 +6,6 @@ package com.team6647.robot;
 
 import com.andromedalib.robot.SuperRobotContainer;
 import com.team6647.commands.auto.AutoBalance;
-import com.team6647.commands.auto.ProtocolCommand;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.Arm.StartArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
@@ -19,8 +18,6 @@ import com.team6647.subsystems.DriveSubsystem;
 import com.team6647.subsystems.VisionSubsystem;
 import com.team6647.utils.Constants.ArmConstants;
 import com.team6647.utils.Constants.OperatorConstants;
-import com.team6647.utils.shuffleboard.AutoModeSelector;
-import com.team6647.utils.shuffleboard.DriveModeSelector;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -30,10 +27,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 public class RobotContainer extends SuperRobotContainer{
 
   private static RobotContainer instance;
-
-  private DriveModeSelector driveSelector;
-  private AutoModeSelector autoSelector;
-  private ProtocolCommand protocolCommand;
+  private TelemetryManager telemetryManager;
 
   private ArmSubsystem arm;
   private ChassisSubsystem chassis;
@@ -60,23 +54,15 @@ public class RobotContainer extends SuperRobotContainer{
     claw = ClawSubsytem.getInstance();
     drive = DriveSubsystem.getInstance();
     vision = VisionSubsystem.getInstance("Photon");
-  }
 
-  /**
-   * Initializes the sending of telemetry
-   */
-  public void initTelemetry() {
-    driveSelector = new DriveModeSelector();
-    autoSelector = new AutoModeSelector();
-    super.initTelemetry();
-    protocolCommand = new ProtocolCommand(arm, chassis, claw);
+    telemetryManager = TelemetryManager.getInstance();
   }
 
   /**
    * Sets the {@link ChassisSubsystem} default command
    */
   public void setChassisCommand() {
-    chassis.setDefaultCommand(driveSelector.getDriveMode());
+    chassis.setDefaultCommand(telemetryManager.getDriveSelection());
   }
 
   /**
@@ -132,8 +118,9 @@ public class RobotContainer extends SuperRobotContainer{
    */
   public Command getAutonomousCommand() {        
     return Commands.sequence(
+        new InstantCommand(() -> ChassisSubsystem.toggleSecondGear()),
         new StartArm(arm),
-        autoSelector.getAutoMode());
+        telemetryManager.getAutoSelection());
   }
 
   /**
@@ -142,6 +129,6 @@ public class RobotContainer extends SuperRobotContainer{
    * @return the command to run in test
    */
   public Command getTestCommand() {
-    return Commands.sequence(new StartArm(arm), protocolCommand.getStartCommand());
+    return Commands.sequence(new StartArm(arm), telemetryManager.getProtocolSelection());
   }
 }
