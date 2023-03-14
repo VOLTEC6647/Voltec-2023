@@ -1,5 +1,6 @@
 package com.team6647.commands.auto;
 
+import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.utils.AutoUtils;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -12,6 +13,8 @@ public class GrabCone extends AutoUtils{
     
     public static Command grabCone(){
         return Commands.sequence(
+            new RunCommand(() -> arm.changeSetpoint(-135)).withTimeout(2),
+            new ExtendArm(arm, 0.3).withTimeout(0.5),
             new ParallelCommandGroup(
                 new InstantCommand(() -> claw.CubeSet(), claw),
                 new RunCommand(() -> chassis.tankDrive(0.3, 0.3), chassis).withTimeout(0.5)
