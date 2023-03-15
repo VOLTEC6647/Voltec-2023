@@ -12,6 +12,7 @@ import com.team6647.utils.shuffleboard.AutoModeSelector;
 import com.team6647.utils.shuffleboard.DriveModeSelector;
 import com.team6647.utils.shuffleboard.GridPlacementSelector;
 import com.team6647.utils.shuffleboard.ShuffleboardManager;
+import com.team6647.utils.shuffleboard.GridPlacementSelector.GridPlacement;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -66,7 +67,7 @@ public class TelemetryManager {
         return driveSelector.getDriveMode();
     }
     
-    public String getGridPlacementSelection(){
+    public GridPlacement getGridPlacementSelection(){
         return gridSelector.getSelection();
     }
 
