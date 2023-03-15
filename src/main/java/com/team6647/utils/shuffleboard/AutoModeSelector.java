@@ -3,7 +3,9 @@ package com.team6647.utils.shuffleboard;
 import com.team6647.commands.auto.AutonomousPaths;
 import com.team6647.utils.Constants.ShuffleboardConstants;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -34,7 +36,7 @@ public class AutoModeSelector {
     };
 
     public AutoModeSelector() {
-       
+
         autoChooser.addOption("Leave Communty", AutoSelection.LeaveCommunity);
         autoChooser.addOption("Bottom Auto Cone", AutoSelection.BottomAutoCone);
         autoChooser.addOption("Bottom Auto Cube", AutoSelection.BottomAutoCube);
@@ -47,6 +49,14 @@ public class AutoModeSelector {
     }
 
     public Command getAutoMode() {
+        Shuffleboard.update();
+        SmartDashboard.updateValues();
+
+        var opt = autoChooser.getSelected();
+
+        if (opt == null)
+            return null;
+
         switch (autoChooser.getSelected()) {
             case LeaveCommunity:
                 return autoModes[0];
@@ -62,7 +72,8 @@ public class AutoModeSelector {
                 return autoModes[5];
             case TopAutoCube:
                 return autoModes[6];
+            default:
+                return null;
         }
-        return null;
     }
 }
