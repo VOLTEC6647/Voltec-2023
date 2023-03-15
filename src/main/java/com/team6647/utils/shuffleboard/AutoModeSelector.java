@@ -31,17 +31,17 @@ public class AutoModeSelector {
             AutonomousPaths.midAutoCube(),
             AutonomousPaths.topAutoCone(),
             AutonomousPaths.topAutoCube()
-
     };
 
     public AutoModeSelector() {
+       
         autoChooser.addOption("Leave Communty", AutoSelection.LeaveCommunity);
         autoChooser.addOption("Bottom Auto Cone", AutoSelection.BottomAutoCone);
         autoChooser.addOption("Bottom Auto Cube", AutoSelection.BottomAutoCube);
         autoChooser.setDefaultOption("Mid Auto Cone", AutoSelection.MidAutoCone);
         autoChooser.addOption("Mid Auto Cube", AutoSelection.MidAutoCube);
         autoChooser.addOption("Top Auto Cone", AutoSelection.TopAutoCone);
-        autoChooser.addOption("BotToptom Auto Cone", AutoSelection.TopAutoCube);
+        autoChooser.addOption("Top Auto Cube", AutoSelection.TopAutoCube);
 
         ShuffleboardConstants.kShuffleboardTab.add("Auto Mode", autoChooser).withPosition(6, 0);
     }
