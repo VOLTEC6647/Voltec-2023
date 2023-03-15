@@ -23,7 +23,7 @@ public class StartArm extends CommandBase {
 
   @Override
   public void execute() {
-    arm.extendArm(-0.1);
+    arm.extendArm(-0.2);
   }
 
   @Override
