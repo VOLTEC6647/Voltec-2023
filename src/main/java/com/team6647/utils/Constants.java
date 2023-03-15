@@ -22,8 +22,11 @@ public final class Constants {
     public static final CommandXboxController driverController2 = new CommandXboxController(
         OperatorConstants.kDriverControllerPort2);
 
-    public static final double xMultiplier = 1;
-    public static final double yMultiplier = 1;
+    public static final double xMultiplier = 0.9;
+    public static final double yMultiplier = 0.9;
+
+    public static final double xSecondGearMultiplier = 0.7;
+    public static final double ySecondGearsMultiplier = 0.7;
 
     public static final double rampTimeSeconds = 2;
   }
