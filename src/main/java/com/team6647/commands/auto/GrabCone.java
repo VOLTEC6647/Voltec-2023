@@ -13,7 +13,7 @@ public class GrabCone extends AutoUtils{
     
     public static Command grabCone(){
         return Commands.sequence(
-            new RunCommand(() -> arm.changeSetpoint(-135)).withTimeout(2),
+            new RunCommand(() -> arm.changeSetpoint(-125)).withTimeout(2),
             new ExtendArm(arm, 0.3).withTimeout(0.5),
             new ParallelCommandGroup(
                 new InstantCommand(() -> claw.CubeSet(), claw),
