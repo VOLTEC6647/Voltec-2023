@@ -9,6 +9,7 @@ import com.team6647.subsystems.ArmSubsystem;
 import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.subsystems.ClawSubsytem;
 import com.team6647.subsystems.DriveSubsystem;
+import com.team6647.utils.shuffleboard.GridPlacementSelector.GridPlacement;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -25,22 +26,22 @@ public class AutoUtils {
     protected static DriveSubsystem drive = DriveSubsystem.getInstance();
 
     protected static Command getGridPlacement(int piece) {
-        String telemetryString = telemetryManager.getGridPlacementSelection();
+        GridPlacement placement =  telemetryManager.getGridPlacementSelection();
 
-        switch (telemetryString) {
-            case "Bottom":
+        switch (placement) {
+            case Bottom:
                 if(piece == 0) return putConeBottom();
                 if(piece == 1) return putCubeBottom();
                 break;
-            case "Middle":
+            case Middle:
                 if(piece == 0) return putConeMid();
                 if(piece == 1) return putCubeMid();
                 break;
-            case "Top":
+            case Top:
                 if(piece == 1) return putCubeTop();
                 break;
             default:
-                break;
+                return null;
         }
 
         return null;
@@ -57,10 +58,11 @@ public class AutoUtils {
                         new InstantCommand(() -> claw.CubeSet(), claw));
     }
 
+    //FINISHED
     protected static Command putCubeBottom() {
         return Commands.sequence(
-                        new RunCommand(() -> arm.changeSetpoint(-90), arm).withTimeout(2),
-                        new InstantCommand(() -> claw.CubeSet(), claw));
+                        new RunCommand(() -> arm.changeSetpoint(-120), arm).withTimeout(2),
+                        new MoveClaw(claw, 2.8)).withTimeout(3);
     }
 
     /* Middle Grid placement */
@@ -71,7 +73,8 @@ public class AutoUtils {
                 new RunCommand(() -> arm.changeSetpoint(-90), arm).withTimeout(2),
                 new InstantCommand(() -> claw.CubeSet(), claw));
     }
-
+    
+    //FINISHED
     protected static Command putCubeMid() {
         return Commands.sequence(
                 new RunCommand(() -> arm.changeSetpoint(-90), arm).withTimeout(2),
