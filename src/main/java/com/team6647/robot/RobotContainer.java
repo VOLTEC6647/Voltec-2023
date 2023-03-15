@@ -19,12 +19,13 @@ import com.team6647.subsystems.VisionSubsystem;
 import com.team6647.utils.Constants.ArmConstants;
 import com.team6647.utils.Constants.OperatorConstants;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
-public class RobotContainer extends SuperRobotContainer{
+public class RobotContainer extends SuperRobotContainer {
 
   private static RobotContainer instance;
   private TelemetryManager telemetryManager;
@@ -35,7 +36,8 @@ public class RobotContainer extends SuperRobotContainer{
   private DriveSubsystem drive;
   private VisionSubsystem vision;
 
-  private RobotContainer() {}
+  private RobotContainer() {
+  }
 
   public static RobotContainer getInstance() {
     if (instance == null) {
@@ -74,9 +76,10 @@ public class RobotContainer extends SuperRobotContainer{
     OperatorConstants.driverController1.x().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleFirstGear()));
     OperatorConstants.driverController1.y().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleSecondGear()));
     OperatorConstants.driverController1.a().whileTrue(new AutoBalance(chassis, drive));
-    OperatorConstants.driverController1.leftTrigger().whileTrue(new AprilAim(vision, chassis)); 
+    OperatorConstants.driverController1.leftTrigger().whileTrue(new AprilAim(vision, chassis));
     OperatorConstants.driverController1.rightTrigger().whileTrue(new LimelightAim(vision, chassis));
-    OperatorConstants.driverController1.rightBumper().whileTrue(new InstantCommand(() -> chassis.setBrake(), chassis)).whileFalse(new InstantCommand(() -> chassis.setCoast(), chassis));
+    OperatorConstants.driverController1.rightBumper().whileTrue(new InstantCommand(() -> chassis.setBrake(), chassis))
+        .whileFalse(new InstantCommand(() -> chassis.setCoast(), chassis));
 
     OperatorConstants.driverController2.x().whileTrue(new RunCommand(() -> {
       arm.manualControl(0.5);
@@ -116,11 +119,16 @@ public class RobotContainer extends SuperRobotContainer{
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {        
-    return Commands.sequence(
-        new InstantCommand(() -> ChassisSubsystem.toggleSecondGear()),
-        new StartArm(arm),
-        telemetryManager.getAutoSelection());
+  public Command getAutonomousCommand() {
+    try {
+      return Commands.sequence(
+          new InstantCommand(() -> ChassisSubsystem.toggleSecondGear()),
+          new StartArm(arm),
+          telemetryManager.getAutoSelection());
+    } catch (Exception e) {
+      DriverStation.reportWarning("Could not run auto", true);
+      return null;
+    }
   }
 
   /**
