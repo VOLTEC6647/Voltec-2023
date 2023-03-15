@@ -53,7 +53,7 @@ public class VisionSubsystem extends SubsystemBase {
       // TODO SET THE ROBOT TO POSE
       photonPoseEstimator = new PhotonPoseEstimator(field, PoseStrategy.CLOSEST_TO_CAMERA_HEIGHT, photonCamera, null);
     } catch (Exception e) {
-      DriverStation.reportError("Cannot find field layout", false);
+      DriverStation.reportWarning("Cannot find field layout", true);
       photonPoseEstimator = null;
     }
 
