@@ -3,6 +3,7 @@
  */
 package com.team6647.utils;
 
+import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
 import com.team6647.robot.TelemetryManager;
 import com.team6647.subsystems.ArmSubsystem;
@@ -70,7 +71,8 @@ public class AutoUtils {
     // TODO MODIFY
     protected static Command putConeMid() {
         return Commands.sequence(
-                new RunCommand(() -> arm.changeSetpoint(-90), arm).withTimeout(2),
+                new ExtendArm(arm, 0.5).withTimeout(1),
+                new RunCommand(() -> arm.changeSetpoint(-75), arm).withTimeout(2),
                 new InstantCommand(() -> claw.CubeSet(), claw));
     }
     
@@ -91,7 +93,7 @@ public class AutoUtils {
     }
 
     /**
-     * Moves the arm to a desired output, with smooth transitions
+     * Moves the arm to a desired output, with semi-smooth transitions
      * 
      * @param position Desired position
      * @return Arm command
