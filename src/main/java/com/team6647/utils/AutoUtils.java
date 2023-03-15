@@ -55,14 +55,14 @@ public class AutoUtils {
     //FINISHED
     protected static Command putConeBottom() {
         return Commands.sequence(
-                        new RunCommand(() -> arm.changeSetpoint(-90), arm).withTimeout(2),
+                        new RunCommand(() -> arm.changeSetpoint(-90), arm).withTimeout(1),
                         new InstantCommand(() -> claw.CubeSet(), claw));
     }
 
     //FINISHED
     protected static Command putCubeBottom() {
         return Commands.sequence(
-                        new RunCommand(() -> arm.changeSetpoint(-120), arm).withTimeout(2),
+                        new RunCommand(() -> arm.changeSetpoint(-120), arm).withTimeout(1),
                         new MoveClaw(claw, 2.8)).withTimeout(3);
     }
 
@@ -72,14 +72,14 @@ public class AutoUtils {
     protected static Command putConeMid() {
         return Commands.sequence(
                 new ExtendArm(arm, 0.5).withTimeout(1),
-                new RunCommand(() -> arm.changeSetpoint(-75), arm).withTimeout(2),
+                new RunCommand(() -> arm.changeSetpoint(-75), arm).withTimeout(1),
                 new InstantCommand(() -> claw.CubeSet(), claw));
     }
     
     //FINISHED
     protected static Command putCubeMid() {
         return Commands.sequence(
-                new RunCommand(() -> arm.changeSetpoint(-90), arm).withTimeout(2),
+                new RunCommand(() -> arm.changeSetpoint(-90), arm).withTimeout(1),
                 new MoveClaw(claw, 3)).withTimeout(3);
     }
 
@@ -88,7 +88,7 @@ public class AutoUtils {
     //FINISHED
     protected static Command putCubeTop() {
         return Commands.sequence(
-                new RunCommand(() -> arm.changeSetpoint(-55), arm).withTimeout(2),
+                new RunCommand(() -> arm.changeSetpoint(-55), arm).withTimeout(1),
                 new MoveClaw(claw, 3.5)).withTimeout(5.5);
     }
 
