@@ -9,8 +9,6 @@ import com.team6647.commands.auto.AutoBalance;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.Arm.StartArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
-import com.team6647.commands.teleop.AprilAim;
-import com.team6647.commands.teleop.LimelightAim;
 import com.team6647.subsystems.ArmSubsystem;
 import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.subsystems.ClawSubsytem;
@@ -18,12 +16,15 @@ import com.team6647.subsystems.DriveSubsystem;
 import com.team6647.subsystems.VisionSubsystem;
 import com.team6647.utils.Constants.ArmConstants;
 import com.team6647.utils.Constants.OperatorConstants;
+import com.team6647.utils.Constants.VisionConstants;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 
 public class RobotContainer extends SuperRobotContainer {
 
@@ -76,8 +77,16 @@ public class RobotContainer extends SuperRobotContainer {
     OperatorConstants.driverController1.x().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleFirstGear()));
     OperatorConstants.driverController1.y().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleSecondGear()));
     OperatorConstants.driverController1.a().whileTrue(new AutoBalance(chassis, drive));
-    OperatorConstants.driverController1.leftTrigger().whileTrue(new AprilAim(vision, chassis));
-    OperatorConstants.driverController1.rightTrigger().whileTrue(new LimelightAim(vision, chassis));
+
+    OperatorConstants.driverController1.leftTrigger().whileTrue(new SequentialCommandGroup(
+      new InstantCommand(() -> vision.setLimePipe(VisionConstants.aprilLimePipe), vision),
+      new StartEndCommand(() -> vision.toggleLimelightAim(), () -> vision.toggleLimelightAim(), vision, chassis)
+    ));
+
+    OperatorConstants.driverController1.rightTrigger().whileTrue(new SequentialCommandGroup(
+      new InstantCommand(() -> vision.setLimePipe(VisionConstants.retroLimePipe), vision),
+      new StartEndCommand(() -> vision.toggleLimelightAim(), () -> vision.toggleLimelightAim(), vision, chassis)
+    ));
     OperatorConstants.driverController1.rightBumper().whileTrue(new InstantCommand(() -> chassis.setBrake(), chassis))
         .whileFalse(new InstantCommand(() -> chassis.setCoast(), chassis));
 
