@@ -23,7 +23,8 @@ public class GrabCone extends AutoUtils{
             new ParallelCommandGroup(
                 new RunCommand(() -> chassis.tankDrive(0.3, 0.3), chassis).withTimeout(1.2),
                 new InstantCommand(() -> claw.ConeSet(), claw)
-            )
+            ),
+            new RunCommand(() -> arm.changeSetpoint(-110)).withTimeout(2)
         );
     }
 }
