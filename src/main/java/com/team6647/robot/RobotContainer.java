@@ -14,6 +14,7 @@ import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.subsystems.ClawSubsytem;
 import com.team6647.subsystems.DriveSubsystem;
 import com.team6647.subsystems.VisionSubsystem;
+import com.team6647.utils.AutoUtils;
 import com.team6647.utils.Constants.ArmConstants;
 import com.team6647.utils.Constants.OperatorConstants;
 import com.team6647.utils.Constants.VisionConstants;
@@ -129,11 +130,12 @@ public class RobotContainer extends SuperRobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    System.out.println(telemetryManager.getGridPlacementSelection());
     try {
       return Commands.sequence(
           new InstantCommand(() -> ChassisSubsystem.toggleSecondGear()),
           new StartArm(arm),
-          telemetryManager.getAutoSelection());
+          AutoUtils.getAuto());
     } catch (Exception e) {
       DriverStation.reportWarning("Could not run auto", true);
       return null;

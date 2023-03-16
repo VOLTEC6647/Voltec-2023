@@ -12,8 +12,11 @@ import com.team6647.utils.shuffleboard.AutoModeSelector;
 import com.team6647.utils.shuffleboard.DriveModeSelector;
 import com.team6647.utils.shuffleboard.GridPlacementSelector;
 import com.team6647.utils.shuffleboard.ShuffleboardManager;
+import com.team6647.utils.shuffleboard.AutoModeSelector.AutoSelection;
 import com.team6647.utils.shuffleboard.GridPlacementSelector.GridPlacement;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 
@@ -53,9 +56,11 @@ public class TelemetryManager {
 
     public void updateTelemetry() {
         interactions.updateTelemetry();
+        Shuffleboard.update();
+        SmartDashboard.updateValues();
     }
 
-    public Command getAutoSelection(){
+    public AutoSelection getAutoMode(){
         return autoSelector.getAutoMode();
     }
 

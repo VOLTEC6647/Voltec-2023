@@ -22,6 +22,7 @@ public class AutonomousPaths extends AutoUtils {
          * @return Command to leave the Community
          */
         public static Command leaveCommunity() {
+                System.out.println("Leave community");
                 return new RunCommand(() -> chassis.tankDrive(-0.4, -0.4), chassis).withTimeout(3.2);
         }
 
@@ -33,6 +34,7 @@ public class AutonomousPaths extends AutoUtils {
          * @return Command for bottom community
          */
         public static Command bottomAutoCone(){
+                System.out.println("Bottom auto Cone");
                 return Commands.sequence(
                         getGridPlacement(0),
                         Load.loadWPITrajectory("GoForPieceBottom1.wpilib.json", true),
@@ -51,6 +53,7 @@ public class AutonomousPaths extends AutoUtils {
          * @return Command for bottom community
          */
         public static Command bottomAutoCube(){
+                System.out.println("Bottom auto cube");
                 return Commands.sequence(
                         getGridPlacement(1),
                         Load.loadWPITrajectory("GoForPieceBottom2.wpilib.json", true),
@@ -71,6 +74,7 @@ public class AutonomousPaths extends AutoUtils {
          * @return Command for middle community
          */
         public static Command midAutoCone() {
+                System.out.println("Mid auto cone");
                 return Commands.sequence(
                                 getGridPlacement(0),
                                 Commands.waitSeconds(0.5),
@@ -84,6 +88,7 @@ public class AutonomousPaths extends AutoUtils {
          * @return Command for middle community
          */
         public static Command midAutoCube() {
+                System.out.println("Mid auto cube");
                 return Commands.sequence(
                                 getGridPlacement(1),
                                 new RunCommand(() -> chassis.tankDrive(-0.5, -0.5), chassis).withTimeout(3),
@@ -98,6 +103,7 @@ public class AutonomousPaths extends AutoUtils {
          * @return Command for top community
          */
         public static Command topAutoCone(){
+                System.out.println("top auto cone");
                 return Commands.sequence(
                         getGridPlacement(0),
                         Load.loadWPITrajectory("GoForPieceTop1.wpilib.json", true),
@@ -116,6 +122,7 @@ public class AutonomousPaths extends AutoUtils {
          * @return Command for top community
          */
         public static Command topAutoCube(){
+                System.out.println("Top auto cube");
                 return Commands.sequence(
                         getGridPlacement(1),
                         Load.loadWPITrajectory("GoForPieceTop2.wpilib.json", true),
@@ -136,6 +143,7 @@ public class AutonomousPaths extends AutoUtils {
          * @return Emergency command
          */
         public static Command emergencyAutoCone() {
+                System.out.println("emergency ");
                 return Commands.sequence(
                                 putConeBottom(),
                                 Commands.waitSeconds(0.5),
