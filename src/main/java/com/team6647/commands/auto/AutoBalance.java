@@ -48,8 +48,8 @@ public class AutoBalance extends CommandBase {
       drivePower *= 0.8; //1.35
     }
 
-    if(Math.abs(drivePower) > 0.35){
-      drivePower = Math.copySign(0.35, drivePower);
+    if(Math.abs(drivePower) > 0.38){
+      drivePower = Math.copySign(0.38, drivePower);
     }
 
     chassis.tankDrive(drivePower, drivePower);
