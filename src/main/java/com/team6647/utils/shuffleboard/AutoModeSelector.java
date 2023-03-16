@@ -20,7 +20,8 @@ public class AutoModeSelector {
         MidAutoCone,
         MidAutoCube,
         TopAutoCone,
-        TopAutoCube
+        TopAutoCube,
+        EmergencyAuto
     }
 
     private SendableChooser<AutoSelection> autoChooser = new SendableChooser<>();
@@ -32,7 +33,8 @@ public class AutoModeSelector {
             AutonomousPaths.midAutoCone(),
             AutonomousPaths.midAutoCube(),
             AutonomousPaths.topAutoCone(),
-            AutonomousPaths.topAutoCube()
+            AutonomousPaths.topAutoCube(),
+            AutonomousPaths.emergencyAutoCone()
     };
 
     public AutoModeSelector() {
@@ -44,6 +46,7 @@ public class AutoModeSelector {
         autoChooser.addOption("Mid Auto Cube", AutoSelection.MidAutoCube);
         autoChooser.addOption("Top Auto Cone", AutoSelection.TopAutoCone);
         autoChooser.addOption("Top Auto Cube", AutoSelection.TopAutoCube);
+        autoChooser.addOption("Emergency", AutoSelection.EmergencyAuto);
 
         ShuffleboardConstants.kShuffleboardTab.add("Auto Mode", autoChooser).withPosition(6, 0);
     }
@@ -72,6 +75,8 @@ public class AutoModeSelector {
                 return autoModes[5];
             case TopAutoCube:
                 return autoModes[6];
+            case EmergencyAuto:
+                return autoModes[7];
             default:
                 return null;
         }

@@ -22,11 +22,16 @@ public class AutonomousPaths extends AutoUtils {
          * @return Command to leave the Community
          */
         public static Command leaveCommunity() {
-                return new RunCommand(() -> chassis.tankDrive(-0.4, -0.4), chassis).withTimeout(7);
+                return new RunCommand(() -> chassis.tankDrive(-0.4, -0.4), chassis).withTimeout(3.2);
         }
 
         /* Bottom Community */
 
+        /**
+         * {@link Command} when robot is in the bottom of the community, leaves a cone, picks a cone and balances.
+         * 
+         * @return Command for bottom community
+         */
         public static Command bottomAutoCone(){
                 return Commands.sequence(
                         getGridPlacement(0),
@@ -40,6 +45,11 @@ public class AutonomousPaths extends AutoUtils {
                 );
         }
 
+        /**
+         * {@link Command} when robot is in the bottom of the community, leaves a cube, picks a cone and balances.
+         * 
+         * @return Command for bottom community
+         */
         public static Command bottomAutoCube(){
                 return Commands.sequence(
                         getGridPlacement(1),
@@ -55,6 +65,11 @@ public class AutonomousPaths extends AutoUtils {
 
         /* Middle Community */
 
+        /**
+         * {@link Command} when robot is in the middle of the community, leaves a cone and balances.
+         * 
+         * @return Command for middle community
+         */
         public static Command midAutoCone() {
                 return Commands.sequence(
                                 getGridPlacement(0),
@@ -63,6 +78,11 @@ public class AutonomousPaths extends AutoUtils {
                                 new AutoBalance(chassis, drive));
         }
 
+        /**
+         * {@link Command} when robot is in the middle of the community, leaves a cube and balances.
+         * 
+         * @return Command for middle community
+         */
         public static Command midAutoCube() {
                 return Commands.sequence(
                                 getGridPlacement(1),
@@ -72,6 +92,11 @@ public class AutonomousPaths extends AutoUtils {
 
         /* Top Community */
 
+        /**
+         * {@link Command} when robot is in the top of the community, leaves a cone, picks a cone and balances.
+         * 
+         * @return Command for top community
+         */
         public static Command topAutoCone(){
                 return Commands.sequence(
                         getGridPlacement(0),
@@ -85,6 +110,11 @@ public class AutonomousPaths extends AutoUtils {
                 );
         }
 
+        /**
+         * {@link Command} when robot is in the top of the community, leaves a cube, picks a cone and balances.
+         * 
+         * @return Command for top community
+         */
         public static Command topAutoCube(){
                 return Commands.sequence(
                         getGridPlacement(1),
@@ -100,6 +130,11 @@ public class AutonomousPaths extends AutoUtils {
 
         /* EMERGENCY AUTO */
 
+        /**
+         * Simple {@link Command} tested and verified to work
+         * 
+         * @return Emergency command
+         */
         public static Command emergencyAutoCone() {
                 return Commands.sequence(
                                 putConeBottom(),
