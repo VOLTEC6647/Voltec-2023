@@ -23,6 +23,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class VisionSubsystem extends SubsystemBase {
@@ -108,6 +109,7 @@ public class VisionSubsystem extends SubsystemBase {
     double rightSpeed = forwardSpeed - turnSpeed;
 
     chassis.tankDrive(leftSpeed * 0.5, rightSpeed * 0.5);
+    chassis.getDrive().feed();
   }
 
   /**
@@ -131,8 +133,10 @@ public class VisionSubsystem extends SubsystemBase {
    */
   public void calculateLime() {
     setLimeLEDMode(3);
-    if (!limelightCamera.hasValidTarget())
+    if (!limelightCamera.hasValidTarget()) {
+      System.out.println("NO VALID TARGET");
       return;
+    }
 
     double tx = limelightCamera.getX(),
         ty = limelightCamera.getY();
@@ -146,14 +150,17 @@ public class VisionSubsystem extends SubsystemBase {
 
     double leftSpeed = distanceAdjust + steeringAdjust;
     double rightSpeed = distanceAdjust - steeringAdjust;
+    SmartDashboard.putNumber("Lime left speed",leftSpeed);
+    SmartDashboard.putNumber("Lime right speed",rightSpeed);
 
+    chassis.getDrive().feed();
     chassis.tankDrive((leftSpeed) * 0.5, (rightSpeed) * 0.5);
   }
 
   /**
    * Sets the Limelight LED mode
    */
-  public void setLimeLEDMode(int mode){
+  public void setLimeLEDMode(int mode) {
     limelightCamera.setLedMode(mode);
   }
 
