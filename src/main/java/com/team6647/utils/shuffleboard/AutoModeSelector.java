@@ -18,7 +18,8 @@ public class AutoModeSelector {
         MidAutoCube,
         TopAutoCone,
         TopAutoCube,
-        EmergencyAuto
+        EmergencyAuto,
+        DoNothing
     }
 
     private static SendableChooser<AutoSelection> autoChooser = new SendableChooser<>();
@@ -33,6 +34,8 @@ public class AutoModeSelector {
         autoChooser.addOption("Top Auto Cone", AutoSelection.TopAutoCone);
         autoChooser.addOption("Top Auto Cube", AutoSelection.TopAutoCube);
         autoChooser.addOption("Emergency", AutoSelection.EmergencyAuto);
+        autoChooser.addOption("Do nothing", AutoSelection.DoNothing);
+        
 
         ShuffleboardConstants.kShuffleboardTab.add("Auto Mode", autoChooser).withPosition(6, 0);
     }

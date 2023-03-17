@@ -82,6 +82,8 @@ public class AutoUtils {
                                 return AutonomousPaths.topAutoCube();
                         case EmergencyAuto:
                                 return AutonomousPaths.emergencyAutoCone();
+                        case DoNothing:
+                                return putCubeBottom();
                         default:
                                 return null;
                 }
