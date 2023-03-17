@@ -1,0 +1,31 @@
+{
+  "NetworkTables Settings": {
+    "mode": "Client (NT4)",
+    "serverTeam": "localhost"
+  },
+  "Persistent Values": {
+    "open": false
+  },
+  "Retained Values": {
+    "open": false
+  },
+  "Server": {
+    "Publishers": {
+      "open": true
+    },
+    "Subscribers": {
+      "open": true
+    }
+  },
+  "transitory": {
+    "Shuffleboard": {
+      "Team 6647": {
+        "Grid Placement": {
+          "open": true
+        },
+        "open": true
+      },
+      "open": true
+    }
+  }
+}
