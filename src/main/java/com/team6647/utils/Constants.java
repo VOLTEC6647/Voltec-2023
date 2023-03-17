@@ -25,9 +25,6 @@ public final class Constants {
     public static final double xMultiplier = 1;
     public static final double yMultiplier = 1;
 
-    public static final double xSecondGearMultiplier = 1;
-    public static final double ySecondGearsMultiplier = 1;
-
     public static final double rampTimeSeconds = 2;
   }
 

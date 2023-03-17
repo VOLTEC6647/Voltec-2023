@@ -9,7 +9,6 @@ import com.team6647.utils.Constants.OperatorConstants;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class TankDriveCommand extends CommandBase {
   ChassisSubsystem chassis;
@@ -27,15 +26,9 @@ public class TankDriveCommand extends CommandBase {
 
   @Override
   public void execute() {
+    leftY = -controller.getLeftY() * OperatorConstants.xMultiplier;
+    rightY = -controller.getRightY() * OperatorConstants.xMultiplier;
 
-    if (chassis.getGear() == Value.kReverse) {
-      leftY = -controller.getLeftY() * OperatorConstants.xSecondGearMultiplier;
-      rightY = -controller.getRightY() * OperatorConstants.ySecondGearsMultiplier;
-    } else {
-
-      leftY = -controller.getLeftY() * OperatorConstants.xMultiplier;
-      rightY = -controller.getRightY() * OperatorConstants.xMultiplier;
-    }
     chassis.tankDrive(leftY, rightY);
   }
 
