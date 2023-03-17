@@ -143,9 +143,24 @@ public class AutonomousPaths extends AutoUtils {
          * @return Emergency command
          */
         public static Command emergencyAutoCone() {
-                System.out.println("emergency ");
+                System.out.println("Emergency cone");
                 return Commands.sequence(
                                 putConeBottom(),
+                                Commands.waitSeconds(0.5),
+                                new RunCommand(() -> chassis.tankDrive(-0.5, -0.5), chassis).withTimeout(3.8),
+                                new RunCommand(() -> chassis.setBrake(), chassis));
+        }
+
+
+        /**
+         * Simple {@link Command} tested and verified to work
+         * 
+         * @return Emergency command
+         */
+        public static Command emergencyAutoCube() {
+                System.out.println("Emergency cube");
+                return Commands.sequence(
+                                putCubeBottom(),
                                 Commands.waitSeconds(0.5),
                                 new RunCommand(() -> chassis.tankDrive(-0.5, -0.5), chassis).withTimeout(3.8),
                                 new RunCommand(() -> chassis.setBrake(), chassis));

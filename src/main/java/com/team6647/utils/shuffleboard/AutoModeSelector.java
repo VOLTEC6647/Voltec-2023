@@ -18,7 +18,8 @@ public class AutoModeSelector {
         MidAutoCube,
         TopAutoCone,
         TopAutoCube,
-        EmergencyAuto,
+        EmergencyAutoCone,
+        EmergencyAutoCube,
         DoNothing
     }
 
@@ -33,7 +34,8 @@ public class AutoModeSelector {
         autoChooser.addOption("Mid Auto Cube", AutoSelection.MidAutoCube);
         autoChooser.addOption("Top Auto Cone", AutoSelection.TopAutoCone);
         autoChooser.addOption("Top Auto Cube", AutoSelection.TopAutoCube);
-        autoChooser.addOption("Emergency", AutoSelection.EmergencyAuto);
+        autoChooser.addOption("Emergency Cone", AutoSelection.EmergencyAutoCone);
+        autoChooser.addOption("Emergency Cube", AutoSelection.EmergencyAutoCube);
         autoChooser.addOption("Do nothing", AutoSelection.DoNothing);
         
 

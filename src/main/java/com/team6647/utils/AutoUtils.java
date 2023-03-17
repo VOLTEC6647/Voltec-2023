@@ -80,8 +80,10 @@ public class AutoUtils {
                                 return AutonomousPaths.topAutoCone();
                         case TopAutoCube:
                                 return AutonomousPaths.topAutoCube();
-                        case EmergencyAuto:
+                        case EmergencyAutoCone:
                                 return AutonomousPaths.emergencyAutoCone();
+                        case EmergencyAutoCube:
+                                return AutonomousPaths.emergencyAutoCube();
                         case DoNothing:
                                 return putCubeBottom();
                         default:
