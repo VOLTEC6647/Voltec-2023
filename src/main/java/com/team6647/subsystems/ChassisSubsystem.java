@@ -59,11 +59,15 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
   }
 
   public static void toggleFirstGear(){
-    gearSolenoid.set(Value.kForward);
+    gearSolenoid.set(Value.kReverse);
   }
 
   public static void toggleSecondGear(){
-    gearSolenoid.set(Value.kReverse);
+    gearSolenoid.set(Value.kForward);
+  }
+
+  public Value getGear(){
+    return gearSolenoid.get();
   }
 
   /**

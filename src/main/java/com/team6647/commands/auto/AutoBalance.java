@@ -9,7 +9,6 @@ import com.team6647.subsystems.DriveSubsystem;
 import com.team6647.subsystems.VisionSubsystem;
 import com.team6647.utils.Constants.DriveConstants;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -68,12 +67,6 @@ public class AutoBalance extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    if (Math.abs(error) < DriveConstants.balanceTolerance){
-      double fpgaTimestamp = Timer.getFPGATimestamp();
-      if(Math.abs(Timer.getFPGATimestamp() - fpgaTimestamp) > 2){
-        return true;
-      }
-    }
-    return false;
+    return (Math.abs(error) < DriveConstants.balanceTolerance);
   }
 }

@@ -25,6 +25,9 @@ public final class Constants {
     public static final double xMultiplier = 1;
     public static final double yMultiplier = 1;
 
+    public static final double xSecondGearMultiplier = 1;
+    public static final double ySecondGearsMultiplier = 1;
+
     public static final double rampTimeSeconds = 2;
   }
 
@@ -110,15 +113,15 @@ public final class Constants {
     // DISTANCE TO SET THE ROBOT FROM GOAl
     public static final double goalRange = 0.36;
 
-    public static final double kpAim = -0.01;
-    public static final double kpDistance = -0.05;
+    public static final double kpAim = -0.03;
+    public static final double kpDistance = -0.06;
     public static final double min_aim_command = 0.0235;
 
     // TODO SET
     public static final int aprilPhotonPipe = 0;
     public static final int retroPhotonPipe = 1;
 
-    public static final int aprilLimePipe = 1;
-    public static final int retroLimePipe = 0;
+    public static final int aprilLimePipe = 0;
+    public static final int retroLimePipe = 1;
   }
 }

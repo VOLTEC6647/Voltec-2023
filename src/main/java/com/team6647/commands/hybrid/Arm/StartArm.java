@@ -23,12 +23,12 @@ public class StartArm extends CommandBase {
 
   @Override
   public void execute() {
-    arm.extendArm(-0.1);
+    arm.extendArm(-0.2);
   }
 
   @Override
   public void end(boolean interrupted) {
-    arm.changeSetpoint(-130);
+    arm.changeSetpoint(-120);
     arm.extendArm(0);
     arm.resetExtendPosition();
 

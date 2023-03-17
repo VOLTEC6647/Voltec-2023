@@ -11,6 +11,9 @@ import com.team6647.utils.Constants.ShuffleboardConstants;
 import com.team6647.utils.shuffleboard.tabs.DebugTab;
 import com.team6647.utils.shuffleboard.tabs.DefaultTab;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class ShuffleboardManager {
 
     public static ShuffleboardManager instance;
@@ -58,6 +61,8 @@ public class ShuffleboardManager {
                 tab.updateTelemetry();
             }
         }
+        Shuffleboard.update();
+        SmartDashboard.updateValues();
     }
 
 }

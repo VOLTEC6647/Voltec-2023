@@ -5,14 +5,16 @@ package com.team6647.utils.shuffleboard;
 
 import com.team6647.utils.Constants.ShuffleboardConstants;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Manages Grid piece placement during auto
  */
 public class GridPlacementSelector {
 
-    private enum GridPlacement {
+    public enum GridPlacement {
         Bottom,
         Middle,
         Top
@@ -28,7 +30,9 @@ public class GridPlacementSelector {
         ShuffleboardConstants.kShuffleboardTab.add("Grid Placement", gridSelector).withPosition(7, 0);
     }
 
-    public String getSelection(){
-        return gridSelector.getSelected().toString();
+    public GridPlacement getSelection(){
+        Shuffleboard.update();
+        SmartDashboard.updateValues();
+        return gridSelector.getSelected();
     }
 }
