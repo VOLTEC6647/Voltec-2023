@@ -60,6 +60,8 @@ public class VisionSubsystem extends SubsystemBase {
 
     chassis = ChassisSubsystem.getInstance();
 
+    setLimeLEDMode(VisionConstants.retroLimePipe);
+
   }
 
   /**

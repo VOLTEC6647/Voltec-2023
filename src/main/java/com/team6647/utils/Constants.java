@@ -119,6 +119,6 @@ public final class Constants {
     public static final int retroPhotonPipe = 1;
 
     public static final int aprilLimePipe = 0;
-    public static final int retroLimePipe = 1;
+    public static final int retroLimePipe = 2;
   }
 }
