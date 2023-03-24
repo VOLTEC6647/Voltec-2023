@@ -145,7 +145,7 @@ public class AutonomousPaths extends AutoUtils {
         public static Command emergencyAutoCone() {
                 System.out.println("Emergency cone");
                 return Commands.sequence(
-                                putConeBottom(),
+                                getGridPlacement(0),
                                 Commands.waitSeconds(0.5),
                                 new RunCommand(() -> chassis.tankDrive(-0.5, -0.5), chassis).withTimeout(3.8),
                                 new RunCommand(() -> chassis.setBrake(), chassis));
@@ -160,7 +160,7 @@ public class AutonomousPaths extends AutoUtils {
         public static Command emergencyAutoCube() {
                 System.out.println("Emergency cube");
                 return Commands.sequence(
-                                putCubeBottom(),
+                                getGridPlacement(1),
                                 Commands.waitSeconds(0.5),
                                 new RunCommand(() -> chassis.tankDrive(-0.5, -0.5), chassis).withTimeout(3.8),
                                 new RunCommand(() -> chassis.setBrake(), chassis));

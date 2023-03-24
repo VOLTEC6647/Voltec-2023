@@ -101,7 +101,7 @@ public class RobotContainer extends SuperRobotContainer {
     }, arm));
 
     OperatorConstants.driverController2.pov(0).whileTrue(new RunCommand(() -> {
-      arm.changeSetpoint(-70);
+      arm.changeSetpoint(-55);
     }, arm));
 
     OperatorConstants.driverController2.pov(180).whileTrue(new RunCommand(() -> {

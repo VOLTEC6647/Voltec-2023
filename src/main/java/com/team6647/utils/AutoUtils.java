@@ -132,7 +132,7 @@ public class AutoUtils {
         protected static Command putCubeTop() {
                 return Commands.sequence(
                                 new RunCommand(() -> arm.changeSetpoint(-55), arm).withTimeout(1),
-                                new MoveClaw(claw, 3.3)).withTimeout(5.5);
+                                new MoveClaw(claw, 3.3)).withTimeout(4.5);
         }
 
         /**
