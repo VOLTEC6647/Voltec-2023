@@ -82,8 +82,6 @@ public class VisionSubsystem extends SubsystemBase {
 
     if (aimingLimelight) {
       calculateLime();
-    } else {
-      setLimeLEDMode(1);
     }
   }
 
