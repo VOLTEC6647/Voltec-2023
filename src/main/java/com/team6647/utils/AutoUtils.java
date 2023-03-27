@@ -4,6 +4,8 @@
 package com.team6647.utils;
 
 import com.team6647.commands.auto.AutonomousPaths;
+import com.team6647.commands.auto.TankDriveAutoCommand;
+import com.team6647.commands.hybrid.Arm.ArmControl;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
 import com.team6647.robot.TelemetryManager;
@@ -17,6 +19,7 @@ import com.team6647.utils.shuffleboard.GridPlacementSelector.GridPlacement;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
 public class AutoUtils {
@@ -67,7 +70,7 @@ public class AutoUtils {
 
                 switch (selection) {
                         case LeaveCommunity:
-                                return AutonomousPaths.leaveCommunity();
+                                return AutonomousPaths.leaveCommunityCones();
                         case BottomAutoCone:
                                 return AutonomousPaths.bottomAutoCone();
                         case BottomAutoCube:
@@ -106,24 +109,30 @@ public class AutoUtils {
         protected static Command putCubeBottom() {
                 return Commands.sequence(
                                 new RunCommand(() -> arm.changeSetpoint(-120), arm).withTimeout(1),
-                                new MoveClaw(claw, 2.8)).withTimeout(3);
+                                new MoveClaw(claw, 2.8, false)).withTimeout(3);
         }
 
         /* Middle Grid placement */
 
-        // TODO MODIFY
+        // FINISHED
         protected static Command putConeMid() {
                 return Commands.sequence(
+                                new RunCommand(() -> arm.changeSetpoint(-110), arm).withTimeout(0.5),
+                                Commands.waitSeconds(0.25),
                                 new ExtendArm(arm, 0.5).withTimeout(1),
-                                new RunCommand(() -> arm.changeSetpoint(-75), arm).withTimeout(1),
-                                new InstantCommand(() -> claw.CubeSet(), claw));
+                                new ArmControl(arm, -70),
+                                new TankDriveAutoCommand(chassis, 0.4, 0.4).withTimeout(0.5),
+                                new ParallelCommandGroup(
+                                                new TankDriveAutoCommand(chassis, 0.4, 0.4),
+                                                new InstantCommand(() -> claw.CubeSet(), claw)).withTimeout(0.5));
+
         }
 
         // FINISHED
         protected static Command putCubeMid() {
                 return Commands.sequence(
-                                new RunCommand(() -> arm.changeSetpoint(-90), arm).withTimeout(1),
-                                new MoveClaw(claw, 3)).withTimeout(3);
+                                new RunCommand(() -> arm.changeSetpoint(-85), arm).withTimeout(1),
+                                new MoveClaw(claw, 3, false)).withTimeout(2);
         }
 
         /* Top Grid Placement */
@@ -132,52 +141,7 @@ public class AutoUtils {
         protected static Command putCubeTop() {
                 return Commands.sequence(
                                 new RunCommand(() -> arm.changeSetpoint(-55), arm).withTimeout(1),
-                                new MoveClaw(claw, 3.3)).withTimeout(4.5);
+                                new MoveClaw(claw, 2.9, true)).withTimeout(4.5);
         }
 
-        /**
-         * Moves the arm to a desired output, with semi-smooth transitions
-         * 
-         * @param position Desired position
-         * @return Arm command
-         */
-        public static Command moveArmAuto(double position) {
-                double current = arm.getMeasurement();
-                double error = (arm.getMeasurement() - position) * -1;
-
-                double q2 = error / 2;
-                double q1 = q2 / 4;
-
-                double first = current += q1;
-                double second = current += q1;
-                double third = current += q1;
-                double fourth = current += q1;
-                double fifth = current += q1;
-                double sixth = current += q1;
-                double seventh = current += q1;
-                double eigth = current += q1;
-
-                System.out.println("First: " + first + " Second: " + second + " Third: " + third + " Fourth: " + fourth
-                                + " Fifth: " + fifth + " Sixth: " + sixth + " Seventh: " + seventh + " Eight: "
-                                + eigth);
-
-                return Commands.sequence(
-                                new RunCommand(() -> arm.changeSetpoint(first),
-                                                arm).withTimeout(0.2),
-                                new RunCommand(() -> arm.changeSetpoint(second),
-                                                arm).withTimeout(0.2),
-                                new RunCommand(() -> arm.changeSetpoint(third),
-                                                arm).withTimeout(0.2),
-                                new RunCommand(() -> arm.changeSetpoint(fourth),
-                                                arm).withTimeout(0.2),
-                                new RunCommand(() -> arm.changeSetpoint(fifth),
-                                                arm).withTimeout(0.2),
-                                new RunCommand(() -> arm.changeSetpoint(sixth),
-                                                arm).withTimeout(0.2),
-                                new RunCommand(() -> arm.changeSetpoint(seventh),
-                                                arm).withTimeout(0.2),
-                                new RunCommand(() -> arm.changeSetpoint(eigth),
-                                                arm).withTimeout(0.2));
-
-        }
 }
