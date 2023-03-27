@@ -6,6 +6,7 @@ package com.team6647.robot;
 
 import com.andromedalib.robot.SuperRobotContainer;
 import com.team6647.commands.auto.AutoBalance;
+import com.team6647.commands.hybrid.Arm.ArmControl;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.Arm.StartArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
@@ -80,17 +81,24 @@ public class RobotContainer extends SuperRobotContainer {
     OperatorConstants.driverController1.a().whileTrue(new AutoBalance(chassis, drive));
 
     OperatorConstants.driverController1.leftTrigger().whileTrue(new SequentialCommandGroup(
-      new InstantCommand(() -> vision.setLimePipe(VisionConstants.aprilLimePipe), vision),
-      new StartEndCommand(() -> vision.toggleLimelightAim(), () -> vision.toggleLimelightAim(), vision, chassis)
-    ));
+        new InstantCommand(() -> vision.setLimePipe(VisionConstants.aprilLimePipe), vision),
+        new StartEndCommand(() -> vision.toggleLimelightAim(), () -> vision.toggleLimelightAim(), vision, chassis)));
 
     OperatorConstants.driverController1.rightTrigger().whileTrue(new SequentialCommandGroup(
-      new InstantCommand(() -> vision.setLimePipe(VisionConstants.retroLimePipe), vision),
-      new StartEndCommand(() -> vision.toggleLimelightAim(), () -> vision.toggleLimelightAim(), vision, chassis)
-    ));
-    
+        new InstantCommand(() -> vision.setLimePipe(VisionConstants.retroLimePipe), vision),
+        new StartEndCommand(() -> vision.toggleLimelightAim(), () -> vision.toggleLimelightAim(), vision, chassis)));
+
     OperatorConstants.driverController1.rightBumper().whileTrue(new InstantCommand(() -> chassis.setBrake(), chassis))
         .whileFalse(new InstantCommand(() -> chassis.setCoast(), chassis));
+
+    /*
+     * arm.setDefaultCommand(new RunCommand(() -> arm.manualControl(
+     * Math.copySign(Functions
+     * .clamp(Math.abs(Functions.handleDeadband(OperatorConstants.driverController2.
+     * getLeftY(), 0.1)), 0, 0.5),
+     * -OperatorConstants.driverController2.getLeftY())),
+     * arm));
+     */
 
     OperatorConstants.driverController2.x().whileTrue(new RunCommand(() -> {
       arm.manualControl(0.5);
@@ -100,21 +108,17 @@ public class RobotContainer extends SuperRobotContainer {
       arm.manualControl(-0.5);
     }, arm));
 
-    OperatorConstants.driverController2.pov(0).whileTrue(new RunCommand(() -> {
-      arm.changeSetpoint(-55);
-    }, arm));
+    OperatorConstants.driverController2.pov(0).toggleOnTrue(new ArmControl(arm, -55));
 
-    OperatorConstants.driverController2.pov(180).whileTrue(new RunCommand(() -> {
-      arm.changeSetpoint(-120);
-    }, arm));
+    OperatorConstants.driverController2.pov(180).toggleOnTrue(new ArmControl(arm, -120));
 
     OperatorConstants.driverController2.y().whileTrue(new ExtendArm(arm, ArmConstants.extendSped))
         .toggleOnFalse(new RunCommand(() -> arm.extendArm(0), arm));
     OperatorConstants.driverController2.a().whileTrue(new ExtendArm(arm, -ArmConstants.extendSped))
         .toggleOnFalse(new RunCommand(() -> arm.extendArm(0), arm));
 
-    OperatorConstants.driverController2.rightTrigger(0.1).whileTrue(new MoveClaw(claw, 1));
-    OperatorConstants.driverController2.leftTrigger(0.1).whileTrue(new MoveClaw(claw, -1));
+    OperatorConstants.driverController2.rightTrigger(0.1).whileTrue(new MoveClaw(claw, 1, false));
+    OperatorConstants.driverController2.leftTrigger(0.1).whileTrue(new MoveClaw(claw, -1, false));
     OperatorConstants.driverController2.rightBumper().whileTrue(new InstantCommand(() -> {
       claw.CubeSet();
     }));
