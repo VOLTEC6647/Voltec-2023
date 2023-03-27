@@ -69,8 +69,10 @@ public class AutoUtils {
                         return null;
 
                 switch (selection) {
-                        case LeaveCommunity:
+                        case LeaveCommunityCone:
                                 return AutonomousPaths.leaveCommunityCones();
+                        case LeaveCommunityCube:
+                                return AutonomousPaths.leaveCommunityCubes();
                         case BottomAutoCone:
                                 return AutonomousPaths.bottomAutoCone();
                         case BottomAutoCube:

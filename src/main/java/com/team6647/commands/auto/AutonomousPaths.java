@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
-/* Load.loadWPITrajectory(Filesystem.getDeployDirectory() + "/pathplanner/generatedJSON/Test1.wpilib.json", true),
-                                new AutoBalance(chassis, drive) */
-
+/**
+ * All commands for autonomous modes
+ */
 public class AutonomousPaths extends AutoUtils {
 
         /**
@@ -21,9 +21,27 @@ public class AutonomousPaths extends AutoUtils {
          * 
          * @return Command to leave the Community
          */
-        public static Command leaveCommunity() {
+        public static Command leaveCommunityCones() {
                 System.out.println("Leave community");
-                return new RunCommand(() -> chassis.tankDrive(-0.4, -0.4), chassis).withTimeout(3.2);
+                return Commands.sequence(
+                        getGridPlacement(0),
+                        Commands.waitSeconds(0.5),
+                        new TankDriveAutoCommand(chassis, -0.5, -0.5).withTimeout(4.2)
+                );
+        }
+
+        /**
+         * Basic {@link Command} to leave the Community
+         * 
+         * @return Command to leave the Community
+         */
+        public static Command leaveCommunityCubes() {
+                System.out.println("Leave community");
+                return Commands.sequence(
+                        getGridPlacement(1),
+                        Commands.waitSeconds(0.5),
+                        new TankDriveAutoCommand(chassis, -0.5, -0.5).withTimeout(4.2)
+                );
         }
 
         /* Bottom Community */
@@ -78,7 +96,7 @@ public class AutonomousPaths extends AutoUtils {
                 return Commands.sequence(
                                 getGridPlacement(0),
                                 Commands.waitSeconds(0.5),
-                                new RunCommand(() -> chassis.tankDrive(-0.5, -0.5), chassis).withTimeout(3),
+                                new RunCommand(() -> chassis.tankDrive(-0.5, -0.5), chassis).withTimeout(3), // Use -0.6 for speeds and 2.3 in case of faulty charge station
                                 new AutoBalance(chassis, drive));
         }
 
@@ -91,7 +109,7 @@ public class AutonomousPaths extends AutoUtils {
                 System.out.println("Mid auto cube");
                 return Commands.sequence(
                                 getGridPlacement(1),
-                                new RunCommand(() -> chassis.tankDrive(-0.5, -0.5), chassis).withTimeout(3),
+                                new RunCommand(() -> chassis.tankDrive(-0.5, -0.5), chassis).withTimeout(3), // Use -0.6 for speeds and 2.3 in case of faulty charge station
                                 new AutoBalance(chassis, drive));
         }
 
