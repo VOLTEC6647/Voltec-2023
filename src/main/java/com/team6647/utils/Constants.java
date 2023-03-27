@@ -95,10 +95,9 @@ public final class Constants {
     public static final double kWheelDiameterMeter = Units.inchesToMeters(kWheelRadiusInches * 2);
     public static final double kWheelCircumference = kWheelDiameterMeter * Math.PI;
 
-    public static final double angleTolerance = 1;
     public static final double balanceGoal = 0;
     public static final double balanceKp = 0.65;
-    public static final double balanceTolerance = 3;
+    public static final double balanceTolerance = 11;
   }
 
   public static class VisionConstants {
