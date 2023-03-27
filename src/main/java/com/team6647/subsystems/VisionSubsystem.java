@@ -60,7 +60,7 @@ public class VisionSubsystem extends SubsystemBase {
 
     chassis = ChassisSubsystem.getInstance();
 
-    setLimeLEDMode(VisionConstants.retroLimePipe);
+    setLimeLEDMode(3);
 
   }
 
@@ -132,8 +132,8 @@ public class VisionSubsystem extends SubsystemBase {
    */
   public void calculateLime() {
     setLimeLEDMode(3);
-    if (!limelightCamera.hasValidTarget()) {
-      System.out.println("NO VALID TARGET");
+    if (limelightCamera.hasValidTarget() == 0) {
+      chassis.getDrive().feed();
       return;
     }
 
