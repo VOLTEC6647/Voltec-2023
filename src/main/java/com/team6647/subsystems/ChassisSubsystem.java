@@ -54,19 +54,26 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
     return instance;
   }
 
-  @Override
-  public void outputTelemetry() {
-  }
-
-  public static void toggleFirstGear(){
+  /**
+   * Toggles gearbox first gear
+   */
+  public static void toggleFirstGear() {
     gearSolenoid.set(Value.kReverse);
   }
 
-  public static void toggleSecondGear(){
+  /**
+   * Toggles gearbox second gear
+   */
+  public static void toggleSecondGear() {
     gearSolenoid.set(Value.kForward);
   }
 
-  public Value getGear(){
+  /**
+   * Gets the current gearbox gera
+   * 
+   * @return Current gear
+   */
+  public Value getGear() {
     return gearSolenoid.get();
   }
 
@@ -82,7 +89,7 @@ public class ChassisSubsystem extends DifferentialDriveSubsystem {
   }
 
   /**
-   * Sets all motors to brake
+   * Sets all motors to coast
    * Be careful to not damage motors
    */
   public void setCoast() {

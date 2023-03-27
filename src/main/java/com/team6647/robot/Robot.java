@@ -7,9 +7,6 @@ package com.team6647.robot;
 import com.andromedalib.robot.SuperRobot;
 import com.team6647.subsystems.DriveSubsystem;
 
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 public class Robot extends SuperRobot {
 
   private RobotContainer robotContainer;
@@ -24,8 +21,6 @@ public class Robot extends SuperRobot {
 
   @Override
   public void autonomousInit() {
-    Shuffleboard.update();
-    SmartDashboard.updateValues();
     DriveSubsystem.getInstance().resetNavx();
     DriveSubsystem.getInstance().resetEncoders();
     super.autonomousInit();
