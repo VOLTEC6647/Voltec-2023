@@ -51,6 +51,16 @@ public class ClawSubsytem extends SubsystemBase {
   }
 
   /**
+   * Sets the Claw's velocity for both neo motor
+   * 
+   * @param speed Claw speed
+   */
+  public void setBothVelocity(double speed){
+    neo1.set(speed);
+    neo2.set(speed);
+  }
+
+  /**
    * Sets the Claw Solenoid State to Cube
    */
   public void ConeSet() {

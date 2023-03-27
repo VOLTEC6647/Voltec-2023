@@ -10,14 +10,19 @@ import com.team6647.utils.Constants.ClawConstants;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+/**
+ * Moves the claw with a desired mult
+ */
 public class MoveClaw extends CommandBase {
   ClawSubsytem claw;
   double speed;
   double mult;
+  boolean both;
 
-  public MoveClaw(ClawSubsytem claw, double mult) {
+  public MoveClaw(ClawSubsytem claw, double mult, boolean both) {
     this.claw = claw;
     this.mult = mult;
+    this.both = both;
 
     addRequirements(claw);
   }
@@ -29,7 +34,12 @@ public class MoveClaw extends CommandBase {
     } else {
       speed = ClawConstants.clawSpeedCones * mult;
     }
-    claw.setVelocity(speed);
+
+    if (both) {
+      claw.setBothVelocity(speed);
+    } else {
+      claw.setVelocity(speed);
+    }
   }
 
   @Override
@@ -38,7 +48,7 @@ public class MoveClaw extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    claw.setVelocity(0);
+    claw.setBothVelocity(0);
   }
 
   @Override
