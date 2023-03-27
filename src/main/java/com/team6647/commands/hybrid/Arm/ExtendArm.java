@@ -9,6 +9,9 @@ import com.team6647.utils.Constants.ArmConstants;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+/**
+ * Extends the arm at a desired speed
+ */
 public class ExtendArm extends CommandBase {
   ArmSubsystem arm;
   double speed;

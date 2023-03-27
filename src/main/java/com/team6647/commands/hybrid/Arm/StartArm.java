@@ -8,6 +8,10 @@ import com.team6647.subsystems.ArmSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+/**
+ * Auto command for resetting the arm position, run before any autonomous
+ * command
+ */
 public class StartArm extends CommandBase {
   ArmSubsystem arm;
 
