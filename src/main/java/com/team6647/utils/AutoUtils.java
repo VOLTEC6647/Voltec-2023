@@ -22,6 +22,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
+/**
+ * Util functions to be used during auto
+ */
 public class AutoUtils {
 
         protected static final TelemetryManager telemetryManager = TelemetryManager.getInstance();
