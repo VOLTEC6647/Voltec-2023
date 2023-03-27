@@ -1,3 +1,6 @@
+/**
+ * Written by Juan Pablo Gutiérrez
+ */
 package com.team6647.commands.auto;
 
 import com.team6647.commands.hybrid.Arm.ExtendArm;
@@ -9,6 +12,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 
+/**
+ * Command for grabbing a cone from the floor
+ */
 public class GrabCone extends AutoUtils{
     
     public static Command grabCone(){
