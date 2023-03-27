@@ -86,8 +86,8 @@ public class LimelightCamera {
      * 
      * @return True if the Limelight has any valid targets, false otherwise
      */
-    public boolean hasValidTarget() {
-        return lTable.validTarget.getBoolean(false);
+    public double hasValidTarget() {
+        return lTable.validTarget.getDouble(0);
     }
 
     /**
