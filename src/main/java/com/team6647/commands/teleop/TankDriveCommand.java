@@ -10,6 +10,9 @@ import com.team6647.utils.Constants.OperatorConstants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
+/**
+ * Tank drive command for teleop
+ */
 public class TankDriveCommand extends CommandBase {
   ChassisSubsystem chassis;
   CommandXboxController controller;

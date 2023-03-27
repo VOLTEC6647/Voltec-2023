@@ -11,6 +11,9 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
+/**
+ * Curvature drive command for teleop
+ */
 public class CurvatureDriveCommand extends CommandBase {
   ChassisSubsystem chassis;
   CommandXboxController controller;
