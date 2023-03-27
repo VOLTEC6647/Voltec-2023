@@ -4,6 +4,7 @@
 
 package com.team6647.commands.auto;
 
+import com.team6647.commands.hybrid.Arm.ArmControl;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.Arm.StartArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
@@ -17,6 +18,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
+/**
+ * Run this before every match to test all mechanisms
+ */
 public final class ProtocolCommand {
     private ArmSubsystem arm;
     private ChassisSubsystem chassis;
@@ -47,8 +51,8 @@ public final class ProtocolCommand {
 
     private Command clawCommand() {
         return new SequentialCommandGroup(
-                new MoveClaw(claw, 1).withTimeout(2),
-                new MoveClaw(claw, -1).withTimeout(2),
+                new MoveClaw(claw, 1, true).withTimeout(2),
+                new MoveClaw(claw, -1, true).withTimeout(2),
                 new InstantCommand(() -> claw.ConeSet(), claw).withTimeout(0.5),
                 new RunCommand(() -> {
                 }, claw).withTimeout(1),
@@ -64,14 +68,14 @@ public final class ProtocolCommand {
 
     private Command moveArm() {
         return new SequentialCommandGroup(
-                AutonomousPaths.moveArmAuto(-120),
-                AutonomousPaths.moveArmAuto(-90),
-                AutonomousPaths.moveArmAuto(20),
+                new ArmControl(arm, -120),
+                new ArmControl(arm, -90),
+                new ArmControl(arm, 20),
                 new RunCommand(() -> {
                 }, arm).withTimeout(2),
-                AutonomousPaths.moveArmAuto(-45),
-                AutonomousPaths.moveArmAuto(-90),
-                AutonomousPaths.moveArmAuto(-120));
+                new ArmControl(arm, -45),
+                new ArmControl(arm, -90),
+                new ArmControl(arm, -120));
     }
 
 }
