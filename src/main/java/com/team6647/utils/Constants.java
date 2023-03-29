@@ -60,9 +60,9 @@ public final class Constants {
 
     public static final double gearRatio = 94;
 
-    public static final double pivotkP = 0.015;
+    public static final double pivotkP = 0.005; //0.015
 
-    public static final double dynamickP = 0.03;
+    public static final double dynamickP = 0.03; //0.03
   }
 
   public static class ClawConstants {
