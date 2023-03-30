@@ -24,10 +24,9 @@ public class AutonomousPaths extends AutoUtils {
         public static Command leaveCommunityCones() {
                 System.out.println("Leave community");
                 return Commands.sequence(
-                        getGridPlacement(0),
-                        Commands.waitSeconds(0.5),
-                        new TankDriveAutoCommand(chassis, -0.5, -0.5).withTimeout(4.2)
-                );
+                                getGridPlacement(0),
+                                Commands.waitSeconds(0.5),
+                                new TankDriveAutoCommand(chassis, -0.5, -0.5).withTimeout(4.2));
         }
 
         /**
@@ -38,56 +37,56 @@ public class AutonomousPaths extends AutoUtils {
         public static Command leaveCommunityCubes() {
                 System.out.println("Leave community");
                 return Commands.sequence(
-                        getGridPlacement(1),
-                        Commands.waitSeconds(0.5),
-                        new TankDriveAutoCommand(chassis, -0.5, -0.5).withTimeout(4.2)
-                );
+                                getGridPlacement(1),
+                                Commands.waitSeconds(0.5),
+                                new TankDriveAutoCommand(chassis, -0.5, -0.5).withTimeout(4.2));
         }
 
         /* Bottom Community */
 
         /**
-         * {@link Command} when robot is in the bottom of the community, leaves a cone, picks a cone and balances.
+         * {@link Command} when robot is in the bottom of the community, leaves a cone,
+         * picks a cone and balances.
          * 
          * @return Command for bottom community
          */
-        public static Command bottomAutoCone(){
+        public static Command bottomAutoCone() {
                 System.out.println("Bottom auto Cone");
                 return Commands.sequence(
-                        getGridPlacement(0),
-                        Load.loadWPITrajectory("GoForPieceBottom1.wpilib.json", true),
-                        GrabCone.grabCone(),
-                        Load.loadWPITrajectory("LeaveConeBottom1.wpilib.json", false),
-                        //ADD LIMELIGHT AIM
-                        putConeMid(),
-                        Load.loadWPITrajectory("BalanceBottom.wpilib.json", false),
-                        new AutoBalance(chassis, drive)
-                );
+                                getGridPlacement(0),
+                                Load.loadWPITrajectory("GoForPieceBottom1.wpilib.json", true),
+                                GrabCone.grabCone(),
+                                Load.loadWPITrajectory("LeaveConeBottom1.wpilib.json", false),
+                                // ADD LIMELIGHT AIM
+                                putConeMid(),
+                                Load.loadWPITrajectory("BalanceBottom.wpilib.json", false),
+                                new AutoBalance(chassis, drive));
         }
 
         /**
-         * {@link Command} when robot is in the bottom of the community, leaves a cube, picks a cone and balances.
+         * {@link Command} when robot is in the bottom of the community, leaves a cube,
+         * picks a cone and balances.
          * 
          * @return Command for bottom community
          */
-        public static Command bottomAutoCube(){
+        public static Command bottomAutoCube() {
                 System.out.println("Bottom auto cube");
                 return Commands.sequence(
-                        getGridPlacement(1),
-                        Load.loadWPITrajectory("GoForPieceBottom2.wpilib.json", true),
-                        GrabCone.grabCone(),
-                        Load.loadWPITrajectory("LeaveConeBottom1.wpilib.json", false),
-                        //ADD LIMELIGHT AIM
-                        putConeMid(),
-                        Load.loadWPITrajectory("BalanceBottom.wpilib.json", false),
-                        new AutoBalance(chassis, drive)
-                );
+                                getGridPlacement(1),
+                                Load.loadWPITrajectory("GoForPieceBottom2.wpilib.json", true),
+                                GrabCone.grabCone(),
+                                Load.loadWPITrajectory("LeaveConeBottom1.wpilib.json", false),
+                                // ADD LIMELIGHT AIM
+                                putConeMid(),
+                                Load.loadWPITrajectory("BalanceBottom.wpilib.json", false),
+                                new AutoBalance(chassis, drive));
         }
 
         /* Middle Community */
 
         /**
-         * {@link Command} when robot is in the middle of the community, leaves a cone and balances.
+         * {@link Command} when robot is in the middle of the community, leaves a cone
+         * and balances.
          * 
          * @return Command for middle community
          */
@@ -96,12 +95,14 @@ public class AutonomousPaths extends AutoUtils {
                 return Commands.sequence(
                                 getGridPlacement(0),
                                 Commands.waitSeconds(0.5),
-                                new RunCommand(() -> chassis.tankDrive(-0.5, -0.5), chassis).withTimeout(3), // Use -0.6 for speeds and 2.3 in case of faulty charge station
+                                new TankDriveAutoCommand(chassis, -0.5, -0.5).withTimeout(6),
+                                new TankDriveAutoCommand(chassis, 0.5, 0.5).withTimeout(3), // Use -0.6 for speeds and 2.3 in case of faulty charge station
                                 new AutoBalance(chassis, drive));
         }
 
         /**
-         * {@link Command} when robot is in the middle of the community, leaves a cube and balances.
+         * {@link Command} when robot is in the middle of the community, leaves a cube
+         * and balances.
          * 
          * @return Command for middle community
          */
@@ -109,48 +110,49 @@ public class AutonomousPaths extends AutoUtils {
                 System.out.println("Mid auto cube");
                 return Commands.sequence(
                                 getGridPlacement(1),
-                                new RunCommand(() -> chassis.tankDrive(-0.5, -0.5), chassis).withTimeout(3), // Use -0.6 for speeds and 2.3 in case of faulty charge station
+                                new TankDriveAutoCommand(chassis, -0.5, -0.5).withTimeout(6),
+                                new TankDriveAutoCommand(chassis, 0.5, 0.5).withTimeout(3),  // Use -0.6 for speeds and 2.3 in case of faulty charge station
                                 new AutoBalance(chassis, drive));
         }
 
         /* Top Community */
 
         /**
-         * {@link Command} when robot is in the top of the community, leaves a cone, picks a cone and balances.
+         * {@link Command} when robot is in the top of the community, leaves a cone,
+         * picks a cone and balances.
          * 
          * @return Command for top community
          */
-        public static Command topAutoCone(){
+        public static Command topAutoCone() {
                 System.out.println("top auto cone");
                 return Commands.sequence(
-                        getGridPlacement(0),
-                        Load.loadWPITrajectory("GoForPieceTop1.wpilib.json", true),
-                        GrabCone.grabCone(),
-                        Load.loadWPITrajectory("LeaveConeTop1.wpilib.json", false),
-                        //ADD LIMELIGHT AIM
-                        putConeMid(),
-                        Load.loadWPITrajectory("BalanceTop.wpilib.json", false),
-                        new AutoBalance(chassis, drive)
-                );
+                                getGridPlacement(0),
+                                Load.loadWPITrajectory("GoForPieceTop1.wpilib.json", true),
+                                GrabCone.grabCone(),
+                                Load.loadWPITrajectory("LeaveConeTop1.wpilib.json", false),
+                                // ADD LIMELIGHT AIM
+                                putConeMid(),
+                                Load.loadWPITrajectory("BalanceTop.wpilib.json", false),
+                                new AutoBalance(chassis, drive));
         }
 
         /**
-         * {@link Command} when robot is in the top of the community, leaves a cube, picks a cone and balances.
+         * {@link Command} when robot is in the top of the community, leaves a cube,
+         * picks a cone and balances.
          * 
          * @return Command for top community
          */
-        public static Command topAutoCube(){
+        public static Command topAutoCube() {
                 System.out.println("Top auto cube");
                 return Commands.sequence(
-                        getGridPlacement(1),
-                        Load.loadWPITrajectory("GoForPieceTop2.wpilib.json", true),
-                        GrabCone.grabCone(),
-                        Load.loadWPITrajectory("LeaveConeTop1.wpilib.json", false),
-                        //ADD LIMELIGHT AIM
-                        putConeMid(),
-                        Load.loadWPITrajectory("BalanceTop.wpilib.json", false),
-                        new AutoBalance(chassis, drive)
-                );
+                                getGridPlacement(1),
+                                Load.loadWPITrajectory("GoForPieceTop2.wpilib.json", true),
+                                GrabCone.grabCone(),
+                                Load.loadWPITrajectory("LeaveConeTop1.wpilib.json", false),
+                                // ADD LIMELIGHT AIM
+                                putConeMid(),
+                                Load.loadWPITrajectory("BalanceTop.wpilib.json", false),
+                                new AutoBalance(chassis, drive));
         }
 
         /* EMERGENCY AUTO */
@@ -168,7 +170,6 @@ public class AutonomousPaths extends AutoUtils {
                                 new RunCommand(() -> chassis.tankDrive(-0.5, -0.5), chassis).withTimeout(3.8),
                                 new RunCommand(() -> chassis.setBrake(), chassis));
         }
-
 
         /**
          * Simple {@link Command} tested and verified to work
