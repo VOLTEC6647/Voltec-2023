@@ -8,11 +8,9 @@ import com.andromedalib.motorControllers.SuperSparkMax;
 import com.andromedalib.motorControllers.IdleManager.GlobalIdleMode;
 import com.team6647.utils.Constants.ArmConstants;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ArmSubsystem extends SubsystemBase {
@@ -26,27 +24,17 @@ public class ArmSubsystem extends SubsystemBase {
 
   private static DigitalInput limitSwitch = new DigitalInput(3);
 
-  private static PIDController pidController = new PIDController(ArmConstants.pivotkP, 0,
-      0);
-
-  private static PIDController dynamicController = new PIDController(ArmConstants.dynamickP, 0, 0);
+  private static ProfiledPIDController profiledController = new ProfiledPIDController(ArmConstants.pivotkP, 0, 0,
+      new TrapezoidProfile.Constraints(40, 20)); //35, 20
 
   private double pidOutput;
   private double feedOutput;
 
   private double setPoint;
   private double totalOutput;
-  private double error;
-
-  /* TEST */
-
-  private static ProfiledPIDController profiledController = new ProfiledPIDController(ArmConstants.pivotkP, 0, 0,
-      new TrapezoidProfile.Constraints(2, 2));
 
   public ArmSubsystem() {
     pivotSpark2.follow(pivotSpark1, true);
-
-    SmartDashboard.putNumber("Arm velocity", getVelociy());
 
     this.setPoint = -148.7; // When initialize
   }
@@ -75,26 +63,11 @@ public class ArmSubsystem extends SubsystemBase {
   public void calculateArm() {
     double actualPoint = getMeasurement();
 
-    double error = Math.abs(actualPoint - setPoint);
-    this.error = error;
+    double pidOut = profiledController.calculate(actualPoint, setPoint);
 
-    double pidOut = profiledController.calculate(getMeasurement(), setPoint);
+    pidOut = Functions.clamp(pidOut, -0.4, 0.4);
 
-    SmartDashboard.putNumber("AA", pidOut);
-    pidOut = Functions.clamp(pidOut, -0.2, 0.2);
-
-    /*
-     * if (error < 10) {
-     * pidOut = dynamicController.calculate(actualPoint, this.setPoint);
-     * pidOut = Functions.clamp(pidOut, -0.5, 0.5);
-     * } else {
-     * pidOut = pidController.calculate(actualPoint, this.setPoint);
-     * pidOut = Functions.clamp(pidOut, -0.4, 0.4);
-     * }
-     */
     double feedForwardValue = 0;
-
-    /* feedForwardValue = Math.cos(getMeasurement()) * 0.1 * 12; */ // TEST
 
     if (actualPoint > 0) {
       feedForwardValue = (actualPoint / 143) * 0.31 * 12;
@@ -102,20 +75,19 @@ public class ArmSubsystem extends SubsystemBase {
         feedForwardValue -= (actualPoint - 90) / 143 * 12;
       }
     } else {
-      feedForwardValue = (actualPoint / -148) * 0.35 * 12;
+      feedForwardValue = (actualPoint / -148) * 0.31 * 12;
       if (actualPoint < -90) {
-        feedForwardValue -= (actualPoint + 90) / -148 * 12;
+        feedForwardValue -= (actualPoint + 90) / -148 * 0.1 * 12;
       }
     }
-
-    this.feedOutput = feedForwardValue;
-    this.pidOutput = pidOut;
 
     double total = (pidOut * 12) + feedForwardValue;
 
     total = Functions.clamp(total, -12, 12);
 
     this.totalOutput = total;
+    this.feedOutput = feedForwardValue;
+    this.pidOutput = pidOut;
 
     pivotSpark1.setVoltage(total);
   }
@@ -227,15 +199,6 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public double getTotal() {
     return totalOutput;
-  }
-
-  /**
-   * Gets the difference between the setpoint and the current position;
-   * 
-   * @return Arm error
-   */
-  public double getError() {
-    return error;
   }
 
   public double getVelociy() {
