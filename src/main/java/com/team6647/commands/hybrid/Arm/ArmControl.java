@@ -5,46 +5,21 @@ package com.team6647.commands.hybrid.Arm;
 
 import com.team6647.subsystems.ArmSubsystem;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-/**
- * Moves arm to a desired position smoothly
- */
-public class ArmControl extends CommandBase {
+public class ArmControl extends InstantCommand {
   ArmSubsystem arm;
-  double value;
-  boolean goingDown;
+  double setpoint;
 
-  public ArmControl(ArmSubsystem arm, double value) {
+  public ArmControl(ArmSubsystem arm, double setpoint) {
     this.arm = arm;
-    this.value = value;
+    this.setpoint = setpoint;
 
     addRequirements(arm);
   }
 
   @Override
   public void initialize() {
-    goingDown = arm.getMeasurement() > value;
-  }
-
-  @Override
-  public void execute() {
-    if (goingDown)
-      arm.manualControl(-0.5);
-    else if (!goingDown)
-      arm.manualControl(0.5);
-  }
-
-  @Override
-  public void end(boolean interrupted) {
-    arm.manualControl(0);
-  }
-
-  @Override
-  public boolean isFinished() {
-    if (goingDown)
-      return arm.getMeasurement() < value;
-    else
-      return arm.getMeasurement() > value;
+    arm.changeSetpoint(setpoint);
   }
 }
