@@ -6,6 +6,7 @@ package com.team6647.robot;
 
 import com.andromedalib.robot.SuperRobotContainer;
 import com.team6647.commands.auto.AutoBalance;
+import com.team6647.commands.hybrid.Arm.ArmControl;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.Arm.StartArm;
 import com.team6647.commands.hybrid.claw.MoveClaw;
@@ -67,6 +68,7 @@ public class RobotContainer extends SuperRobotContainer {
    */
   public void setChassisCommand() {
     chassis.setDefaultCommand(telemetryManager.getDriveSelection());
+    arm.resetPID();
   }
 
   /**
@@ -107,9 +109,9 @@ public class RobotContainer extends SuperRobotContainer {
       arm.manualControl(-0.5);
     }, arm));
 
-    OperatorConstants.driverController2.pov(0).toggleOnTrue(new InstantCommand(() -> arm.changeSetpoint(-50), arm));
+    OperatorConstants.driverController2.pov(0).toggleOnTrue(new ArmControl(arm, -50));
 
-    OperatorConstants.driverController2.pov(180).toggleOnTrue(new InstantCommand(() -> arm.changeSetpoint(-120), arm));
+    OperatorConstants.driverController2.pov(180).toggleOnTrue(new ArmControl(arm, -120));
 
     OperatorConstants.driverController2.y().whileTrue(new ExtendArm(arm, ArmConstants.extendSped))
         .toggleOnFalse(new RunCommand(() -> arm.extendArm(0), arm));
@@ -141,7 +143,7 @@ public class RobotContainer extends SuperRobotContainer {
           AutoUtils.getAuto());
     } catch (Exception e) {
       DriverStation.reportWarning("Could not run auto", true);
-      return null;
+      return Commands.waitSeconds(1);
     }
   }
 
