@@ -58,7 +58,7 @@ public class AutonomousPaths extends AutoUtils {
                                 GrabCone.grabCone(),
                                 Load.loadWPITrajectory("LeaveConeBottom1.wpilib.json", false),
                                 // ADD LIMELIGHT AIM
-                                putConeMid(),
+                                ConeMid(),
                                 Load.loadWPITrajectory("BalanceBottom.wpilib.json", false),
                                 new AutoBalance(chassis, drive));
         }
@@ -77,7 +77,7 @@ public class AutonomousPaths extends AutoUtils {
                                 GrabCone.grabCone(),
                                 Load.loadWPITrajectory("LeaveConeBottom1.wpilib.json", false),
                                 // ADD LIMELIGHT AIM
-                                putConeMid(),
+                                ConeMid(),
                                 Load.loadWPITrajectory("BalanceBottom.wpilib.json", false),
                                 new AutoBalance(chassis, drive));
         }
@@ -131,7 +131,7 @@ public class AutonomousPaths extends AutoUtils {
                                 GrabCone.grabCone(),
                                 Load.loadWPITrajectory("LeaveConeTop1.wpilib.json", false),
                                 // ADD LIMELIGHT AIM
-                                putConeMid(),
+                                ConeMid(),
                                 Load.loadWPITrajectory("BalanceTop.wpilib.json", false),
                                 new AutoBalance(chassis, drive));
         }
@@ -150,7 +150,7 @@ public class AutonomousPaths extends AutoUtils {
                                 GrabCone.grabCone(),
                                 Load.loadWPITrajectory("LeaveConeTop1.wpilib.json", false),
                                 // ADD LIMELIGHT AIM
-                                putConeMid(),
+                                ConeMid(),
                                 Load.loadWPITrajectory("BalanceTop.wpilib.json", false),
                                 new AutoBalance(chassis, drive));
         }

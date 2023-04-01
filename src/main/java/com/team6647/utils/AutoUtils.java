@@ -44,19 +44,19 @@ public class AutoUtils {
                 switch (placement) {
                         case Bottom:
                                 if (piece == 0)
-                                        return putConeBottom();
+                                        return ConeBottom();
                                 if (piece == 1)
-                                        return putCubeBottom();
+                                        return CubeBottom();
                                 break;
                         case Middle:
                                 if (piece == 0)
-                                        return putConeMid();
+                                        return ConeMid();
                                 if (piece == 1)
-                                        return putCubeMid();
+                                        return CubeMid();
                                 break;
                         case Top:
                                 if (piece == 1)
-                                        return putCubeTop();
+                                        return CubeTop();
                                 break;
                         default:
                                 return null;
@@ -93,7 +93,7 @@ public class AutoUtils {
                         case EmergencyAutoCube:
                                 return AutonomousPaths.emergencyAutoCube();
                         case DoNothing:
-                                return putCubeBottom();
+                                return CubeBottom();
                         default:
                                 return null;
                 }
@@ -104,14 +104,14 @@ public class AutoUtils {
         /* Bottom Grid Placement */
 
         // FINISHED
-        protected static Command putConeBottom() {
+        protected static Command ConeBottom() {
                 return Commands.sequence(
                                 new RunCommand(() -> arm.changeSetpoint(-90), arm).withTimeout(1),
                                 new InstantCommand(() -> claw.CubeSet(), claw));
         }
 
         // FINISHED
-        protected static Command putCubeBottom() {
+        protected static Command CubeBottom() {
                 return Commands.sequence(
                                 new RunCommand(() -> arm.changeSetpoint(-120), arm).withTimeout(1),
                                 new MoveClaw(claw, 2.8, false)).withTimeout(3);
@@ -120,7 +120,7 @@ public class AutoUtils {
         /* Middle Grid placement */
 
         // FINISHED
-        protected static Command putConeMid() {
+        protected static Command ConeMid() {
                 return Commands.sequence(
                                 new RunCommand(() -> arm.changeSetpoint(-110), arm).withTimeout(0.5),
                                 Commands.waitSeconds(0.25),
@@ -134,7 +134,7 @@ public class AutoUtils {
         }
 
         // FINISHED
-        protected static Command putCubeMid() {
+        protected static Command CubeMid() {
                 return Commands.sequence(
                                 new RunCommand(() -> arm.changeSetpoint(-85), arm).withTimeout(1),
                                 new MoveClaw(claw, 3, false)).withTimeout(2);
@@ -143,7 +143,7 @@ public class AutoUtils {
         /* Top Grid Placement */
 
         // FINISHED
-        protected static Command putCubeTop() {
+        protected static Command CubeTop() {
                 return Commands.sequence(
                                 new RunCommand(() -> arm.changeSetpoint(-55), arm).withTimeout(1),
                                 new MoveClaw(claw, 2.9, true)).withTimeout(4.5);
