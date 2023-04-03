@@ -23,17 +23,17 @@ public class ClawSubsytem extends SubsystemBase {
   private static SuperSparkMax neo1 = new SuperSparkMax(ClawConstants.clawNeo1ID, GlobalIdleMode.brake, false, 50);
   private static SuperSparkMax neo2 = new SuperSparkMax(ClawConstants.clawNeo2ID, GlobalIdleMode.brake, false, 50);
 
-  private static SuperTalonFX wristTalon = new SuperTalonFX(ClawConstants.wristFalconID, GlobalIdleMode.brake, false);
-
-  private static ProfiledPIDController wrisController = new ProfiledPIDController(ClawConstants.wristkP, 0, 0,
-      new TrapezoidProfile.Constraints(2, 2));
+/*   private static SuperTalonFX wristTalon = new SuperTalonFX(ClawConstants.wristFalconID, GlobalIdleMode.brake, false);
+ */
+  /* private static ProfiledPIDController wrisController = new ProfiledPIDController(ClawConstants.wristkP, 0, 0,
+      new TrapezoidProfile.Constraints(2, 2)); */
 
   private static DoubleSolenoid solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,
       ClawConstants.clawForwardPistonID, ClawConstants.clawBackwarddPistonID);
 
-  double setpoint = 0;
+/*   double setpoint = 0;
   boolean parallelWirst = true;
-
+ */
   public ClawSubsytem() {
   }
 
@@ -51,14 +51,14 @@ public class ClawSubsytem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (parallelWirst) {
+   /*  if (parallelWirst) {
       setWristParallelToFloor(ArmSubsystem.getArmPosition());
     }
 
-    calculateWrist();
+    calculateWrist(); */
   }
 
-  public void calculateWrist() {
+  /* public void calculateWrist() {
     double pidOut = wrisController.calculate(setpoint, getWristPosition());
     pidOut = Functions.clamp(pidOut, -0.2, 0.2);
 
@@ -69,46 +69,46 @@ public class ClawSubsytem extends SubsystemBase {
     total = Functions.clamp(total, -12, 12);
 
     wristTalon.setVoltage(total);
-  }
+  } */
 
   /**
    * Security method for changing the setpoint
    * 
    * @param change New setpoint
    */
-  public void changeSetpoint(double change) {
+  /* public void changeSetpoint(double change) {
     if (change < -90 || change > -90) // TUNE
       change = Functions.clamp(change, -90, -90);
 
     this.setpoint = change;
-  }
+  } */
 
   /**
    * Gets the relative wristPosition
    * 
    * @return Relative position
    */
-  public double getWristPosition() {
+  /* public double getWristPosition() {
     return (wristTalon.getSelectedSensorPosition() / 2048) / 360; // TODO ADD CONVERSIONS
-  }
+  } */
 
   /**
    * Sets the wrist always parallel to the floor
    * 
    * @param armPosition Current arm position
    */
-  public void setWristParallelToFloor(double armPosition) {
+  /* public void setWristParallelToFloor(double armPosition) {
     double goalPosition = armPosition > 0 ? -Math.abs(armPosition) - 90 : Math.abs(armPosition) - 90;
 
     changeSetpoint(goalPosition);
-  }
+  } */
 
   /**
    * Toggles the wrist movement for it to always be parallel to the floor
    */
-  public void toggleParallel() {
+  /* public void toggleParallel() {
     parallelWirst = !parallelWirst;
-  }
+  } */
 
   /**
    * Sets the Claw's velocity

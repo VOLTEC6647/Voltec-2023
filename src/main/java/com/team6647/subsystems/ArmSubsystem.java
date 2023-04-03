@@ -25,7 +25,7 @@ public class ArmSubsystem extends SubsystemBase {
   private static DigitalInput limitSwitch = new DigitalInput(3);
 
   private static ProfiledPIDController profiledController = new ProfiledPIDController(ArmConstants.pivotkP, 0, 0,
-      new TrapezoidProfile.Constraints(40, 20)); //35, 20
+      new TrapezoidProfile.Constraints(55, 30)); // 35, 20
 
   private double pidOutput;
   private double feedOutput;
@@ -36,7 +36,9 @@ public class ArmSubsystem extends SubsystemBase {
   public ArmSubsystem() {
     pivotSpark2.follow(pivotSpark1, true);
 
-    this.setPoint = -148.7; // When initialize
+    this.setPoint = -144.52;
+
+    resetPID();
   }
 
   /**
@@ -61,7 +63,7 @@ public class ArmSubsystem extends SubsystemBase {
    * Applies these values
    */
   public void calculateArm() {
-    double actualPoint = getMeasurement();
+    double actualPoint = getArmPosition();
 
     double pidOut = profiledController.calculate(actualPoint, setPoint);
 
@@ -69,15 +71,17 @@ public class ArmSubsystem extends SubsystemBase {
 
     double feedForwardValue = 0;
 
+/*     feedForwardValue = -Math.sin(getArmPosition()) * 0.5 * 12;
+ */
     if (actualPoint > 0) {
       feedForwardValue = (actualPoint / 143) * 0.31 * 12;
       if (actualPoint > 90) {
         feedForwardValue -= (actualPoint - 90) / 143 * 12;
       }
     } else {
-      feedForwardValue = (actualPoint / -148) * 0.31 * 12;
+      feedForwardValue = (actualPoint / -144) * 0.31 * 12;
       if (actualPoint < -90) {
-        feedForwardValue -= (actualPoint + 90) / -148 * 0.1 * 12;
+        feedForwardValue -= (actualPoint + 90) / -144 * 0.1 * 12;
       }
     }
 
@@ -93,12 +97,12 @@ public class ArmSubsystem extends SubsystemBase {
   }
 
   /**
-   * Gets encoder measuremt converted to degrees
+   * Gets encoder position converted to degrees
    * 
    * @return Encoder measurement
    */
-  public double getMeasurement() {
-    return (pivotSpark1.getPosition() / ((double) 94 / 360)) - 148.7;
+  public static double getArmPosition() {
+    return (pivotSpark1.getPosition() / ((double) 188 / 360)) - 144.52;// - 148.7;
   }
 
   /**
@@ -107,8 +111,8 @@ public class ArmSubsystem extends SubsystemBase {
    * @param change Setpoint change
    */
   public void changeSetpoint(double change) {
-    if (change < -148 || change > 143) // TUNE
-      change = Functions.clamp(change, -148, 143);
+    if (change < -144 || change > 143) // TUNE
+      change = Functions.clamp(change, -144, 143);
 
     this.setPoint = change;
   }
@@ -120,6 +124,10 @@ public class ArmSubsystem extends SubsystemBase {
    */
   public void manualControl(double value) {
     changeSetpoint(setPoint + value * 1);
+  }
+
+  public void resetPID() {
+    profiledController.reset(getArmPosition(), 0);
   }
 
   /**

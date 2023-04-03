@@ -53,14 +53,14 @@ public class DebugTab extends ShuffleboardTabBase {
 
         this.extendingPosition = tab.add("Extend postion", arm.getExtendPosition()).withPosition(5,1).getEntry();
 
-        this.armPositionDoublePID  = tab.add("Arm Position", arm.getMeasurement()).withPosition(3,1).getEntry();
+        this.armPositionDoublePID  = tab.add("Arm Position", arm.getArmPosition()).withPosition(3,1).getEntry();
         this.desiredPosition = tab.add("Desired Position", arm.getSetpoint()).withPosition(4, 1).getEntry();
         this.pidOutput = tab.add("Arm Output", arm.getPidOutput()).withPosition(5, 2).getEntry();
         this.feedOutput = tab.add("Feed output", arm.getFeedOutput()).withPosition(4, 2).getEntry();
         this.totalOutput = tab.add("Total Output", arm.getTotal()).withPosition(3, 2).getEntry();
         this.voltageApplied = tab.add("Voltage Applied", arm.getPivot1Voltage()).withPosition(6, 1).getEntry();
 
-        this.armPositionGraph = tab.add("Arm Position Graph", arm.getMeasurement()).withPosition(0, 2).withWidget(BuiltInWidgets.kGraph).getEntry();
+        this.armPositionGraph = tab.add("Arm Position Graph", arm.getArmPosition()).withPosition(0, 2).withWidget(BuiltInWidgets.kGraph).getEntry();
 
         this.limit = tab.add("Limit switch", arm.getLimitState()).withPosition(3, 3).getEntry();
 
@@ -78,7 +78,7 @@ public class DebugTab extends ShuffleboardTabBase {
 
         extendingPosition.setDouble(arm.getExtendPosition());
 
-        armPositionDoublePID.setDouble(arm.getMeasurement());
+        armPositionDoublePID.setDouble(arm.getArmPosition());
         desiredPosition.setDouble(arm.getSetpoint());
         voltageApplied.setDouble(arm.getPivot1Voltage());
         feedOutput.setDouble(arm.getFeedOutput());
