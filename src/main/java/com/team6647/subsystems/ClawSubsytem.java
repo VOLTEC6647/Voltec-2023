@@ -31,6 +31,9 @@ public class ClawSubsytem extends SubsystemBase {
   private static DoubleSolenoid solenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM,
       ClawConstants.clawForwardPistonID, ClawConstants.clawBackwarddPistonID);
 
+  double setpoint = 0;
+  boolean parallelWirst = true;
+
   public ClawSubsytem() {
   }
 
@@ -48,15 +51,15 @@ public class ClawSubsytem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    if (parallelWirst) {
+      setWristParallelToFloor(ArmSubsystem.getArmPosition());
+    }
+
     calculateWrist();
   }
 
   public void calculateWrist() {
-    double globalPos = ArmSubsystem.getArmPosition();
-
-    double goalPosition = globalPos > 0 ? -Math.abs(globalPos) - 90 : Math.abs(globalPos) - 90;
-
-    double pidOut = wrisController.calculate(goalPosition, getWristPosition());
+    double pidOut = wrisController.calculate(setpoint, getWristPosition());
     pidOut = Functions.clamp(pidOut, -0.2, 0.2);
 
     double feedForwardValue = 0;
@@ -68,8 +71,43 @@ public class ClawSubsytem extends SubsystemBase {
     wristTalon.setVoltage(total);
   }
 
+  /**
+   * Security method for changing the setpoint
+   * 
+   * @param change New setpoint
+   */
+  public void changeSetpoint(double change) {
+    if (change < -90 || change > -90) // TUNE
+      change = Functions.clamp(change, -90, -90);
+
+    this.setpoint = change;
+  }
+
+  /**
+   * Gets the relative wristPosition
+   * 
+   * @return Relative position
+   */
   public double getWristPosition() {
     return (wristTalon.getSelectedSensorPosition() / 2048) / 360; // TODO ADD CONVERSIONS
+  }
+
+  /**
+   * Sets the wrist always parallel to the floor
+   * 
+   * @param armPosition Current arm position
+   */
+  public void setWristParallelToFloor(double armPosition) {
+    double goalPosition = armPosition > 0 ? -Math.abs(armPosition) - 90 : Math.abs(armPosition) - 90;
+
+    changeSetpoint(goalPosition);
+  }
+
+  /**
+   * Toggles the wrist movement for it to always be parallel to the floor
+   */
+  public void toggleParallel() {
+    parallelWirst = !parallelWirst;
   }
 
   /**
