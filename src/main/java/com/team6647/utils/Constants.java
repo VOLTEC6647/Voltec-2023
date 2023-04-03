@@ -66,12 +66,15 @@ public final class Constants {
   public static class ClawConstants {
     public static final int clawNeo1ID = 8;
     public static final int clawNeo2ID = 9;
+    public static final int wristFalconID = 10;
 
     public static final int clawForwardPistonID = 6;
     public static final int clawBackwarddPistonID = 5;
 
     public static final double clawSpeedCones = 0.5;
     public static final double clawSpeedCubes = 0.3;
+    
+    public static final double wristkP = 0.015;
   }
 
   public static class DriveConstants {
