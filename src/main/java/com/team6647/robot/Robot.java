@@ -12,9 +12,9 @@ public class Robot extends SuperRobot {
   private RobotContainer robotContainer;
 
   @Override
-  public void robotInit(){
+  public void robotInit() {
     robotContainer = RobotContainer.getInstance();
-    setRobotContainer(robotContainer); 
+    setRobotContainer(robotContainer);
 
     super.robotInit();
   }
@@ -23,6 +23,7 @@ public class Robot extends SuperRobot {
   public void autonomousInit() {
     DriveSubsystem.getInstance().resetNavx();
     DriveSubsystem.getInstance().resetEncoders();
+    robotContainer.resetArm();
     super.autonomousInit();
   }
 
@@ -31,4 +32,5 @@ public class Robot extends SuperRobot {
     super.teleopInit();
     robotContainer.setChassisCommand();
   }
+
 }

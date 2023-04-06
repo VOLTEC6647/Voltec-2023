@@ -4,6 +4,7 @@
 
 package com.team6647.robot;
 
+import com.andromedalib.math.Functions;
 import com.andromedalib.robot.SuperRobotContainer;
 import com.team6647.commands.auto.AutoBalance;
 import com.team6647.commands.hybrid.Arm.ArmControl;
@@ -71,6 +72,11 @@ public class RobotContainer extends SuperRobotContainer {
     arm.resetPID();
   }
 
+  public void resetArm() {
+    arm.resetArmPositiom();
+    arm.resetPID();
+  }
+
   /**
    * Sets the button bindings
    */
@@ -92,14 +98,11 @@ public class RobotContainer extends SuperRobotContainer {
     OperatorConstants.driverController1.rightBumper().whileTrue(new InstantCommand(() -> chassis.setBrake(), chassis))
         .whileFalse(new InstantCommand(() -> chassis.setCoast(), chassis));
 
-    /*
-     * arm.setDefaultCommand(new RunCommand(() -> arm.manualControl(
-     * Math.copySign(Functions
-     * .clamp(Math.abs(Functions.handleDeadband(OperatorConstants.driverController2.
-     * getLeftY(), 0.1)), 0, 0.5),
-     * -OperatorConstants.driverController2.getLeftY())),
-     * arm));
-     */
+    arm.setDefaultCommand(new RunCommand(() -> arm.manualControl(
+        Math.copySign(Functions
+            .clamp(Math.abs(Functions.handleDeadband(OperatorConstants.driverController2.getLeftY(), 0.1)), 0, 0.5),
+            -OperatorConstants.driverController2.getLeftY())),
+        arm));
 
     OperatorConstants.driverController2.x().whileTrue(new RunCommand(() -> {
       arm.manualControl(0.5);
@@ -109,10 +112,11 @@ public class RobotContainer extends SuperRobotContainer {
       arm.manualControl(-0.5);
     }, arm));
 
-    OperatorConstants.driverController2.pov(0).toggleOnTrue(new ArmControl(arm, -50));
+    OperatorConstants.driverController2.pov(0).toggleOnTrue(new ArmControl(arm, 50));
 
     OperatorConstants.driverController2.pov(180).toggleOnTrue(new ArmControl(arm, -120));
 
+    
     OperatorConstants.driverController2.y().whileTrue(new ExtendArm(arm, ArmConstants.extendSped))
         .toggleOnFalse(new RunCommand(() -> arm.extendArm(0), arm));
     OperatorConstants.driverController2.a().whileTrue(new ExtendArm(arm, -ArmConstants.extendSped))
