@@ -20,6 +20,7 @@ public class ArmControl extends InstantCommand {
 
   @Override
   public void initialize() {
+    arm.resetPID();
     arm.changeSetpoint(setpoint);
   }
 }

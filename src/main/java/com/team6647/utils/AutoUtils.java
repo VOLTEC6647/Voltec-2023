@@ -106,14 +106,16 @@ public class AutoUtils {
         // FINISHED
         protected static Command ConeBottom() {
                 return Commands.sequence(
-                                new RunCommand(() -> arm.changeSetpoint(-90), arm).withTimeout(1),
+                                new ArmControl(arm, -90),
+                                Commands.waitSeconds(1.5),
                                 new InstantCommand(() -> claw.CubeSet(), claw));
         }
 
         // FINISHED
         protected static Command CubeBottom() {
                 return Commands.sequence(
-                                new RunCommand(() -> arm.changeSetpoint(-120), arm).withTimeout(1),
+                                new ArmControl(arm, -120),
+                                Commands.waitSeconds(1.5),
                                 new MoveClaw(claw, 2.8, false)).withTimeout(3);
         }
 
@@ -136,7 +138,8 @@ public class AutoUtils {
         // FINISHED
         protected static Command CubeMid() {
                 return Commands.sequence(
-                                new RunCommand(() -> arm.changeSetpoint(-85), arm).withTimeout(1),
+                                new ArmControl(arm, -85),
+                                Commands.waitSeconds(1.5),
                                 new MoveClaw(claw, 3, false)).withTimeout(2);
         }
 
@@ -145,7 +148,8 @@ public class AutoUtils {
         // FINISHED
         protected static Command CubeTop() {
                 return Commands.sequence(
-                                new RunCommand(() -> arm.changeSetpoint(-55), arm).withTimeout(1),
+                                new ArmControl(arm, -55),
+                                Commands.waitSeconds(1.5),
                                 new MoveClaw(claw, 2.9, true)).withTimeout(4.5);
         }
 
