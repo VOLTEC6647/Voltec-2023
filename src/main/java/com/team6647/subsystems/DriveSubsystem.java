@@ -9,12 +9,20 @@ import java.util.Optional;
 import org.photonvision.EstimatedRobotPose;
 
 import com.andromedalib.sensors.SuperNavx;
+import com.andromedalib.vision.LimelightCamera;
+import com.andromedalib.vision.LimelightHelpers;
 import com.team6647.utils.Constants.DriveConstants;
 
 import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -31,7 +39,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   private DifferentialDrivePoseEstimator poseEstimator;
 
-  private VisionSubsystem visionSubystem = VisionSubsystem.getInstance("Photon");
+  private Alliance alliance;
 
   private DriveSubsystem() {
     resetEncoders();
@@ -51,6 +59,8 @@ public class DriveSubsystem extends SubsystemBase {
     resetOdometry(new Pose2d(4.29, 1.5, Rotation2d.fromDegrees(0)));
 
     field.setRobotPose(getPose());
+
+    alliance = DriverStation.getAlliance();
   }
 
   /**
@@ -81,11 +91,19 @@ public class DriveSubsystem extends SubsystemBase {
         ChassisSubsystem.frontLeft.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio),
         -ChassisSubsystem.frontRight.getPosition(DriveConstants.kWheelCircumference, DriveConstants.kGearRatio));
 
-    Optional<EstimatedRobotPose> result = visionSubystem.getEstimatedGlobalPose(poseEstimator.getEstimatedPosition());
+    LimelightHelpers.Results result = LimelightHelpers.getLatestResults("limelight").targetingResults;
 
-    if (result.isPresent()) {
-      EstimatedRobotPose pose = result.get();
-      poseEstimator.addVisionMeasurement(pose.estimatedPose.toPose2d(), pose.timestampSeconds);
+    if (!(result.botpose[0] == 0 && result.botpose[1] == 0) && LimelightHelpers.getTA("limelight") < 30) {
+      if (alliance == Alliance.Blue) {
+        poseEstimator.addVisionMeasurement(
+            LimelightHelpers.toPose2D(result.botpose_wpiblue),
+            Timer.getFPGATimestamp() - (result.latency_capture / 1000.0) - (result.latency_pipeline / 1000.0));
+      } else if (alliance == Alliance.Red) {
+        // double[] botpose = LimelightHelpers.getBotPose_wpiRed("limelight");
+        poseEstimator.addVisionMeasurement(
+            LimelightHelpers.toPose2D(result.botpose_wpired),
+            Timer.getFPGATimestamp() - (result.latency_capture / 1000.0) - (result.latency_pipeline / 1000.0));
+      }
     }
   }
 
