@@ -4,6 +4,9 @@
 
 package com.team6647.commands.auto;
 
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
 import com.team6647.utils.AutoUtils;
 import com.team6647.utils.Load;
 
@@ -15,6 +18,16 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
  * All commands for autonomous modes
  */
 public class AutonomousPaths extends AutoUtils {
+
+        /* Bottom */
+        private static PathPlannerTrajectory leaveConeBottom = PathPlanner.loadPath("LeaveConeBottom1", new PathConstraints(2, 3));
+        private static PathPlannerTrajectory balanceBottom = PathPlanner.loadPath("BalanceBottom", new PathConstraints(1, 2));
+
+        /* Top */
+        private static PathPlannerTrajectory LeaveConeTop = PathPlanner.loadPath("LeaveConeTop1", new PathConstraints(2, 3));
+        private static PathPlannerTrajectory BalanceTop = PathPlanner.loadPath("BalanceTop", new PathConstraints(1, 2));
+
+        
 
         /**
          * Basic {@link Command} to leave the Community
@@ -52,14 +65,16 @@ public class AutonomousPaths extends AutoUtils {
          */
         public static Command bottomAutoCone() {
                 System.out.println("Bottom auto Cone");
+
+                PathPlannerTrajectory pieceBottom = PathPlanner.loadPath("GoForPieceBottom1", new PathConstraints(2, 3));
+
                 return Commands.sequence(
                                 getGridPlacement(0),
-                                Load.loadWPITrajectory("GoForPieceBottom1.wpilib.json", true),
+                                Load.loadPathTrajectory(pieceBottom, true),
                                 GrabCone.grabCone(),
-                                Load.loadWPITrajectory("LeaveConeBottom1.wpilib.json", false),
-                                // ADD LIMELIGHT AIM
+                                Load.loadPathTrajectory(leaveConeBottom, false),
                                 ConeMid(),
-                                Load.loadWPITrajectory("BalanceBottom.wpilib.json", false),
+                                Load.loadPathTrajectory(balanceBottom, false),
                                 new AutoBalance(chassis, drive));
         }
 
@@ -71,14 +86,16 @@ public class AutonomousPaths extends AutoUtils {
          */
         public static Command bottomAutoCube() {
                 System.out.println("Bottom auto cube");
+
+                PathPlannerTrajectory pieceBottom = PathPlanner.loadPath("GoForPieceBottom2", new PathConstraints(2,3));
+
                 return Commands.sequence(
                                 getGridPlacement(1),
-                                Load.loadWPITrajectory("GoForPieceBottom2.wpilib.json", true),
+                                Load.loadPathTrajectory(pieceBottom, true),
                                 GrabCone.grabCone(),
-                                Load.loadWPITrajectory("LeaveConeBottom1.wpilib.json", false),
-                                // ADD LIMELIGHT AIM
+                                Load.loadPathTrajectory(leaveConeBottom, false),
                                 ConeMid(),
-                                Load.loadWPITrajectory("BalanceBottom.wpilib.json", false),
+                                Load.loadPathTrajectory(balanceBottom, false),
                                 new AutoBalance(chassis, drive));
         }
 
@@ -96,7 +113,9 @@ public class AutonomousPaths extends AutoUtils {
                                 getGridPlacement(0),
                                 Commands.waitSeconds(0.5),
                                 new TankDriveAutoCommand(chassis, -0.5, -0.5).withTimeout(6),
-                                new TankDriveAutoCommand(chassis, 0.5, 0.5).withTimeout(3), // Use -0.6 for speeds and 2.3 in case of faulty charge station
+                                new TankDriveAutoCommand(chassis, 0.5, 0.5).withTimeout(3), // Use -0.6 for speeds and
+                                                                                            // 2.3 in case of faulty
+                                                                                            // charge station
                                 new AutoBalance(chassis, drive));
         }
 
@@ -111,7 +130,9 @@ public class AutonomousPaths extends AutoUtils {
                 return Commands.sequence(
                                 getGridPlacement(1),
                                 new TankDriveAutoCommand(chassis, -0.5, -0.5).withTimeout(6),
-                                new TankDriveAutoCommand(chassis, 0.5, 0.5).withTimeout(3),  // Use -0.6 for speeds and 2.3 in case of faulty charge station
+                                new TankDriveAutoCommand(chassis, 0.5, 0.5).withTimeout(3), // Use -0.6 for speeds and
+                                                                                            // 2.3 in case of faulty
+                                                                                            // charge station
                                 new AutoBalance(chassis, drive));
         }
 
@@ -124,15 +145,17 @@ public class AutonomousPaths extends AutoUtils {
          * @return Command for top community
          */
         public static Command topAutoCone() {
-                System.out.println("top auto cone");
+                System.out.println("Top auto cone");
+
+                PathPlannerTrajectory pieceTop = PathPlanner.loadPath("GoForPieceTop1", new PathConstraints(2,3));
+
                 return Commands.sequence(
                                 getGridPlacement(0),
-                                Load.loadWPITrajectory("GoForPieceTop1.wpilib.json", true),
+                                Load.loadPathTrajectory(pieceTop, true),
                                 GrabCone.grabCone(),
-                                Load.loadWPITrajectory("LeaveConeTop1.wpilib.json", false),
-                                // ADD LIMELIGHT AIM
+                                Load.loadPathTrajectory(LeaveConeTop, false),
                                 ConeMid(),
-                                Load.loadWPITrajectory("BalanceTop.wpilib.json", false),
+                                Load.loadPathTrajectory(BalanceTop, false),
                                 new AutoBalance(chassis, drive));
         }
 
@@ -144,14 +167,16 @@ public class AutonomousPaths extends AutoUtils {
          */
         public static Command topAutoCube() {
                 System.out.println("Top auto cube");
+
+                PathPlannerTrajectory pieceTop = PathPlanner.loadPath("GoForPieceTop2", new PathConstraints(2,3));
+
                 return Commands.sequence(
                                 getGridPlacement(1),
-                                Load.loadWPITrajectory("GoForPieceTop2.wpilib.json", true),
+                                Load.loadPathTrajectory(pieceTop, true),
                                 GrabCone.grabCone(),
-                                Load.loadWPITrajectory("LeaveConeTop1.wpilib.json", false),
-                                // ADD LIMELIGHT AIM
+                                Load.loadPathTrajectory(LeaveConeTop, false),
                                 ConeMid(),
-                                Load.loadWPITrajectory("BalanceTop.wpilib.json", false),
+                                Load.loadPathTrajectory(BalanceTop, false),
                                 new AutoBalance(chassis, drive));
         }
 
