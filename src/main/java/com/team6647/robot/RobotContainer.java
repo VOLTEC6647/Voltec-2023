@@ -59,7 +59,7 @@ public class RobotContainer extends SuperRobotContainer {
     chassis = ChassisSubsystem.getInstance();
     claw = ClawSubsytem.getInstance();
     drive = DriveSubsystem.getInstance();
-    vision = VisionSubsystem.getInstance("Photon");
+    vision = VisionSubsystem.getInstance();
 
     telemetryManager = TelemetryManager.getInstance();
   }

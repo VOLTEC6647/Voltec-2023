@@ -21,7 +21,7 @@ public class DebugTab extends ShuffleboardTabBase {
     ChassisSubsystem chassis = ChassisSubsystem.getInstance();
     ClawSubsytem claw = ClawSubsytem.getInstance();
     DriveSubsystem drive = DriveSubsystem.getInstance();
-    VisionSubsystem vision = VisionSubsystem.getInstance("Photon");
+    VisionSubsystem vision = VisionSubsystem.getInstance();
 
     static ShuffleboardTab tab;
 
@@ -38,10 +38,8 @@ public class DebugTab extends ShuffleboardTabBase {
     GenericEntry totalOutput;
 
     GenericEntry limeAim;
-    GenericEntry photonAim;
 
     GenericEntry limePipe;
-    GenericEntry photonPipe;
 
     GenericEntry pivot1Temp;
     GenericEntry pivot2Temp;
@@ -65,7 +63,6 @@ public class DebugTab extends ShuffleboardTabBase {
         this.limit = tab.add("Limit switch", arm.getLimitState()).withPosition(3, 3).getEntry();
 
         this.limeAim = tab.add("Limelight aim", vision.getLimelightAim()).withPosition(4, 3).getEntry();
-        this.photonAim = tab.add("Photon aim", vision.getPhotonAim()).withPosition(5, 3).getEntry();
         
         this.pivot1Temp = tab.add("Pivot1 Temp", arm.getPivot1Temp()).withPosition(6, 3).getEntry();
         this.pivot2Temp = tab.add("Pivot2 Temp", arm.getPivot2Temp()).withPosition(7, 3).getEntry();
@@ -88,7 +85,6 @@ public class DebugTab extends ShuffleboardTabBase {
         limit.setBoolean(arm.getLimitState());
 
         limeAim.setBoolean(vision.getLimelightAim());
-        photonAim.setBoolean(vision.getPhotonAim());
 
         pivot1Temp.setDouble(arm.getPivot1Temp());
         pivot2Temp.setDouble(arm.getPivot2Temp());

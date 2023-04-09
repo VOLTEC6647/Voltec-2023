@@ -25,7 +25,7 @@ public class AutoBalance extends CommandBase {
   public AutoBalance(ChassisSubsystem chassis, DriveSubsystem drive) {
     this.chassis = chassis;
     this.drive = drive;
-    this.vision = VisionSubsystem.getInstance("Photon");
+    this.vision = VisionSubsystem.getInstance();
 
     addRequirements(drive, chassis);
   }

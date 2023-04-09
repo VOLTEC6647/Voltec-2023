@@ -102,21 +102,9 @@ public final class Constants {
   }
 
   public static class VisionConstants {
-    // TODO ADJUST
-    public static final double cameraHeight = Units.inchesToMeters(2);
-    public static final double targetHeight = Units.inchesToMeters(27);
-    public static final double targetPitch = Units.inchesToMeters(0);
-    public static final double cameraPitch = Units.degreesToRadians(0);
-    // DISTANCE TO SET THE ROBOT FROM GOAl
-    public static final double goalRange = 0.36;
-
     public static final double kpAim = -0.03;
     public static final double kpDistance = -0.06;
     public static final double min_aim_command = 0.0235;
-
-    // TODO SET
-    public static final int aprilPhotonPipe = 0;
-    public static final int retroPhotonPipe = 1;
 
     public static final int aprilLimePipe = 0;
     public static final int retroLimePipe = 2;
