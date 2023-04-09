@@ -25,7 +25,7 @@ public class ArmSubsystem extends SubsystemBase {
   private static DigitalInput limitSwitch = new DigitalInput(3);
 
   private static ProfiledPIDController profiledController = new ProfiledPIDController(ArmConstants.pivotkP, 0, 0,
-      new TrapezoidProfile.Constraints(55, 30)); // 35, 20
+      new TrapezoidProfile.Constraints(40, 30));
 
   private double pidOutput;
   private double feedOutput;
@@ -36,7 +36,7 @@ public class ArmSubsystem extends SubsystemBase {
   public ArmSubsystem() {
     pivotSpark2.follow(pivotSpark1, true);
 
-    this.setPoint = -144.52;
+    this.setPoint = -144.2;
 
     resetPID();
   }
@@ -71,17 +71,15 @@ public class ArmSubsystem extends SubsystemBase {
 
     double feedForwardValue = 0;
 
-/*     feedForwardValue = -Math.sin(getArmPosition()) * 0.5 * 12;
- */
     if (actualPoint > 0) {
-      feedForwardValue = (actualPoint / 143) * 0.31 * 12;
+      feedForwardValue = (actualPoint / 112) * 0.31 * 12;
       if (actualPoint > 90) {
-        feedForwardValue -= (actualPoint - 90) / 143 * 12;
+        feedForwardValue -= (actualPoint - 90) / 112 * 12;
       }
     } else {
       feedForwardValue = (actualPoint / -144) * 0.31 * 12;
       if (actualPoint < -90) {
-        feedForwardValue -= (actualPoint + 90) / -144 * 0.1 * 12;
+        feedForwardValue -= (actualPoint + 90) / -144 * 12;
       }
     }
 
@@ -101,8 +99,12 @@ public class ArmSubsystem extends SubsystemBase {
    * 
    * @return Encoder measurement
    */
-  public static double getArmPosition() {
-    return (pivotSpark1.getPosition() / ((double) 188 / 360)) - 144.52;// - 148.7;
+  public double getArmPosition() {
+    return (pivotSpark1.getPosition() / ((double) 188 / 360)) -144.2;// - 144.52;// - 148.7;
+  }
+
+  public void resetArmPositiom() {
+    pivotSpark1.resetEncoder();
   }
 
   /**
@@ -111,8 +113,8 @@ public class ArmSubsystem extends SubsystemBase {
    * @param change Setpoint change
    */
   public void changeSetpoint(double change) {
-    if (change < -144 || change > 143) // TUNE
-      change = Functions.clamp(change, -144, 143);
+    if (change < -144 || change > 112) // TUNE
+      change = Functions.clamp(change, -144, 112);
 
     this.setPoint = change;
   }
