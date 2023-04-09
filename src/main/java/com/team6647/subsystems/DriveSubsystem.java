@@ -91,7 +91,6 @@ public class DriveSubsystem extends SubsystemBase {
             LimelightHelpers.toPose2D(result.botpose_wpiblue),
             Timer.getFPGATimestamp() - (result.latency_capture / 1000.0) - (result.latency_pipeline / 1000.0));
       } else if (alliance == Alliance.Red) {
-        // double[] botpose = LimelightHelpers.getBotPose_wpiRed("limelight");
         poseEstimator.addVisionMeasurement(
             LimelightHelpers.toPose2D(result.botpose_wpired),
             Timer.getFPGATimestamp() - (result.latency_capture / 1000.0) - (result.latency_pipeline / 1000.0));
