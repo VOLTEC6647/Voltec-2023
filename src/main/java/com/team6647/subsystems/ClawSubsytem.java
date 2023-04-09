@@ -4,14 +4,10 @@
 
 package com.team6647.subsystems;
 
-import com.andromedalib.math.Functions;
 import com.andromedalib.motorControllers.SuperSparkMax;
-import com.andromedalib.motorControllers.SuperTalonFX;
 import com.andromedalib.motorControllers.IdleManager.GlobalIdleMode;
 import com.team6647.utils.Constants.ClawConstants;
 
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
