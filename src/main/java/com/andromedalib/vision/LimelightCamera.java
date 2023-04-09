@@ -163,6 +163,15 @@ public class LimelightCamera {
     }
 
     /**
+     * Gets the pipeline capture latency
+     * 
+     * @return Capture latency
+     */
+    public double getCaptureLatency() {
+        return lTable.captureLatency.getDouble(0);
+    }
+
+    /**
      * Gets the target's corner coordinates array. Returns empty array if the
      * lengths are not equal (should never happen)
      * 
@@ -335,6 +344,10 @@ public class LimelightCamera {
      */
     public void setCustomString(String key, String value) {
         lTable.table.getEntry(key).setString(value);
+    }
+
+    public double[] getBotpose() {
+        return lTable.botpose.getDoubleArray(new double[7]);
     }
 
 }
