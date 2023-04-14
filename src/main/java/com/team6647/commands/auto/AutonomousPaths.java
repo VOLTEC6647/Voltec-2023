@@ -8,7 +8,7 @@ import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.team6647.utils.AutoUtils;
-import com.team6647.utils.Load;
+import com.team6647.utils.TrajectoryReader;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -26,8 +26,6 @@ public class AutonomousPaths extends AutoUtils {
         /* Top */
         private static PathPlannerTrajectory LeaveConeTop = PathPlanner.loadPath("LeaveConeTop1", new PathConstraints(2, 3));
         private static PathPlannerTrajectory BalanceTop = PathPlanner.loadPath("BalanceTop", new PathConstraints(1, 2));
-
-        
 
         /**
          * Basic {@link Command} to leave the Community
@@ -70,11 +68,11 @@ public class AutonomousPaths extends AutoUtils {
 
                 return Commands.sequence(
                                 getGridPlacement(0),
-                                Load.loadPathTrajectory(pieceBottom, true),
+                                TrajectoryReader.loadPathTrajectory(pieceBottom, true),
                                 GrabCone.grabCone(),
-                                Load.loadPathTrajectory(leaveConeBottom, false),
+                                TrajectoryReader.loadPathTrajectory(leaveConeBottom, false),
                                 ConeMid(),
-                                Load.loadPathTrajectory(balanceBottom, false),
+                                TrajectoryReader.loadPathTrajectory(balanceBottom, false),
                                 new AutoBalance(chassis, drive));
         }
 
@@ -91,11 +89,11 @@ public class AutonomousPaths extends AutoUtils {
 
                 return Commands.sequence(
                                 getGridPlacement(1),
-                                Load.loadPathTrajectory(pieceBottom, true),
+                                TrajectoryReader.loadPathTrajectory(pieceBottom, true),
                                 GrabCone.grabCone(),
-                                Load.loadPathTrajectory(leaveConeBottom, false),
+                                TrajectoryReader.loadPathTrajectory(leaveConeBottom, false),
                                 ConeMid(),
-                                Load.loadPathTrajectory(balanceBottom, false),
+                                TrajectoryReader.loadPathTrajectory(balanceBottom, false),
                                 new AutoBalance(chassis, drive));
         }
 
@@ -151,11 +149,11 @@ public class AutonomousPaths extends AutoUtils {
 
                 return Commands.sequence(
                                 getGridPlacement(0),
-                                Load.loadPathTrajectory(pieceTop, true),
+                                TrajectoryReader.loadPathTrajectory(pieceTop, true),
                                 GrabCone.grabCone(),
-                                Load.loadPathTrajectory(LeaveConeTop, false),
+                                TrajectoryReader.loadPathTrajectory(LeaveConeTop, false),
                                 ConeMid(),
-                                Load.loadPathTrajectory(BalanceTop, false),
+                                TrajectoryReader.loadPathTrajectory(BalanceTop, false),
                                 new AutoBalance(chassis, drive));
         }
 
@@ -172,11 +170,11 @@ public class AutonomousPaths extends AutoUtils {
 
                 return Commands.sequence(
                                 getGridPlacement(1),
-                                Load.loadPathTrajectory(pieceTop, true),
+                                TrajectoryReader.loadPathTrajectory(pieceTop, true),
                                 GrabCone.grabCone(),
-                                Load.loadPathTrajectory(LeaveConeTop, false),
+                                TrajectoryReader.loadPathTrajectory(LeaveConeTop, false),
                                 ConeMid(),
-                                Load.loadPathTrajectory(BalanceTop, false),
+                                TrajectoryReader.loadPathTrajectory(BalanceTop, false),
                                 new AutoBalance(chassis, drive));
         }
 
