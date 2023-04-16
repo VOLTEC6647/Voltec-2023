@@ -172,15 +172,6 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   /**
-   * Get navx angle
-   * 
-   * @return Navx angle
-   */
-  public String getNavxAngle() {
-    return navx.getRotation().toString();
-  }
-
-  /**
    * Resets navx
    */
   public void resetNavx() {
