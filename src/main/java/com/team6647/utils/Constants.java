@@ -53,20 +53,21 @@ public final class Constants {
 
     public static final double extendSped = 0.5;
 
-    public static final double kMaxVelocityRadPerSecond = 100.38 / 2;
-    public static final double kMaxAccelerationRadPerSecSquared = 118.876 / 2;
-
     public static final double forwardLimit = 42;
 
-    public static final double gearRatio = 94;
+    public static final double pivotkP = 0.03;
 
-    public static final double pivotkP = 0.03; //0.015
+    public static final int armLimitID = 3;
   }
 
   public static class ClawConstants {
     public static final int clawNeo1ID = 8;
     public static final int clawNeo2ID = 9;
-    public static final int wristFalconID = 10;
+    public static final int wristNeoID = 10;
+
+    public static final int topLimit = 4;
+    public static final int bottomLimit = 5;
+    public static final int beamBrake = 0;
 
     public static final int clawForwardPistonID = 6;
     public static final int clawBackwarddPistonID = 5;
@@ -74,7 +75,10 @@ public final class Constants {
     public static final double clawSpeedCones = 0.5;
     public static final double clawSpeedCubes = 0.3;
     
-    public static final double wristkP = 0.015;
+    public static final double wristkP = 0.2335; //0.235
+
+    public static final int maxClaw = 150;
+    public static final int minClaw = -120;
   }
 
   public static class DriveConstants {
