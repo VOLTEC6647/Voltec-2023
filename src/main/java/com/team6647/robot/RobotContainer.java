@@ -121,9 +121,6 @@ public class RobotContainer extends SuperRobotContainer {
 
     OperatorConstants.driverController2.rightTrigger(0.1).whileTrue(new SpeedClaw(claw, 1, false));
     OperatorConstants.driverController2.leftTrigger(0.1).whileTrue(new SpeedClaw(claw, -1, false));
-    OperatorConstants.driverController2.rightBumper().whileTrue(new InstantCommand(() -> {
-      claw.CubeSet();
-    }));
 
     OperatorConstants.driverController2.rightBumper().whileTrue(new InstantCommand(() -> {
       claw.CubeSet();
