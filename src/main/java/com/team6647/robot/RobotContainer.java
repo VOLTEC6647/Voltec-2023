@@ -114,10 +114,8 @@ public class RobotContainer extends SuperRobotContainer {
       arm.manualControl(-0.5);
     }, arm));
 
-    OperatorConstants.driverController2.y().whileTrue(new ExtendArm(teleArm, ArmConstants.extendSped))
-        .toggleOnFalse(new RunCommand(() -> teleArm.extendArm(0), arm));
-    OperatorConstants.driverController2.a().whileTrue(new ExtendArm(teleArm, -ArmConstants.extendSped))
-        .toggleOnFalse(new RunCommand(() -> teleArm.extendArm(0), arm));
+    OperatorConstants.driverController2.y().whileTrue(new ExtendArm(teleArm, ArmConstants.extendSped));
+    OperatorConstants.driverController2.a().whileTrue(new ExtendArm(teleArm, -ArmConstants.extendSped));
 
     OperatorConstants.driverController2.rightTrigger(0.1).whileTrue(new SpeedClaw(claw, 1, false));
     OperatorConstants.driverController2.leftTrigger(0.1).whileTrue(new SpeedClaw(claw, -1, false));
