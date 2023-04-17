@@ -75,7 +75,7 @@ public final class Constants {
     public static final double clawSpeedCones = 0.5;
     public static final double clawSpeedCubes = 0.3;
     
-    public static final double wristkP = 0.2335; //0.235
+    public static final double wristkP = 0.235; //0.235
 
     public static final int maxClaw = 150;
     public static final int minClaw = -120;
