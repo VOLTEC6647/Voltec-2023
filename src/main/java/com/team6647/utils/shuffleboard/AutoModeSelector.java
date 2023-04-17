@@ -28,8 +28,8 @@ public class AutoModeSelector {
 
     public AutoModeSelector() {
 
-        autoChooser.addOption("Leave Communty Cone", AutoSelection.LeaveCommunityCone);
-        autoChooser.addOption("Leave Communty Cone", AutoSelection.LeaveCommunityCube);
+        autoChooser.addOption("Leave Community Cone", AutoSelection.LeaveCommunityCone);
+        autoChooser.addOption("Leave Community Cube", AutoSelection.LeaveCommunityCube);
         autoChooser.addOption("Bottom Auto Cone", AutoSelection.BottomAutoCone);
         autoChooser.addOption("Bottom Auto Cube", AutoSelection.BottomAutoCube);
         autoChooser.setDefaultOption("Mid Auto Cone", AutoSelection.MidAutoCone);
