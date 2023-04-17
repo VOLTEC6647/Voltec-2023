@@ -4,13 +4,11 @@
 package com.team6647.commands.auto;
 
 import com.team6647.commands.hybrid.Arm.ArmControl;
-import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.claw.ParallelWrist;
 import com.team6647.utils.AutoUtils;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 /**
  * Command for grabbing a cone from the floor
@@ -18,13 +16,8 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 public class GrabCone extends AutoUtils {
 
     public static Command grabCone() {
-        return Commands.sequence(
-                new ParallelCommandGroup(
-                        
-                        new TankDriveAutoCommand(chassis, -0.3, -0.3)),
-                Commands.runOnce(() -> claw.ConeSet(), claw),
-                Commands.waitSeconds(1),
-                new ArmControl(arm, -50)).andThen(null, null);
+        return new TankDriveAutoCommand(chassis, 0.3, 0).withTimeout(1)
+                .andThen(Commands.runOnce(() -> claw.ConeSet(), claw)).andThen(AutoUtils.defaultArmPosition());
     }
 
     /**
