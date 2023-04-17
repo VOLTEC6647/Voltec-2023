@@ -8,7 +8,6 @@ import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.team6647.utils.AutoUtils;
-import com.team6647.utils.TeleopUitls;
 import com.team6647.utils.TrajectoryReader;
 
 import edu.wpi.first.wpilibj2.command.Command;
