@@ -41,13 +41,12 @@ public class ExtendArm extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
-    /* if (speed > 0 && !arm.getLimitState()) {
+    if (speed > 0 && !arm.getLimitState()) {
       return false;
     }
     if (speed < 0 && Math.abs(arm.getExtendPosition()) >= Math.abs(ArmConstants.forwardLimit)) {
       return false;
     }
-    return !arm.getLimitState() || (Math.abs(arm.getExtendPosition()) >= Math.abs(ArmConstants.forwardLimit)); */
+    return !arm.getLimitState() || (Math.abs(arm.getExtendPosition()) >= Math.abs(ArmConstants.forwardLimit));
   }
 }
