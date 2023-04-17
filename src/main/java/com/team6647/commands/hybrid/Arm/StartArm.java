@@ -4,7 +4,7 @@
 
 package com.team6647.commands.hybrid.Arm;
 
-import com.team6647.subsystems.ArmSubsystem;
+import com.team6647.subsystems.TelescopicArm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  * command
  */
 public class StartArm extends CommandBase {
-  ArmSubsystem arm;
+  TelescopicArm arm;
 
-  public StartArm(ArmSubsystem arm) {
+  public StartArm(TelescopicArm arm) {
     this.arm = arm;
 
     addRequirements(arm);
@@ -32,7 +32,6 @@ public class StartArm extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    arm.changeSetpoint(-120);
     arm.extendArm(0);
     arm.resetExtendPosition();
 

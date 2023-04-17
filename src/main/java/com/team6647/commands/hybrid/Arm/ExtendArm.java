@@ -4,7 +4,7 @@
 
 package com.team6647.commands.hybrid.Arm;
 
-import com.team6647.subsystems.ArmSubsystem;
+import com.team6647.subsystems.TelescopicArm;
 import com.team6647.utils.Constants.ArmConstants;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  * Extends the arm at a desired speed
  */
 public class ExtendArm extends CommandBase {
-  ArmSubsystem arm;
+  TelescopicArm arm;
   double speed;
 
-  public ExtendArm(ArmSubsystem arm, double speed) {
+  public ExtendArm(TelescopicArm arm, double speed) {
     this.arm = arm;
     this.speed = speed;
 
