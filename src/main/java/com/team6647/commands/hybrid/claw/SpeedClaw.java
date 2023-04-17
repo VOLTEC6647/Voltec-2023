@@ -29,7 +29,7 @@ public class SpeedClaw extends CommandBase {
 
   @Override
   public void initialize() {
-    if (claw.getSolenoidState() == Value.kForward) {
+    if (claw.getSolenoidState() == Value.kReverse) {
       speed = ClawConstants.clawSpeedCubes * mult;
     } else {
       speed = ClawConstants.clawSpeedCones * mult;
