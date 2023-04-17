@@ -3,10 +3,6 @@
  */
 package com.team6647.robot;
 
-import com.team6647.commands.hybrid.Arm.StartArm;
-import com.team6647.subsystems.ArmSubsystem;
-import com.team6647.subsystems.ChassisSubsystem;
-import com.team6647.subsystems.ClawSubsytem;
 import com.team6647.utils.shuffleboard.AutoModeSelector;
 import com.team6647.utils.shuffleboard.DriveModeSelector;
 import com.team6647.utils.shuffleboard.GridPlacementSelector;
