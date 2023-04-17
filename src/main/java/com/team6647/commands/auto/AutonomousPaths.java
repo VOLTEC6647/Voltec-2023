@@ -8,6 +8,7 @@ import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.team6647.utils.AutoUtils;
+import com.team6647.utils.TeleopUitls;
 import com.team6647.utils.TrajectoryReader;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -68,6 +69,7 @@ public class AutonomousPaths extends AutoUtils {
 
                 return Commands.sequence(
                                 getGridPlacement(0),
+                                GrabCone.readyArm(),
                                 TrajectoryReader.loadPathTrajectory(pieceBottom, true),
                                 GrabCone.grabCone(),
                                 TrajectoryReader.loadPathTrajectory(leaveConeBottom, false),
@@ -89,6 +91,7 @@ public class AutonomousPaths extends AutoUtils {
 
                 return Commands.sequence(
                                 getGridPlacement(1),
+                                GrabCone.readyArm(),
                                 TrajectoryReader.loadPathTrajectory(pieceBottom, true),
                                 GrabCone.grabCone(),
                                 TrajectoryReader.loadPathTrajectory(leaveConeBottom, false),
@@ -149,6 +152,7 @@ public class AutonomousPaths extends AutoUtils {
 
                 return Commands.sequence(
                                 getGridPlacement(0),
+                                GrabCone.readyArm(),
                                 TrajectoryReader.loadPathTrajectory(pieceTop, true),
                                 GrabCone.grabCone(),
                                 TrajectoryReader.loadPathTrajectory(LeaveConeTop, false),
@@ -170,6 +174,7 @@ public class AutonomousPaths extends AutoUtils {
 
                 return Commands.sequence(
                                 getGridPlacement(1),
+                                GrabCone.readyArm(),
                                 TrajectoryReader.loadPathTrajectory(pieceTop, true),
                                 GrabCone.grabCone(),
                                 TrajectoryReader.loadPathTrajectory(LeaveConeTop, false),

@@ -4,23 +4,23 @@
 package com.team6647.utils;
 
 import com.team6647.commands.auto.AutonomousPaths;
-import com.team6647.commands.auto.TankDriveAutoCommand;
 import com.team6647.commands.hybrid.Arm.ArmControl;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
-import com.team6647.commands.hybrid.claw.MoveClaw;
+import com.team6647.commands.hybrid.claw.SpeedClaw;
+import com.team6647.commands.hybrid.claw.WristControl;
 import com.team6647.robot.TelemetryManager;
 import com.team6647.subsystems.ArmSubsystem;
 import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.subsystems.ClawSubsytem;
 import com.team6647.subsystems.DriveSubsystem;
+import com.team6647.subsystems.TelescopicArm;
+import com.team6647.subsystems.WristSubsystem;
 import com.team6647.utils.shuffleboard.AutoModeSelector.AutoSelection;
 import com.team6647.utils.shuffleboard.GridPlacementSelector.GridPlacement;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 
 /**
  * Util functions to be used during auto
@@ -30,7 +30,9 @@ public class AutoUtils {
         protected static final TelemetryManager telemetryManager = TelemetryManager.getInstance();
 
         protected static ArmSubsystem arm = ArmSubsystem.getInstance();
+        protected static TelescopicArm teleArm = TelescopicArm.getInstance();
         protected static ClawSubsytem claw = ClawSubsytem.getInstance();
+        protected static WristSubsystem wrist = WristSubsystem.getInstance();
         protected static ChassisSubsystem chassis = ChassisSubsystem.getInstance();
         protected static DriveSubsystem drive = DriveSubsystem.getInstance();
 
@@ -93,7 +95,7 @@ public class AutoUtils {
                         case EmergencyAutoCube:
                                 return AutonomousPaths.emergencyAutoCube();
                         case DoNothing:
-                                return CubeBottom();
+                                return ConeMid();
                         default:
                                 return null;
                 }
@@ -103,54 +105,64 @@ public class AutoUtils {
 
         /* Bottom Grid Placement */
 
-        // FINISHED
         protected static Command ConeBottom() {
                 return Commands.sequence(
-                                new ArmControl(arm, -90),
+                                new ArmControl(arm, 65),
+                                new WristControl(wrist, 0),
                                 Commands.waitSeconds(1.5),
-                                new InstantCommand(() -> claw.CubeSet(), claw));
+                                new InstantCommand(() -> claw.CubeSet(), claw), AutoUtils.defaultArmPosition());
         }
 
-        // FINISHED
         protected static Command CubeBottom() {
                 return Commands.sequence(
-                                new ArmControl(arm, -120),
-                                Commands.waitSeconds(1.5),
-                                new MoveClaw(claw, 2.8, false)).withTimeout(3);
+                                new ArmControl(arm, 65),
+                                new WristControl(wrist, 120),
+                                Commands.waitSeconds(2),
+                                new SpeedClaw(claw, 2.8, false), AutoUtils.defaultArmPosition()).withTimeout(3);
         }
 
         /* Middle Grid placement */
 
-        // FINISHED
         protected static Command ConeMid() {
                 return Commands.sequence(
-                                new RunCommand(() -> arm.changeSetpoint(-110), arm).withTimeout(0.5),
-                                Commands.waitSeconds(0.25),
-                                new ExtendArm(arm, 0.5).withTimeout(1),
-                                new ArmControl(arm, -70),
-                                new TankDriveAutoCommand(chassis, 0.4, 0.4).withTimeout(0.5),
-                                new ParallelCommandGroup(
-                                                new TankDriveAutoCommand(chassis, 0.4, 0.4),
-                                                new InstantCommand(() -> claw.CubeSet(), claw)).withTimeout(0.5));
-
+                                new InstantCommand(() -> chassis.setBrake()),
+                                new WristControl(wrist, -80),
+                                Commands.waitSeconds(0.5),
+                                new ArmControl(arm, 65),
+                                Commands.waitSeconds(1),
+                                new ExtendArm(teleArm, 0.5).withTimeout(0.825),
+                                Commands.waitSeconds(0.2),
+                                new WristControl(wrist, 20),
+                                Commands.waitSeconds(1),
+                                new ArmControl(arm, 67),
+                                new InstantCommand(() -> claw.CubeSet(), claw),
+                                AutoUtils.defaultArmPosition(),
+                                new ExtendArm(teleArm, -0.5),
+                                new InstantCommand(() -> chassis.setCoast()));
         }
 
-        // FINISHED
         protected static Command CubeMid() {
                 return Commands.sequence(
-                                new ArmControl(arm, -85),
+                                new ArmControl(arm, 75),
+                                new WristControl(wrist, 0),
                                 Commands.waitSeconds(1.5),
-                                new MoveClaw(claw, 3, false)).withTimeout(2);
+                                new SpeedClaw(claw, 3, false), AutoUtils.defaultArmPosition()).withTimeout(2);
         }
 
         /* Top Grid Placement */
 
-        // FINISHED
         protected static Command CubeTop() {
                 return Commands.sequence(
-                                new ArmControl(arm, -55),
+                                new ArmControl(arm, 70),
+                                new WristControl(wrist, -10),
                                 Commands.waitSeconds(1.5),
-                                new MoveClaw(claw, 2.9, true)).withTimeout(4.5);
+                                new SpeedClaw(claw, 2.9, true), AutoUtils.defaultArmPosition()).withTimeout(4.5);
+        }
+
+        public static Command defaultArmPosition() {
+                return Commands.sequence(
+                                new ArmControl(arm, -14),
+                                new WristControl(wrist, 114));
         }
 
 }
