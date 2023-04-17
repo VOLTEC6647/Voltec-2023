@@ -106,17 +106,17 @@ public class RobotContainer extends SuperRobotContainer {
 
     /* Driver 2 */
 
-    OperatorConstants.driverController2.pov(0).whileTrue(new RunCommand(() -> {
+    OperatorConstants.driverController2.x().whileTrue(new RunCommand(() -> {
       arm.manualControl(0.5);
     }, arm));
 
-    OperatorConstants.driverController2.pov(180).whileTrue(new RunCommand(() -> {
+    OperatorConstants.driverController2.b().whileTrue(new RunCommand(() -> {
       arm.manualControl(-0.5);
     }, arm));
 
-    OperatorConstants.driverController2.pov(90).whileTrue(new ExtendArm(teleArm, ArmConstants.extendSped))
+    OperatorConstants.driverController2.y().whileTrue(new ExtendArm(teleArm, ArmConstants.extendSped))
         .toggleOnFalse(new RunCommand(() -> teleArm.extendArm(0), arm));
-    OperatorConstants.driverController2.pov(270).whileTrue(new ExtendArm(teleArm, -ArmConstants.extendSped))
+    OperatorConstants.driverController2.a().whileTrue(new ExtendArm(teleArm, -ArmConstants.extendSped))
         .toggleOnFalse(new RunCommand(() -> teleArm.extendArm(0), arm));
 
     OperatorConstants.driverController2.rightTrigger(0.1).whileTrue(new SpeedClaw(claw, 1, false));
@@ -139,21 +139,21 @@ public class RobotContainer extends SuperRobotContainer {
     /* Presets */
 
     /* Cone mid */
-    OperatorConstants.driverController2.b().whileTrue(TeleopUitls.midinvertedStartSequence)
-        .and(OperatorConstants.driverController2.a())
+    OperatorConstants.driverController2.pov(180).whileTrue(TeleopUitls.midinvertedStartSequence)
+        .and(OperatorConstants.driverController2.pov(270))
         .toggleOnTrue(TeleopUitls.invertedWristCommand);
 
-    OperatorConstants.driverController2.x().whileTrue(TeleopUitls.midstartSequence)
-        .and(OperatorConstants.driverController2.a())
+    OperatorConstants.driverController2.pov(0).whileTrue(TeleopUitls.midstartSequence)
+        .and(OperatorConstants.driverController2.pov(270))
         .toggleOnTrue(TeleopUitls.wristCommand);
 
     /* Cube mid */
-    OperatorConstants.driverController2.x().whileTrue(TeleopUitls.midstartSequence)
-        .and(OperatorConstants.driverController2.y())
+    OperatorConstants.driverController2.pov(0).whileTrue(TeleopUitls.midstartSequence)
+        .and(OperatorConstants.driverController2.pov(90))
         .toggleOnTrue(TeleopUitls.cubeCommand);
 
-    OperatorConstants.driverController2.b().whileTrue(TeleopUitls.midinvertedStartSequence)
-        .and(OperatorConstants.driverController2.y())
+    OperatorConstants.driverController2.pov(180).whileTrue(TeleopUitls.midinvertedStartSequence)
+        .and(OperatorConstants.driverController2.pov(90))
         .toggleOnTrue(TeleopUitls.invertedCubeCommand);
 
     wrist.setDefaultCommand(new RunCommand(() -> wrist.manualControl(
