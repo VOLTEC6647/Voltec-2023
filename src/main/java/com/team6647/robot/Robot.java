@@ -37,7 +37,7 @@ public class Robot extends SuperRobot {
   public void teleopInit() {
     super.teleopInit();
     robotContainer.setChassisCommand();
-    WristSubsystem.startClaw();
+    WristSubsystem.startClaw(); //TODO REMOVE
   }
 
   @Override
