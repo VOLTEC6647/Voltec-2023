@@ -7,16 +7,18 @@ package com.team6647.robot;
 import com.andromedalib.math.Functions;
 import com.andromedalib.robot.SuperRobotContainer;
 import com.team6647.commands.auto.AutoBalance;
-import com.team6647.commands.hybrid.Arm.ArmControl;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.Arm.StartArm;
-import com.team6647.commands.hybrid.claw.MoveClaw;
+import com.team6647.commands.hybrid.claw.SpeedClaw;
 import com.team6647.subsystems.ArmSubsystem;
 import com.team6647.subsystems.ChassisSubsystem;
 import com.team6647.subsystems.ClawSubsytem;
 import com.team6647.subsystems.DriveSubsystem;
+import com.team6647.subsystems.TelescopicArm;
 import com.team6647.subsystems.VisionSubsystem;
+import com.team6647.subsystems.WristSubsystem;
 import com.team6647.utils.AutoUtils;
+import com.team6647.utils.TeleopUitls;
 import com.team6647.utils.Constants.ArmConstants;
 import com.team6647.utils.Constants.OperatorConstants;
 import com.team6647.utils.Constants.VisionConstants;
@@ -35,8 +37,10 @@ public class RobotContainer extends SuperRobotContainer {
   private TelemetryManager telemetryManager;
 
   private ArmSubsystem arm;
+  private TelescopicArm teleArm;
   private ChassisSubsystem chassis;
   private ClawSubsytem claw;
+  private WristSubsystem wrist;
   private DriveSubsystem drive;
   private VisionSubsystem vision;
 
@@ -56,8 +60,10 @@ public class RobotContainer extends SuperRobotContainer {
    */
   public void initSubsystems() {
     arm = ArmSubsystem.getInstance();
+    teleArm = TelescopicArm.getInstance();
     chassis = ChassisSubsystem.getInstance();
     claw = ClawSubsytem.getInstance();
+    wrist = WristSubsystem.getInstance();
     drive = DriveSubsystem.getInstance();
     vision = VisionSubsystem.getInstance();
 
@@ -73,7 +79,6 @@ public class RobotContainer extends SuperRobotContainer {
   }
 
   public void resetArm() {
-    arm.resetArmPositiom();
     arm.resetPID();
   }
 
@@ -83,6 +88,7 @@ public class RobotContainer extends SuperRobotContainer {
   public void configureBindings() {
     setChassisCommand();
 
+    /** Driver 1 */
     OperatorConstants.driverController1.x().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleFirstGear()));
     OperatorConstants.driverController1.y().whileTrue(new InstantCommand(() -> ChassisSubsystem.toggleSecondGear()));
     OperatorConstants.driverController1.a().whileTrue(new AutoBalance(chassis, drive));
@@ -98,39 +104,74 @@ public class RobotContainer extends SuperRobotContainer {
     OperatorConstants.driverController1.rightBumper().whileTrue(new InstantCommand(() -> chassis.setBrake(), chassis))
         .whileFalse(new InstantCommand(() -> chassis.setCoast(), chassis));
 
-    arm.setDefaultCommand(new RunCommand(() -> arm.manualControl(
-        Math.copySign(Functions
-            .clamp(Math.abs(Functions.handleDeadband(OperatorConstants.driverController2.getLeftY(), 0.1)), 0, 0.5),
-            -OperatorConstants.driverController2.getLeftY())),
-        arm));
+    /* Driver 2 */
 
-    OperatorConstants.driverController2.x().whileTrue(new RunCommand(() -> {
+    OperatorConstants.driverController2.pov(0).whileTrue(new RunCommand(() -> {
       arm.manualControl(0.5);
     }, arm));
 
-    OperatorConstants.driverController2.b().whileTrue(new RunCommand(() -> {
+    OperatorConstants.driverController2.pov(180).whileTrue(new RunCommand(() -> {
       arm.manualControl(-0.5);
     }, arm));
 
-    OperatorConstants.driverController2.pov(0).toggleOnTrue(new ArmControl(arm, 50));
+    OperatorConstants.driverController2.pov(90).whileTrue(new ExtendArm(teleArm, ArmConstants.extendSped))
+        .toggleOnFalse(new RunCommand(() -> teleArm.extendArm(0), arm));
+    OperatorConstants.driverController2.pov(270).whileTrue(new ExtendArm(teleArm, -ArmConstants.extendSped))
+        .toggleOnFalse(new RunCommand(() -> teleArm.extendArm(0), arm));
 
-    OperatorConstants.driverController2.pov(180).toggleOnTrue(new ArmControl(arm, -120));
-
-    
-    OperatorConstants.driverController2.y().whileTrue(new ExtendArm(arm, ArmConstants.extendSped))
-        .toggleOnFalse(new RunCommand(() -> arm.extendArm(0), arm));
-    OperatorConstants.driverController2.a().whileTrue(new ExtendArm(arm, -ArmConstants.extendSped))
-        .toggleOnFalse(new RunCommand(() -> arm.extendArm(0), arm));
-
-    OperatorConstants.driverController2.rightTrigger(0.1).whileTrue(new MoveClaw(claw, 1, false));
-    OperatorConstants.driverController2.leftTrigger(0.1).whileTrue(new MoveClaw(claw, -1, false));
+    OperatorConstants.driverController2.rightTrigger(0.1).whileTrue(new SpeedClaw(claw, 1, false));
+    OperatorConstants.driverController2.leftTrigger(0.1).whileTrue(new SpeedClaw(claw, -1, false));
     OperatorConstants.driverController2.rightBumper().whileTrue(new InstantCommand(() -> {
       claw.CubeSet();
     }));
+
+    OperatorConstants.driverController2.rightBumper().whileTrue(new InstantCommand(() -> {
+      claw.CubeSet();
+    }));
+
     OperatorConstants.driverController2.leftBumper().whileTrue(new InstantCommand(() -> {
       claw.ConeSet();
     }));
+
+    OperatorConstants.driverController2.rightStick().whileTrue(TeleopUitls.storeArm);
+    OperatorConstants.driverController2.leftStick().whileTrue(new InstantCommand(() -> WristSubsystem.startClaw()));
+
+    /* Presets */
+
+    /* Cone mid */
+    OperatorConstants.driverController2.b().whileTrue(TeleopUitls.midinvertedStartSequence)
+        .and(OperatorConstants.driverController2.a())
+        .toggleOnTrue(TeleopUitls.invertedWristCommand);
+
+    OperatorConstants.driverController2.x().whileTrue(TeleopUitls.midstartSequence)
+        .and(OperatorConstants.driverController2.a())
+        .toggleOnTrue(TeleopUitls.wristCommand);
+
+    /* Cube mid */
+    OperatorConstants.driverController2.x().whileTrue(TeleopUitls.midstartSequence)
+        .and(OperatorConstants.driverController2.y())
+        .toggleOnTrue(TeleopUitls.cubeCommand);
+
+    OperatorConstants.driverController2.b().whileTrue(TeleopUitls.midinvertedStartSequence)
+        .and(OperatorConstants.driverController2.y())
+        .toggleOnTrue(TeleopUitls.invertedCubeCommand);
+
+    wrist.setDefaultCommand(new RunCommand(() -> wrist.manualControl(
+        Math.copySign(Functions
+            .clamp(Math.abs(Functions.handleDeadband(OperatorConstants.driverController2.getLeftY(), 0.1)), 0, 1),
+            -OperatorConstants.driverController2.getLeftY())),
+        wrist));
+
+    OperatorConstants.driverController2.y().whileTrue(new InstantCommand(() -> wrist.setDefaultCommand(new RunCommand(
+        () -> wrist.manualControl(
+            Math.copySign(Functions
+                .clamp(Math.abs(Functions.handleDeadband(OperatorConstants.driverController2.getLeftY(), 0.1)), 0, 1),
+                -OperatorConstants.driverController2.getLeftY())),
+        wrist))));
   }
+
+  // BRAZO: -70
+  // Extend position: 25
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -143,20 +184,12 @@ public class RobotContainer extends SuperRobotContainer {
     try {
       return Commands.sequence(
           new InstantCommand(() -> ChassisSubsystem.toggleSecondGear()),
-          new StartArm(arm),
+          new StartArm(teleArm),
+          Commands.waitSeconds(1),
           AutoUtils.getAuto());
     } catch (Exception e) {
       DriverStation.reportWarning("Could not run auto", true);
       return Commands.waitSeconds(1);
     }
-  }
-
-  /**
-   * Use this to pass the test command to the main {@link Robot} class.
-   *
-   * @return the command to run in test
-   */
-  public Command getTestCommand() {
-    return Commands.sequence(new StartArm(arm), telemetryManager.getProtocolSelection());
   }
 }
