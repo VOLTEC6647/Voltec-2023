@@ -112,8 +112,8 @@ public class AutonomousPaths extends AutoUtils {
                 return Commands.sequence(
                                 getGridPlacement(0),
                                 Commands.waitSeconds(0.5),
-                                new TankDriveAutoCommand(chassis, -0.5, -0.5).withTimeout(6),
-                                new TankDriveAutoCommand(chassis, 0.5, 0.5).withTimeout(3), // Use -0.6 for speeds and
+                                new TankDriveAutoCommand(chassis, 0.6, 0.6).withTimeout(4),
+                                new TankDriveAutoCommand(chassis, -0.6, -0.6).withTimeout(2), // Use -0.6 for speeds and
                                                                                             // 2.3 in case of faulty
                                                                                             // charge station
                                 new AutoBalance(chassis, drive));

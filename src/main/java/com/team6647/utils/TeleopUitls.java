@@ -1,12 +1,15 @@
 package com.team6647.utils;
 
+import com.andromedalib.math.Functions;
 import com.team6647.commands.hybrid.Arm.ArmControl;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.claw.WristControl;
+import com.team6647.utils.Constants.OperatorConstants;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 
 public class TeleopUitls extends AutoUtils {
 
@@ -34,4 +37,9 @@ public class TeleopUitls extends AutoUtils {
 
         public static Command topStartSequence = Commands.sequence(new ArmControl(arm, -55), new WristControl(wrist, -10));
 
+        public static Command wristDefaul = new InstantCommand(() ->     wrist.setDefaultCommand(new RunCommand(() -> wrist.manualControl(
+        Math.copySign(Functions
+            .clamp(Math.abs(Functions.handleDeadband(OperatorConstants.driverController2.getLeftY(), 0.1)), 0, 1),
+            -OperatorConstants.driverController2.getLeftY())),
+        wrist)));
 }

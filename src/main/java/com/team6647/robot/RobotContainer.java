@@ -151,18 +151,12 @@ public class RobotContainer extends SuperRobotContainer {
         .and(OperatorConstants.driverController2.pov(90))
         .toggleOnTrue(TeleopUitls.invertedCubeCommand);
 
-    wrist.setDefaultCommand(new RunCommand(() -> wrist.manualControl(
-        Math.copySign(Functions
-            .clamp(Math.abs(Functions.handleDeadband(OperatorConstants.driverController2.getLeftY(), 0.1)), 0, 1),
-            -OperatorConstants.driverController2.getLeftY())),
-        wrist));
-
-    OperatorConstants.driverController2.y().whileTrue(new InstantCommand(() -> wrist.setDefaultCommand(new RunCommand(
+    /* OperatorConstants.driverController2.y().whileTrue(new InstantCommand(() -> wrist.setDefaultCommand(new RunCommand(
         () -> wrist.manualControl(
             Math.copySign(Functions
                 .clamp(Math.abs(Functions.handleDeadband(OperatorConstants.driverController2.getLeftY(), 0.1)), 0, 1),
                 -OperatorConstants.driverController2.getLeftY())),
-        wrist))));
+        wrist)))); */
   }
 
   // BRAZO: -70

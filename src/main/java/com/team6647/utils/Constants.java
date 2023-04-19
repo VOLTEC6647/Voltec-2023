@@ -102,7 +102,7 @@ public final class Constants {
 
     public static final double balanceGoal = 0;
     public static final double balanceKp = 0.65;
-    public static final double balanceTolerance = 11;
+    public static final double balanceTolerance = 12;
   }
 
   public static class VisionConstants {
