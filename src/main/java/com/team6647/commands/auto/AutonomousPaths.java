@@ -37,7 +37,7 @@ public class AutonomousPaths extends AutoUtils {
                 return Commands.sequence(
                                 getGridPlacement(0),
                                 Commands.waitSeconds(0.5),
-                                new TankDriveAutoCommand(chassis, -0.5, -0.5).withTimeout(4.2));
+                                new TankDriveAutoCommand(chassis, -0.5, -0.5).withTimeout(5.2));
         }
 
         /**
@@ -50,7 +50,7 @@ public class AutonomousPaths extends AutoUtils {
                 return Commands.sequence(
                                 getGridPlacement(1),
                                 Commands.waitSeconds(0.5),
-                                new TankDriveAutoCommand(chassis, -0.5, -0.5).withTimeout(4.2));
+                                new TankDriveAutoCommand(chassis, -0.5, -0.5).withTimeout(5.2));
         }
 
         /* Bottom Community */
@@ -112,10 +112,7 @@ public class AutonomousPaths extends AutoUtils {
                 return Commands.sequence(
                                 getGridPlacement(0),
                                 Commands.waitSeconds(0.5),
-                                new TankDriveAutoCommand(chassis, 0.6, 0.6).withTimeout(4),
-                                new TankDriveAutoCommand(chassis, -0.6, -0.6).withTimeout(2), // Use -0.6 for speeds and
-                                                                                            // 2.3 in case of faulty
-                                                                                            // charge station
+                                new TankDriveAutoCommand(chassis, -0.53, -0.53).withTimeout(2.7),
                                 new AutoBalance(chassis, drive));
         }
 
@@ -129,10 +126,7 @@ public class AutonomousPaths extends AutoUtils {
                 System.out.println("Mid auto cube");
                 return Commands.sequence(
                                 getGridPlacement(1),
-                                new TankDriveAutoCommand(chassis, -0.5, -0.5).withTimeout(6),
-                                new TankDriveAutoCommand(chassis, 0.5, 0.5).withTimeout(3), // Use -0.6 for speeds and
-                                                                                            // 2.3 in case of faulty
-                                                                                            // charge station
+                                new TankDriveAutoCommand(chassis, -0.53, -0.53).withTimeout(2.7),
                                 new AutoBalance(chassis, drive));
         }
 

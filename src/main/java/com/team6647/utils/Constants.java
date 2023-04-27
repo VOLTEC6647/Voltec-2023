@@ -63,22 +63,12 @@ public final class Constants {
   public static class ClawConstants {
     public static final int clawNeo1ID = 8;
     public static final int clawNeo2ID = 9;
-    public static final int wristNeoID = 10;
-
-    public static final int topLimit = 4;
-    public static final int bottomLimit = 5;
-    public static final int beamBrake = 0;
 
     public static final int clawForwardPistonID = 6;
     public static final int clawBackwarddPistonID = 5;
 
     public static final double clawSpeedCones = 0.5;
     public static final double clawSpeedCubes = 0.3;
-    
-    public static final double wristkP = 0.235; //0.235
-
-    public static final int maxClaw = 150;
-    public static final int minClaw = -120;
   }
 
   public static class DriveConstants {
@@ -102,7 +92,7 @@ public final class Constants {
 
     public static final double balanceGoal = 0;
     public static final double balanceKp = 0.65;
-    public static final double balanceTolerance = 12;
+    public static final double balanceTolerance = 11;
   }
 
   public static class VisionConstants {

@@ -12,7 +12,6 @@ import com.team6647.subsystems.ClawSubsytem;
 import com.team6647.subsystems.DriveSubsystem;
 import com.team6647.subsystems.TelescopicArm;
 import com.team6647.subsystems.VisionSubsystem;
-import com.team6647.subsystems.WristSubsystem;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -23,7 +22,6 @@ public class DebugTab extends ShuffleboardTabBase {
     TelescopicArm teleArm = TelescopicArm.getInstance();
     ChassisSubsystem chassis = ChassisSubsystem.getInstance();
     ClawSubsytem claw = ClawSubsytem.getInstance();
-    WristSubsystem wrist = WristSubsystem.getInstance();
     DriveSubsystem drive = DriveSubsystem.getInstance();
     VisionSubsystem vision = VisionSubsystem.getInstance();
     RobotContainer container = RobotContainer.getInstance();
@@ -45,12 +43,6 @@ public class DebugTab extends ShuffleboardTabBase {
 
     GenericEntry chassisAngle;
 
-    GenericEntry wristTopLimit;
-    GenericEntry wristBottomLimit;
-
-    GenericEntry wristPosition;
-    GenericEntry wristSetpoint;
-
     public DebugTab(ShuffleboardTab tab) {
 
         this.extendingPosition = tab.add("Extend postion", teleArm.getExtendPosition()).withPosition(5, 1).getEntry();
@@ -70,10 +62,6 @@ public class DebugTab extends ShuffleboardTabBase {
         this.pivot2Temp = tab.add("Pivot2 Temp", arm.getPivot2Temp()).withPosition(7, 3).getEntry();
         this.chassisAngle = tab.add("Chassis Angle", drive.getNavxRoll()).withPosition(5, 3).getEntry();
 
-        this.wristTopLimit = tab.add("Claw Top Limit", wrist.topLimit()).withPosition(6, 1).getEntry();
-        this.wristBottomLimit = tab.add("Claw Bottom Limit", wrist.bottomLimit()).withPosition(7, 1).getEntry();
-        this.wristPosition = tab.add("Claw Position", wrist.getWristPosition()).withPosition(6, 2).getEntry();
-        this.wristSetpoint = tab.add("Wrist setpoint", wrist.getSetpoint()).withPosition(7, 2).getEntry();
     }
 
     @Override
@@ -95,11 +83,6 @@ public class DebugTab extends ShuffleboardTabBase {
         pivot2Temp.setDouble(arm.getPivot2Temp());
 
         chassisAngle.setDouble(drive.getNavxRoll());
-
-        wristTopLimit.setBoolean(wrist.topLimit());
-        wristBottomLimit.setBoolean(wrist.bottomLimit());
-        wristPosition.setDouble(wrist.getWristPosition());
-        wristSetpoint.setDouble(wrist.getSetpoint());
 
     }
 }

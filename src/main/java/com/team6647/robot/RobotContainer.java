@@ -4,9 +4,9 @@
 
 package com.team6647.robot;
 
-import com.andromedalib.math.Functions;
 import com.andromedalib.robot.SuperRobotContainer;
 import com.team6647.commands.auto.AutoBalance;
+import com.team6647.commands.hybrid.Arm.ArmControl;
 import com.team6647.commands.hybrid.Arm.ExtendArm;
 import com.team6647.commands.hybrid.Arm.StartArm;
 import com.team6647.commands.hybrid.claw.SpeedClaw;
@@ -16,9 +16,7 @@ import com.team6647.subsystems.ClawSubsytem;
 import com.team6647.subsystems.DriveSubsystem;
 import com.team6647.subsystems.TelescopicArm;
 import com.team6647.subsystems.VisionSubsystem;
-import com.team6647.subsystems.WristSubsystem;
 import com.team6647.utils.AutoUtils;
-import com.team6647.utils.TeleopUitls;
 import com.team6647.utils.Constants.ArmConstants;
 import com.team6647.utils.Constants.OperatorConstants;
 import com.team6647.utils.Constants.VisionConstants;
@@ -40,7 +38,6 @@ public class RobotContainer extends SuperRobotContainer {
   private TelescopicArm teleArm;
   private ChassisSubsystem chassis;
   private ClawSubsytem claw;
-  private WristSubsystem wrist;
   private DriveSubsystem drive;
   private VisionSubsystem vision;
 
@@ -63,7 +60,6 @@ public class RobotContainer extends SuperRobotContainer {
     teleArm = TelescopicArm.getInstance();
     chassis = ChassisSubsystem.getInstance();
     claw = ClawSubsytem.getInstance();
-    wrist = WristSubsystem.getInstance();
     drive = DriveSubsystem.getInstance();
     vision = VisionSubsystem.getInstance();
 
@@ -128,35 +124,8 @@ public class RobotContainer extends SuperRobotContainer {
       claw.ConeSet();
     }));
 
-    OperatorConstants.driverController2.rightStick().whileTrue(TeleopUitls.storeArm);
-    OperatorConstants.driverController2.leftStick().whileTrue(new InstantCommand(() -> WristSubsystem.startClaw()));
-
-    /* Presets */
-
-    /* Cone mid */
-    OperatorConstants.driverController2.pov(180).whileTrue(TeleopUitls.midinvertedStartSequence)
-        .and(OperatorConstants.driverController2.pov(270))
-        .toggleOnTrue(TeleopUitls.invertedWristCommand);
-
-    OperatorConstants.driverController2.pov(0).whileTrue(TeleopUitls.midstartSequence)
-        .and(OperatorConstants.driverController2.pov(270))
-        .toggleOnTrue(TeleopUitls.wristCommand);
-
-    /* Cube mid */
-    OperatorConstants.driverController2.pov(0).whileTrue(TeleopUitls.midstartSequence)
-        .and(OperatorConstants.driverController2.pov(90))
-        .toggleOnTrue(TeleopUitls.cubeCommand);
-
-    OperatorConstants.driverController2.pov(180).whileTrue(TeleopUitls.midinvertedStartSequence)
-        .and(OperatorConstants.driverController2.pov(90))
-        .toggleOnTrue(TeleopUitls.invertedCubeCommand);
-
-    /* OperatorConstants.driverController2.y().whileTrue(new InstantCommand(() -> wrist.setDefaultCommand(new RunCommand(
-        () -> wrist.manualControl(
-            Math.copySign(Functions
-                .clamp(Math.abs(Functions.handleDeadband(OperatorConstants.driverController2.getLeftY(), 0.1)), 0, 1),
-                -OperatorConstants.driverController2.getLeftY())),
-        wrist)))); */
+    OperatorConstants.driverController2.pov(0).whileTrue(new ArmControl(arm, -70));
+    OperatorConstants.driverController2.rightStick().whileTrue(AutoUtils.storeArm());
   }
 
   // BRAZO: -70
@@ -174,7 +143,7 @@ public class RobotContainer extends SuperRobotContainer {
       return Commands.sequence(
           new InstantCommand(() -> ChassisSubsystem.toggleSecondGear()),
           new StartArm(teleArm),
-          Commands.waitSeconds(1),
+          Commands.waitSeconds(0.5),
           AutoUtils.getAuto());
     } catch (Exception e) {
       DriverStation.reportWarning("Could not run auto", true);
