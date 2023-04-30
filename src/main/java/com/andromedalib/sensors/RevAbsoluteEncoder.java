@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 
 /**
  * A class that represents revs through bore encoder in the form of an absolute
- * encoder. Connect the PWM cable to the Rio's DIO port
+ * encoder. Connect the PWM cable to the Rio's DIO port 
  */
 public class RevAbsoluteEncoder {
     private DutyCycleEncoder encoder;
